@@ -1,0 +1,8 @@
+﻿Group: Misc
+FriendlyName: Google Pagespeed Tools
+SystemName: FoxNetSoft.Pagespeed
+Version: 1.15
+SupportedVersions: 3.70
+Author: FoxNetSoft
+DisplayOrder: 1
+FileName: FoxNetSoft.Plugin.Misc.Pagespeed.dll

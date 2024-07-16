@@ -1,0 +1,13 @@
+.jcarousel-skin-thumbs .jcarousel-item-horizontal {
+    margin: 10px 0 0 10px;
+}
+.jcarousel-skin-thumbs .jcarousel-prev-horizontal {
+    left: inherit;
+    right: 0;
+    background: url('images/next-horizontal.png') top no-repeat;
+}
+.jcarousel-skin-thumbs .jcarousel-next-horizontal {
+    right: inherit;
+    left: 0;
+    background: url('images/prev-horizontal.png') top no-repeat;    
+}

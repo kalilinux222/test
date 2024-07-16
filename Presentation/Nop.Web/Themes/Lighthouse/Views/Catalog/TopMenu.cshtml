@@ -1,0 +1,76 @@
+﻿@model TopMenuModel
+@using Nop.Web.Models.Catalog;
+@{
+    var isRtl = this.ShouldUseRtlTheme();
+
+    var theme = Nop.Core.Infrastructure.EngineContext.Current.Resolve<Nop.Web.Framework.Themes.IThemeContext>().WorkingThemeName;
+}
+
+<input type="hidden" value="@isRtl.ToString().ToLowerInvariant()" id="isRtlEnabled" />
+
+@helper RenderCategoryLine(CategorySimpleModel category)
+{
+    <li>
+        @{
+            if (category.SubCategories.Count > 0)
+            {
+                <a href="@Url.RouteUrl("Category", new { SeName = category.SeName })">@category.Name</a>
+                <div class="plus-button"></div>
+                <div class="sublist-wrap">
+                    <ul class="sublist">
+                        @foreach (var subCategory in category.SubCategories)
+                        {
+                            @RenderCategoryLine(subCategory)
+                        }
+                    </ul>
+                </div>
+            }
+            else
+            {
+                if (category.NumberOfProducts.HasValue)
+                {
+                    <a href="@Url.RouteUrl("Category", new { SeName = category.SeName })">@category.Name @T("Categories.TotalProducts", category.NumberOfProducts.Value)</a>
+                }
+                else
+                {
+                    <a href="@Url.RouteUrl("Category", new { SeName = category.SeName })">@category.Name</a>
+                }
+            }
+        }
+    </li>
+}
+<div class="menu-title">
+    <span>@T(String.Format("SevenSpikes.Themes.{0}.Common.MenuTitle", theme))</span>
+</div>
+<ul class="top-menu">
+    @Html.Widget("header_menu_before")
+    @if (Model.Categories.Count > 0)
+    {
+        foreach (var category in Model.Categories)
+        {
+            @RenderCategoryLine(category)
+        }
+    }
+    else
+    {
+        //no categories to display?
+        //in this case let's diplay some default menu items
+        <li><a href="@Url.RouteUrl("HomePage")">@T("HomePage")</a></li>
+        if (Model.NewProductsEnabled)
+        {
+            <li><a href="@Url.RouteUrl("NewProducts")">@T("Products.NewProducts")</a></li>
+        }
+        <li><a href="@Url.RouteUrl("ProductSearch")">@T("Search")</a> </li>
+        <li><a href="@Url.RouteUrl("CustomerInfo")">@T("Account.MyAccount")</a></li>
+        if (Model.BlogEnabled)
+        {
+            <li><a href="@Url.RouteUrl("Blog")">@T("Blog")</a></li>
+        }
+        if (Model.ForumEnabled)
+        {
+            <li><a href="@Url.RouteUrl("Boards")">@T("Forum.Forums")</a></li>
+        }
+        <li><a href="@Url.RouteUrl("ContactUs")">@T("ContactUs")</a></li>
+    }
+    @Html.Widget("header_menu_after")
+</ul>

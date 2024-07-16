@@ -1,0 +1,78 @@
+
+.jcarousel-skin-thumbs .jcarousel-direction-rtl {
+    direction: rtl;
+}
+
+.jcarousel-skin-thumbs .jcarousel-clip {
+    overflow: hidden;
+}
+
+.jcarousel-skin-thumbs .jcarousel-container-horizontal .jcarousel-list {
+    height: auto !important;
+}
+
+.jcarousel-skin-thumbs .jcarousel-item {
+    width: 33.33333%;
+}
+
+.gallery .picture-thumbs .jcarousel-item a {
+    width: 100%;
+    margin: 0 !important;
+}
+
+
+@media all and (min-width: 481px) {
+    .jcarousel-skin-thumbs .jcarousel-item {
+        width: 25%;
+    }
+}
+
+@media all and (min-width: 1025px) {
+
+    .two-columns .sevenspikes-cloudzoom-gallery .picture-thumbs li {
+        height: 113px;
+    }
+
+    .sevenspikes-cloudzoom-gallery .picture-thumbs {
+        margin: 0 0 20px 3px;
+        overflow: visible;
+    }
+
+    .jcarousel-skin-thumbs .jcarousel-item {
+        float: none !important;
+        width: auto;
+    }
+
+    .jcarousel-skin-thumbs .jcarousel-prev-vertical,
+    .jcarousel-skin-thumbs .jcarousel-next-vertical {
+        position: absolute;
+        left: 50%;
+        width: 33px;
+        height: 15px;
+        margin-left: -16px;
+        background-position: center;
+        background-repeat: no-repeat;
+        cursor: pointer;
+    }
+
+    .jcarousel-skin-thumbs .jcarousel-prev-vertical {
+        top: -30px;
+        background-image: url('images/prev-vertical.png');
+    }
+
+    .jcarousel-skin-thumbs .jcarousel-next-vertical {
+        bottom: -30px;
+        background-image: url('images/next-vertical.png');
+    }
+}
+
+@media all and (min-width: 1201px) {
+
+    .two-columns .sevenspikes-cloudzoom-gallery .picture-thumbs li {
+        height: 110px;
+    }
+
+    .sevenspikes-cloudzoom-gallery .picture-thumbs li {
+        height: 150px;
+    }
+}

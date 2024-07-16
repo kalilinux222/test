@@ -1,0 +1,278 @@
+﻿@model FoxNetSoft.Plugin.Misc.PriceImportExport.Models.PriceImportExportSettingsModel
+@using System.Web.Mvc.Html
+@using FoxNetSoft.Plugin.Misc.PriceImportExport.Models
+@using Nop.Web.Framework
+@if (!Model.IsRunning)
+{
+    <div>
+    @using (Html.BeginForm("ImportPriceFromFile", "PriceImportExportSettings", FormMethod.Post, new { id = "import-form",enctype = "multipart/form-data" }))
+    {
+    @Html.AntiForgeryToken()
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#@Html.FieldIdFor(model => model.AdvancedUpdating)").click(toggleAdvancedUpdating);
+            $("#@Html.FieldIdFor(model => model.ImportUsePercentage)").click(toggleImportUsePercentage);
+
+            toggleAdvancedUpdating()
+            toggleImportUsePercentage();
+
+            $("#@Html.FieldIdFor(m => m.ImportToPriceKey)").change(function () {
+                var selectedItem = $(this).val();
+                if (selectedItem == "@(FoxNetSoft.Plugin.Misc.PriceImportExport.Core.PriceKey.TiersPrice)") {
+                    $('#pnlImportToTierQuantity').show();
+                    $('#pnlImportToTierStore').show();
+                    $('#pnlImportToTierCustomerRole').show();
+                }
+                else {
+                    $('#pnlImportToTierQuantity').hide();
+                    $('#pnlImportToTierStore').hide();
+                    $('#pnlImportToTierCustomerRole').hide();
+                }
+            }).change();
+            $("#@Html.FieldIdFor(m => m.ImportFromPriceKey)").change(function () {
+                var selectedItem = $(this).val();
+                if (selectedItem == "@(FoxNetSoft.Plugin.Misc.PriceImportExport.Core.PriceKey.TiersPrice)") {
+                    $('#pnlImportFromTierQuantity').show();
+                }
+                else {
+                    $('#pnlImportFromTierQuantity').hide();
+                }
+            }).change();
+        });
+            
+        function toggleAdvancedUpdating() {
+            if ($('#@Html.FieldIdFor(model => model.AdvancedUpdating)').is(':checked')) {
+                $('#pnlUpdatePrice').hide();
+                $('#pnlUpdateProductCost').hide();
+                $('#pnlUpdateOldPrice').hide();
+                $('#pnlUpdateSpecialPrice').hide();
+                $('#pnlUpdateTiersPrice').hide();
+                $('#pnlAdvancedUpdatingSettings').show();
+            } else {
+                $('#pnlUpdatePrice').show();
+                $('#pnlUpdateProductCost').show();
+                $('#pnlUpdateOldPrice').show();
+                $('#pnlUpdateSpecialPrice').show();
+                $('#pnlUpdateTiersPrice').show();
+                $('#pnlAdvancedUpdatingSettings').hide();
+            }
+        }
+        function toggleImportUsePercentage() {
+            if ($('#@Html.FieldIdFor(model => model.ImportUsePercentage)').is(':checked')) {
+                $('#pnlImportPricePercentage').show();
+                $('#pnlImportRoundingXNumberOfDigits').show();
+                $('#pnlImportAddInThe99Cents').show();
+            } else {
+                $('#pnlImportPricePercentage').hide();
+                $('#pnlImportRoundingXNumberOfDigits').hide();
+                $('#pnlImportAddInThe99Cents').hide();
+            }
+        }
+    </script>
+    <table class="adminContent">
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.ImportProductKey):
+            </td>
+            <td class="adminData">
+                @Html.DropDownListFor(model => model.ImportProductKey, Model.AvailableImportProductKeys)
+                @Html.ValidationMessageFor(model => model.ImportProductKey)
+            </td>
+        </tr>   
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.AdvancedUpdating):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.AdvancedUpdating)
+                @Html.ValidationMessageFor(model => model.AdvancedUpdating)
+            </td>
+        </tr>
+        <tr class="adminSeparator">
+            <td colspan="2">
+                <hr />
+            </td>
+        </tr>
+        <tr id="pnlUpdatePrice">
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.UpdatePrice):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.UpdatePrice)
+                @Html.ValidationMessageFor(model => model.UpdatePrice)
+            </td>
+        </tr>  
+        <tr id="pnlUpdateProductCost">
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.UpdateProductCost):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.UpdateProductCost)
+                @Html.ValidationMessageFor(model => model.UpdateProductCost)
+            </td>
+        </tr>
+        <tr id="pnlUpdateOldPrice">
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.UpdateOldPrice):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.UpdateOldPrice)
+                @Html.ValidationMessageFor(model => model.UpdateOldPrice)
+            </td>
+        </tr>
+        <tr id="pnlUpdateSpecialPrice">
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.UpdateSpecialPrice):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.UpdateSpecialPrice)
+                @Html.ValidationMessageFor(model => model.UpdateSpecialPrice)
+            </td>
+        </tr>
+        <tr id="pnlUpdateTiersPrice">
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.UpdateTiersPrice):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.UpdateTiersPrice)
+                @Html.ValidationMessageFor(model => model.UpdateTiersPrice)
+            </td>
+        </tr>
+        <tr id="pnlAdvancedUpdatingSettings">
+            <td colspan="2">
+                <table class="adminContent">
+                   <tr>
+                        <td class="adminTitle">
+                            @Html.NopLabelFor(model => model.ImportToPriceKey):
+                        </td>
+                        <td class="adminData">
+                            @Html.DropDownList("ImportToPriceKey", Model.AvailableToPriceKeys)
+                        </td>
+                    </tr>
+                   <tr id="pnlImportToTierQuantity">
+                        <td class="adminTitle">
+                            @Html.NopLabelFor(model => model.ImportToTierQuantity):
+                        </td>
+                        <td class="adminData">
+                            @Html.EditorFor(model => model.ImportToTierQuantity)
+                            @Html.ValidationMessageFor(model => model.ImportToTierQuantity)
+                        </td>
+                    </tr>
+                   <tr id="pnlImportToTierStore">
+                        <td class="adminTitle">
+                            @Html.NopLabelFor(model => model.ImportToTierStoreId):
+                        </td>
+                        <td class="adminData">
+                           @Html.DropDownList("ImportToTierStoreId", Model.AvailableImToTierStores)
+                           @Html.ValidationMessageFor(model => model.ImportToTierStoreId)
+                        </td>
+                    </tr>
+                   <tr id="pnlImportToTierCustomerRole">
+                        <td class="adminTitle">
+                            @Html.NopLabelFor(model => model.ImportToTierCustomerRoleId):
+                        </td>
+                        <td class="adminData">
+                           @Html.DropDownList("ImportToTierCustomerRoleId", Model.AvailableImToTierCustomerRoles)
+                           @Html.ValidationMessageFor(model => model.ImportToTierCustomerRoleId)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="adminTitle">
+                            @Html.NopLabelFor(model => model.ImportFromPriceKey):
+                        </td>
+                        <td class="adminData">
+                            @Html.DropDownList("ImportFromPriceKey", Model.AvailableFromPriceKeys)
+                        </td>
+                    </tr>
+                   <tr id="pnlImportFromTierQuantity">
+                        <td class="adminTitle">
+                            @Html.NopLabelFor(model => model.ImportFromTierQuantity):
+                        </td>
+                        <td class="adminData">
+                            @Html.EditorFor(model => model.ImportFromTierQuantity)
+                            @Html.ValidationMessageFor(model => model.ImportFromTierQuantity)
+                        </td>
+                    </tr>
+                    <tr class="adminSeparator">
+                        <td colspan="2">
+                            <hr />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="adminTitle">
+                            @Html.NopLabelFor(model => model.ImportUsePercentage):
+                        </td>
+                        <td class="adminData">
+                            @Html.EditorFor(model => model.ImportUsePercentage)
+                            @Html.ValidationMessageFor(model => model.ImportUsePercentage)
+                        </td>
+                    </tr>
+                    <tr id="pnlImportPricePercentage">
+                        <td class="adminTitle">
+                            @Html.NopLabelFor(model => model.ImportPricePercentage):
+                        </td>
+                        <td class="adminData">
+                            @Html.EditorFor(model => model.ImportPricePercentage)
+                            @Html.ValidationMessageFor(model => model.ImportPricePercentage)
+                        </td>
+                    </tr>
+                    <tr id="pnlImportRoundingXNumberOfDigits">
+                        <td class="adminTitle">
+                            @Html.NopLabelFor(model => model.ImportRoundingXNumberOfDigits):
+                        </td>
+                        <td class="adminData">
+                            @Html.EditorFor(model => model.ImportRoundingXNumberOfDigits)
+                            @Html.ValidationMessageFor(model => model.ImportRoundingXNumberOfDigits)
+                        </td>
+                    </tr>
+                    <tr id="pnlImportAddInThe99Cents">
+                        <td class="adminTitle">
+                            @Html.NopLabelFor(model => model.ImportAddInThe99Cents):
+                        </td>
+                        <td class="adminData">
+                            @Html.EditorFor(model => model.ImportAddInThe99Cents)
+                            @Html.ValidationMessageFor(model => model.ImportAddInThe99Cents)
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr class="adminSeparator">
+            <td colspan="2">
+                <hr />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <table style="text-align: left;">
+                    <tr>
+                        <td>
+                            @T("Admin.FoxNetSoft.Plugin.Misc.PriceImportExport.Import.CSVFile"):
+                        </td>
+                        <td>
+                            <input type="file" id="importcsvfile" name="importcsvfile" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <strong>@T("Admin.Configuration.Languages.XmlFile.Note1")</strong>
+                            <br />
+                            <strong>@T("Admin.Configuration.Languages.XmlFile.Note2")</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <input name="importpricelist" id="importpricelist" type="submit" class="k-button" value="@T("Admin.FoxNetSoft.Plugin.Misc.PriceImportExport.Import.Button")" />
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    }
+    </div>
+}
+else
+{
+    @Model.MessageThead
+}

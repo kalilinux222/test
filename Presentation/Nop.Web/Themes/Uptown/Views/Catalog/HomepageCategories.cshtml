@@ -1,0 +1,74 @@
+﻿@using Nop.Web.Models.Catalog;
+@using Nop.Core;
+@using Nop.Core.Infrastructure;
+@using Nop.Services.Configuration;
+
+@model IList<CategoryModel>
+
+@{
+    var storeId = EngineContext.Current.Resolve<IStoreContext>().CurrentStore.Id;
+
+    var settingService = EngineContext.Current.Resolve<ISettingService>();
+    var lazyLoadImages = settingService.GetSettingByKey("UptownThemeSettings.LazyLoadImages", false, storeId, true);
+}
+
+@if (Model.Count > 0)
+{
+    var additionalCssClass = string.Empty;
+    switch (Model.Count)
+    {
+        case 1:
+            additionalCssClass = "one";
+            break;
+        case 2:
+            additionalCssClass = "two";
+            break;
+        case 3:
+            additionalCssClass = "three";
+            break;
+        case 4:
+            additionalCssClass = "four";
+            break;
+        case 5:
+            additionalCssClass = "five";
+            break;
+        default:
+            additionalCssClass = String.Empty;
+            break;
+    }
+
+    <div class="category-grid home-page-category-grid @additionalCssClass">
+        <div class="item-grid">
+            @foreach (var item in Model)
+            {
+                <div class="item-box">
+                    <div class="category-item">
+                        <div class="picture">
+                            <a href="@Url.RouteUrl("Category", new {SeName = item.SeName})" title="@item.PictureModel.Title">
+                                @if (lazyLoadImages)
+                                {
+                                    <img data-lazyloadsrc="@item.PictureModel.ImageUrl"
+                                         src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                                         alt="@item.PictureModel.AlternateText"
+                                         title="@item.PictureModel.Title" />
+                                }
+                                else
+                                {
+                                    <img alt="@item.PictureModel.AlternateText" src="@item.PictureModel.ImageUrl" title="@item.PictureModel.Title" />
+                                }
+                            </a>
+                        </div>
+                        <h2 class="title">
+                            <a href="@Url.RouteUrl("Category", new { SeName = item.SeName })" title="@item.PictureModel.Title">
+                                <span class="category-item-text-wrapper">
+                                    <span class="category-item-name">@item.Name</span>
+                                    <span class="category-item-count">@Html.Widget("uptown_category_box_products_count", item.Id) @T("SevenSpikes.Themes.Uptown.Common.Products.Count.Title")</span>
+                                </span>
+                            </a>
+                        </h2>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}

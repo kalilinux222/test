@@ -1,0 +1,8 @@
+﻿Group: Misc
+FriendlyName: FoxNetSoft Price (Import, Export, Mass Update)
+SystemName: FoxNetSoft.Plugin.Misc.PriceImportExport
+Version: 1.06
+SupportedVersions: 3.70
+Author: FoxNetSoft
+DisplayOrder: 5
+FileName: FoxNetSoft.Plugin.Misc.PriceImportExport.dll

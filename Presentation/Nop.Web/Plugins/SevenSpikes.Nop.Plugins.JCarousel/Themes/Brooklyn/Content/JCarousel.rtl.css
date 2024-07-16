@@ -1,0 +1,121 @@
+*{
+	direction: rtl;
+}
+.products-carousel .item-info,
+.products-carousel .item-info .jcarousel-product-title,
+.products-carousel .item-info .short-description {
+	text-align: right;
+}
+.nop-jcarousel .jcarousel-prev-horizontal{
+	right: 0;
+	left: auto;
+}
+.nop-jcarousel .jcarousel-next-horizontal{
+	left: 0;
+	right: auto;
+}
+.nop-jcarousel .jcarousel-prev-vertical{
+	right: 50%;
+	left: auto;
+	margin-right: -50px;
+	margin-left: 0;
+}
+.nop-jcarousel .jcarousel-next-vertical{
+	left: 50%;
+	right: auto;
+	margin-left: -50px;
+	margin-right: 0;
+}
+.nop-jcarousel .jcarousel-next-horizontal {
+    background: rgba(0, 0, 0, 0) url("images/prev-product-mobile.png") no-repeat scroll center center;
+}
+.nop-jcarousel .jcarousel-prev-horizontal {
+    background: rgba(0, 0, 0, 0) url("images/next-product-mobile.png") no-repeat scroll center center;
+    left: 0;
+}
+
+@media all and (min-width: 769px) {
+    .products-carousel .jcarousel-prev-horizontal,
+    .categories-carousel .jcarousel-prev-horizontal {
+        right: 0;
+        left: auto;
+        margin-right: 0 !important;
+    }
+
+    .products-carousel .jcarousel-next-horizontal,
+    .categories-carousel .jcarousel-next-horizontal {
+        left: 0;
+        right: auto;
+        margin-left: 0 !important;
+    }
+}
+
+@media all and (min-width: 769px) and (max-width: 1000px) {
+
+.manufacturers-carousel .jcarousel-prev-horizontal {
+	left: auto;
+    right: 0;
+}
+.manufacturers-carousel .jcarousel-next-horizontal {
+	right: auto;
+    left: 0;
+}
+
+}
+
+@media all and (min-width: 1001px) {
+
+.manufacturers-carousel .jcarousel-prev-horizontal {
+	right: -32px;
+    left: 0;
+}
+.manufacturers-carousel .jcarousel-next-horizontal {
+	right: auto;
+    left: -32px;
+}  
+ 
+.nop-jcarousel .jcarousel-prev-horizontal {
+    left: 0;
+    right: auto;
+    margin-left: 0;
+    margin-right: -36px;
+    background: url('images/gradient-left.png') repeat-y left center;
+}
+.nop-jcarousel .jcarousel-next-horizontal {
+    left: auto;
+    right: 0;
+    margin-left: -36px;
+    margin-right: 0;
+    background: url('images/gradient-right.png') repeat-y right center;
+}
+.side-2 .nop-jcarousel .jcarousel-prev-horizontal {
+    right: 68px;
+    left: auto;
+}
+.side-2 .nop-jcarousel .jcarousel-next-horizontal {
+    left: 68px;
+    right: auto;
+}
+}
+
+
+
+@media all and (min-width: 1281px) {
+
+
+.nop-jcarousel .jcarousel-next-horizontal {
+    right: auto;
+    left: 0;
+    background: url('images/gradient-left.png');
+    background-position: left top;
+    background-repeat: repeat-y;
+}
+.nop-jcarousel .jcarousel-prev-horizontal {
+    background: rgba(0, 0, 0, 0) url("images/gradient-left.png") repeat-y scroll left top;
+}
+.nop-jcarousel .jcarousel-next-horizontal {
+    background: rgba(0, 0, 0, 0) url("images/gradient-right.png") repeat-y scroll right top;
+    right: 0;
+}
+
+}

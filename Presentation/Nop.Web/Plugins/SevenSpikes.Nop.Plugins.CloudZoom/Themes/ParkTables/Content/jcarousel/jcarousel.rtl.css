@@ -1,0 +1,14 @@
+
+@media all and (min-width: 1001px) {
+	
+.jcarousel-skin-thumbs .jcarousel-prev-horizontal {
+	right: -3px;
+	left: auto;
+	background-image: url('images/next-horizontal.png');
+}
+.jcarousel-skin-thumbs .jcarousel-next-horizontal {
+	left: -3px;
+	right: auto;
+	background-image: url('images/prev-horizontal.png');
+}
+}

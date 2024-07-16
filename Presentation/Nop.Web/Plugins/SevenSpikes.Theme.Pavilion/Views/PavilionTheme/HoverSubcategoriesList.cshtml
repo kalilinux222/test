@@ -1,0 +1,24 @@
+﻿@using Nop.Web.Models.Catalog
+
+@model CategorySimpleModel
+
+<div class="sub-category-details">
+    <h2 class="inner-title">
+        <a href="@Url.RouteUrl("Category", new {SeName = Model.SeName})" title="@Model.Name">@Model.Name</a>
+    </h2>
+    <ul class="sub-category-sublist">
+        @foreach (var item in Model.SubCategories)
+        {
+            <li>
+                @if (item.NumberOfProducts.HasValue)
+                {
+                    <a href="@Url.RouteUrl("Category", new {SeName = item.SeName})" title="@item.Name">@item.Name @T("Categories.TotalProducts", item.NumberOfProducts.Value)</a>
+                }
+                else
+                {
+                    <a href="@Url.RouteUrl("Category", new {SeName = item.SeName})" title="@item.Name">@item.Name</a>
+                }
+            </li>
+        }
+    </ul>
+</div>

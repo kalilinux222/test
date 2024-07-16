@@ -1,0 +1,51 @@
+﻿
+.quick-view-button a {
+	background: url('images/icon-qv-rtl.png') no-repeat right center;
+	padding: 20px 30px 20px 10px;
+}
+.product-list .quick-view-button a {
+	padding: 15px 30px 15px 10px;
+}
+.quickView .k-window-titlebar.k-header .k-window-actions {
+	right: auto;
+	left: 14px;
+}
+.quickViewWindow .product-name {
+	padding: 0 0 0 25px;
+	text-align: right;
+}
+.quickViewWindow .product-content {
+	text-align: right;
+}
+.quickViewWindow .links-panel a {
+	background: none !important;
+	padding: 0 !important;
+}
+.quickViewWindow .overview .left,
+.quickViewWindow .overview .right,
+.quickViewWindow .variant-grid-info .compare-products {
+	text-align: right;
+}
+.quickViewWindow .overview .prices {
+	text-align: right;
+}
+.quickViewWindow .overview .add-to-cart {
+	float: right;
+	margin-right: 0;
+	margin-left: -1px;
+}
+.quickViewWindow .overview .overview-buttons {
+	float: right;
+}
+.quickViewWindow .overview .short-description {
+	text-align: right;
+}
+.quickViewWindow .overview .color-squares {
+	text-align: right;
+}
+.quickViewWindow .overview .giftcard label {
+	text-align: right;
+}
+.quickViewWindow .variant-grid-info .compare-products {
+	float: left !important;
+}

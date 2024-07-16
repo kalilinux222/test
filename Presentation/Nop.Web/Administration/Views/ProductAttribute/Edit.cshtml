@@ -1,0 +1,39 @@
+﻿@model ProductAttributeModel
+@{  
+    //page title
+    ViewBag.Title = T("Admin.Catalog.Attributes.ProductAttributes.EditAttributeDetails").Text;
+}
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "productattribute-form" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="section-header">
+        <div class="title">
+            <img src="@Url.Content("~/Administration/Content/images/ico-catalog.png")" alt="" />
+            @T("Admin.Catalog.Attributes.ProductAttributes.EditAttributeDetails") - @Model.Name @Html.ActionLink("(" + T("Admin.Catalog.Attributes.ProductAttributes.BackToList") + ")", "List")
+        </div>
+        <div class="options">
+            <input type="submit" name="save" class="k-button" value="@T("Admin.Common.Save")" />
+            <input type="submit" name="save-continue" class="k-button" value="@T("Admin.Common.SaveContinue")" />
+            @*y.chan - custom*@
+            <span id="productattribute-apply" class="k-button">@T("admin.productattributepredefinedvalues.saveapply")</span>
+            @*y.chan - custom end*@
+           <span id="productattribute-delete" class="k-button">@T("Admin.Common.Delete")</span>
+        </div>
+    </div>
+    @Html.Partial("_CreateOrUpdate", Model)
+}
+@Html.DeleteConfirmation("productattribute-delete")
+@*y.chan - custom*@
+@using (Html.BeginForm("Apply", "ProductAttribute", new { id = Model.Id }, FormMethod.Post, new { id = "applypredefinedvalues-form" }))
+{
+    @Html.AntiForgeryToken()
+    <input type="submit" name="apply" class="k-button" value="Apply" style="display:none;" />
+}
+<script>
+    $(document).ready(function () {
+        $('#productattribute-apply').click(function (e) {
+            $('#applypredefinedvalues-form').submit();
+        });
+    });
+</script>
+@*y.chan - custom end*@

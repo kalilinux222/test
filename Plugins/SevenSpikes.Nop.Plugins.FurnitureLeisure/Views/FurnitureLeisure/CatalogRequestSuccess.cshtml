@@ -1,0 +1,31 @@
+﻿@using SevenSpikes.Nop.Plugins.FurnitureLeisure.Models
+
+@model CatalogRequestSucessModel
+
+@{
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+}
+
+@if (Model.RegisteredAccount)
+{
+    <span class="catalog-request-succsess-message">
+        @Model.NotificationText
+    </span>
+}
+else
+{
+    <span class="catalog-request-succsess-message">
+        @T("SevenSpikes.Plugins.FurnitureLeisure.CatalogRequest.Success")
+    </span>
+}
+
+
+<script>
+    $(document).ready(function () {
+
+        setTimeout(function () {
+
+            window.location.href = "/";
+        }, 5000);
+    });
+</script>

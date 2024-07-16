@@ -1,0 +1,70 @@
+﻿@using SevenSpikes.Nop.Framework.MVCExtensions
+@using SevenSpikes.Nop.Plugins.UltimateCarousel.Models
+@using SevenSpikes.Nop.Plugins.UltimateCarousel
+@using Nop.Web.Framework
+@model UltimateCarouselSettingsModel
+@{
+    Html.AppendCssFileParts("~/Plugins/SevenSpikes.Core/Styles/adminstyles.css");
+    Html.AddScriptParts("~/Plugins/SevenSpikes.Core/Scripts/animatedcollapse.js");
+    Html.AddScriptParts("~/Plugins/SevenSpikes.Core/Scripts/adminAnimatedCollapse.js");
+}
+
+<script type="text/javascript">
+    animatedcollapse.addDiv('adminGroupPanel1', 'fade=1, speed=400');
+
+    animatedcollapse.init();
+</script>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="section-header">
+        <div class="title">
+            <img src="@Url.Content("~/Administration/Content/images/ico-configuration.png")" alt="" />
+            @T("SevenSpikes.UltimateCarousel.Admin.Settings.Common")
+        </div>
+        <div class="options">
+            <button type="submit" name="save" value="save" class="k-button">@T("Admin.Common.Save")</button>
+        </div>
+    </div>  
+    @Html.TrialMessage(Model.IsTrialVersion, Constants.PluginName, Constants.PluginUrlInStore)
+    @Html.Action("StoreScopeConfiguration", "Setting")
+    <div class="adminGroup">
+        <div class="controlTitle">
+            <a class="toggleControl">@T("SevenSpikes.UltimateCarousel.Admin.Settings.Common.GeneralSettings")</a>
+        </div>
+        <div id="adminGroupPanel1" class="adminGroupPanel">
+            <table class="adminContent">
+                <tr>
+                    <td class="adminTitle">
+                        @Html.NopLabelFor(model => model.EnabledAsWidget):
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.EnabledAsWidget)
+                        @Html.ValidationMessageFor(model => model.EnabledAsWidget)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminHint" colspan="2">
+                        <p>@T("SevenSpikes.UltimateCarousel.Admin.Settings.EnabledAsWidget.Hint")</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.OverrideStoreCheckboxFor(model => model.Enabled_OverrideForStore, model => model.Enabled, Model.ActiveStoreScopeConfiguration)
+                        @Html.NopLabelFor(model => model.Enabled):
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.Enabled)
+                        @Html.ValidationMessageFor(model => model.Enabled)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminHint" colspan="2">
+                        <p>@T("SevenSpikes.UltimateCarousel.Admin.Settings.Enabled.Hint")</p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+}

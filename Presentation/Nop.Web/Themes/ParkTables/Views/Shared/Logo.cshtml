@@ -1,0 +1,30 @@
+﻿@using Nop.Core
+@using Nop.Core.Infrastructure
+@using Nop.Web.Framework.Themes
+@using Nop.Services.Localization
+@{
+    //logo path
+    var currentThemeName = EngineContext.Current.Resolve<IThemeContext>().WorkingThemeName;
+    var logoPath = "~/Themes/" + currentThemeName + "/Content/img/logo.png";
+
+    var themeLogo = @Html.Widget("brooklyn_theme_logo");
+}
+<div class="header-logo">
+    @*
+        <div class="wrapper">
+            <h1><a href="@Url.RouteUrl("HomePage")" class="logo">@T("SevenSpikes.Themes.Brooklyn.Store.Name")</a></h1>
+            <h2 class="slogan"><a href="@Url.RouteUrl("HomePage")">@T("SevenSpikes.Themes.Brooklyn.Store.Slogan")</a></h2>
+        </div>
+    *@
+    <a href="@Url.RouteUrl("HomePage")" class="logo">
+        @if (!MvcHtmlString.IsNullOrEmpty(themeLogo))
+        {
+            @themeLogo
+        }
+        else
+        {
+            var storeName = EngineContext.Current.Resolve<IStoreContext>().CurrentStore.GetLocalized(x => x.Name);
+            <img title="" alt="@storeName" src="@Url.Content(logoPath)">
+        }
+    </a>
+</div>

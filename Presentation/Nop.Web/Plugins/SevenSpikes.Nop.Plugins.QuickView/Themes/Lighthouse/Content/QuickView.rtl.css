@@ -1,0 +1,18 @@
+﻿.quick-view-button {
+    right: 12px;
+    left: auto;
+}
+
+/*=====================================================
+    
+    TABLETS LANDSCAPE & NETBOOKS
+
+=====================================================*/
+
+@media all and (max-width: 980px) and (min-width: 769px) {
+    
+    .quickViewWindow .product-grid .item-box {
+        margin: 0 2% 2% 0;
+    }
+
+}

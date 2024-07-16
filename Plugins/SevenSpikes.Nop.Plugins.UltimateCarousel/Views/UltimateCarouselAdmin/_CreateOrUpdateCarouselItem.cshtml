@@ -1,0 +1,120 @@
+﻿@using Nop.Web.Framework;
+@using SevenSpikes.Nop.Plugins.UltimateCarousel.Models
+
+@model CarouselItemModel
+
+@Html.ValidationSummary(false)
+@Html.HiddenFor(model => model.Id)
+@Html.HiddenFor(model => model.CarouselId)
+<table class="adminContent">
+    <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.Visible):
+        </td>
+        <td class="adminData">
+            @Html.CheckBoxFor(model => model.Visible)
+        </td>
+    </tr>
+</table>
+
+@(Html.LocalizedEditor<CarouselItemModel, CarouselItemLocalizedModel>("carousel-item-localized",
+@<table class="adminContent">
+    <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.Locales[item].Title):
+        </td>
+        <td class="adminData">
+            @Html.EditorFor(model => model.Locales[item].Title)
+            @Html.ValidationMessageFor(model => model.Locales[item].Title)
+        </td>
+    </tr>
+    <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.Locales[item].Description):
+        </td>
+        <td class="adminData">
+            @Html.EditorFor(model => model.Locales[item].Description, "RichEditor")
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            @Html.HiddenFor(model => model.Locales[item].LanguageId)
+        </td>
+    </tr>
+</table>
+,
+@<table class="adminContent">
+     <tr>
+         <td class="adminTitle">
+            @Html.NopLabelFor(model => model.Title):
+         </td>
+         <td class="adminData">
+            @Html.EditorFor(model => model.Title)
+            @Html.ValidationMessageFor(model => model.Title)
+         </td>
+     </tr>
+     <tr>
+         <td class="adminTitle">
+             @Html.NopLabelFor(model => model.Description):
+         </td>
+         <td class="adminData">
+             @Html.EditorFor(model => model.Description, "RichEditor")
+         </td>
+     </tr>
+</table>
+))
+    
+<table class="adminContent">
+    <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.Url):
+        </td>
+        <td class="adminData">
+            @Html.EditorFor(model => model.Url)
+        </td>
+    </tr>
+    <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.OpenInNewWindow):
+        </td>
+        <td class="adminData">
+            @Html.EditorFor(model => model.OpenInNewWindow)
+        </td>
+    </tr>
+    <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.IsPictureVisible):
+        </td>
+        <td class="adminData">
+            @Html.EditorFor(model => model.IsPictureVisible)
+        </td>
+    </tr>
+    <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.PictureId)
+        </td>
+        <td class="adminData">
+            @Html.EditorFor(model => model.PictureId)
+            @Html.ValidationMessageFor(model => model.PictureId)
+        </td>
+    </tr>
+    <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.DisplayOrder):
+        </td>
+        <td class="adminData">
+            @Html.EditorFor(model => model.DisplayOrder)
+        </td>
+    </tr>
+</table>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#btnRefreshItems').on("click", function (e) {
+            //refresh grid
+            var optionsGrid = $("#carousel-items-grid");
+            optionsGrid.data('kendoGrid').dataSource.read();
+            e.preventDefault(); //don't reload the page
+        });
+    });
+</script>

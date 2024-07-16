@@ -1,0 +1,103 @@
+﻿04/22/2016	y. chan		Use product attribute TextPrompt instead of the Name
+						- added \Libraries\Nop.Services\Catalog\_ISC_Custom\ProductAttributeFormatter.cs and \Libraries\Nop.Services\Catalog\_ISC_Custom\iProductAttributeFormatter.cs to override
+						FormatAttributes() methods
+						- added \Presentation\Nop.Web\Controllers\_ISC_Custom\ShoppingCartController.cs to override PrepareShoppingCartModel(), PrepareWishlistModel(), and PrepareMiniShoppingCartModel()
+						methods
+						- commented out PrepareShoppingCartModel(), PrepareWishlistModel(), and PrepareMiniShoppingCartModel() methods in the base class \Presentation\Nop.Web\Controllers\ShoppingCartController.cs
+04/22/2016	y. chan		Fix for the Ajax plugins - added following entry in the web.config of the Nop.Web project <add key="aspnet:MaxJsonDeserializerMembers" value="150000" />
+05/09/2016	y. chan		Accepted Payment Types - remove PayPal/ add Discover card
+						- \Nop.Web\Themes\Pavilion\Content\img\payment-sprite.png - replaced 
+						- \Nop.Web\Themes\Pavilion\Content\css\styles.css - modified
+						- \Nop.Web\Themes\Pavilion\Views\Common\Footer.cshtml - modified
+05/09/2016	y. chan		Added Phone and business hours to the header
+						- \Nop.Web\Themes\Pavilion\Content\img\Phone-and-Hours.png - new image added
+						- \Nop.Web\Themes\Pavilion\Content\css\1000.css - modified to change the height of the header (removed some padding)
+						- \Nop.Web\Themes\Pavilion\Content\css\styles.css - modified
+05/09/2016	y. chan		Move Homepage topic to the area below the Slider in the 2 column layout (right pane) and add another homepage topic just above the footer
+						- \Nop.Web\Themes\Pavilion\Views\Shared\Header.cshtml - modified
+						- \Nop.Web\Themes\Pavilion\Content\css\styles.css - modified
+						- \Nop.Web\Themes\Pavilion\Views\Home\Index.cshtml - modified
+05/09/2016	y. chan		Fix Smart Product Collection plugin css bug (sub-categories list is truncated when hower over the category image on the left)
+						- \Nop.Web\Plugins\SevenSpikes.Nop.Plugins.SmartProductCollections\Themes\Pavilion\Content\SmartProductCollections.css
+05/09/2016	y. chan		Add category Description2 text at the very bottom of the Category details page
+						- \Nop.Web\Themes\Pavilion\Views\Catalog\CategoryTemplate.ProductsInGridOrLines.cshtml - modified
+05/09/2016	y. chan		Hover over the product box replace product name with short description in the tooltip
+						- \Nop.Web\Controllers\ProductController.cs - modified
+						- \Nop.Web\Controllers\ShoppingCartController.cs - modified
+						- \Nop.Web\Extensions\ControllerExtensions.cs - modified
+05/09/2016	y. chan		Shopping Cart - move the Estimate Shipping, Discount Code, Gift Cards to the right pane just above the Order Totals section
+						- \Nop.Web\Themes\Pavilion\Content\css\styles.css - modified
+						- \Nop.Web\Themes\Pavilion\Views\ShoppingCart\OrderSummary.cshtml - modified
+						- \Nop.Web\Themes\Pavilion\Content\css\1000.css - modified
+						- \Nop.Web\Themes\Pavilion\Content\css\768.css - modified
+						- \Nop.Web\Themes\Pavilion\Content\css\1280.css - modified
+05/10/2016	y. chan		Product Details page - per Chris K design
+						- \Nop.Web\Themes\Pavilion\Views\Product\_ProductReviewOverview.cshtml - added
+						- \Nop.Web\Themes\Pavilion\Views\Product\ProductTemplate.Simple.cshtml - modified
+						- \Nop.Web\Themes\Pavilion\Content\css\768.css - modified
+						- \Nop.Web\Themes\Pavilion\Content\css\styles.css - modified
+						- \Nop.Web\Themes\Pavilion\Content\css\768.rtl.css - modified
+						- \Nop.Web\Themes\Pavilion\Content\img\hr_green.jpg - added
+						- \Nop.Web\Themes\Pavilion\Views\Product\_ProductAttributes.cshtml - added
+						- \Nop.Web\Content\Images\swatch.png - added
+05/11/2016	y. chan		Copy Product Attribute values to other products with the same attribute
+						- \Libraries\Nop.Services\Catalog\_ISC_Custom\CopyProductAttributeService.cs - added
+						- \Libraries\Nop.Services\Catalog\_ISC_Custom\ICopyProductAttributeService.cs - added
+						- \Nop.Web.Framework\DependencyRegistrar.cs - modified
+						- \Nop.Web\Administration\Views\ProductAttribute\Edit.cshtml - modified
+						- \Nop.Web\Administration\Controllers\ProductAttributeController.cs - modified
+						- \Nop.Web\Administration\Views\ProductAttribute\_CreateOrUpdate.cshtml - modified
+06/23/2016	y. chan		Display SKU on Category pages instead of Review stars
+						- \Nop.Web\Models\Catalog\ProductOverviewModel.cs - added SKU property
+						- \Nop.Web\Extensions\ControllerExtensions.cs - populate SKU property
+07/01/2016	y. chan		Implemented 301 redirects
+						- \Nop.Web\rewriteMaps.config - added all rewrite rules in the new separate config file
+						- \Nop.Web\Web.config - modified to reference a new config file instead of having the rewrite rules here
+07/08/2016	y. chan		Modify the Admin portal header to personalize
+						- \Nop.Web\Administration\Content\styles.css - modified
+						- \Nop.Web\Administration\Content\styles.rtl.css - modified
+						- \Nop.Web\Administration\Content\images\logo.gif - replaced
+						- \Nop.Web\Administration\Content\images\admin-header-bg.gif - replaced
+07/19/2016	y. chan		Address GA script rendering outside of the HEAD tag, which is wrong according to Google
+						- \Plugins\Nop.Plugin.Widgets.GoogleAnalytics\GoogleAnalyticPlugin.cs - modified to render GA script inside of the HEAD tag
+						per Google suggestion
+07/19/2016	y. chan		Added URL rewrite rule to force WWW prefix on all requests including over HTTPS (NOP has bug in forcing WWW when https is entered)
+						- \Nop.Web\Web.config - added redirect rule
+						- \Nop.Web\rewriteMaps.config - removed duplicate entries
+11/21/2016	y. chan		Added Header1 field for the Category to be displayed in the H1 tag on the Category pages
+						- \Nop.Core\Domain\Catalog\Category.cs
+						- \Nop.Web\Extensions\MappingExtensions.cs
+						- \Nop.Web\Models\Catalog\CategoryModel.cs
+						- \Nop.Services\ExportImport\ExportManager.cs
+						- \Libraries\FL.Resources\DB_Releases\v1.0\NOP_LocaleStringResources.sql
+						- \Nop.Web\Administration\Models\Catalog\CategoryModel.cs
+						- \Nop.Web\Administration\Controllers\CategoryController.cs
+						- \Nop.Web\Administration\Views\Category\_CreateOrUpdate.cshtml
+						- \Nop.Web\Themes\Brooklyn\Views\Catalog\HomepageCategories.cshtml
+						- \Nop.Web\Themes\Brooklyn\Views\Catalog\CategoryTemplate.ProductsInGridOrLines.cshtml
+						- \Libraries\FL.Resources\DB_Releases\v1.0\upd_Category_tbl.sql
+12/08/2016	y. chan		Added Chat integration
+						- \Nop.Web\Themes\Brooklyn\Views\Shared\_Root.Head.cshtml
+12/27/2016  y. chan		Made customization to list Height, Length, Width, and Weight as a specification attribute
+						by default
+						- \Nop.Web\Extensions\ControllerExtensions.cs
+12/27/2016	y. chan		Added timeout on the flyout cart to make sure it is not trigerred by accident
+						- \Nop.Web\Themes\Brooklyn\Content\scripts\brooklyn.js
+12/27/2016	y. chan		Modified to go to the "wide" layout at 1525px instead of 1281px
+						- \Nop.Web\Plugins\SevenSpikes.Nop.Plugins.AjaxCart\Themes\Brooklyn\Content\ajaxCart.cs
+						- \Nop.Web\Plugins\SevenSpikes.Nop.Plugins.MegaMenu\Themes\Brooklyn\Content\MegaMenu.css
+						- \Nop.Web\Plugins\SevenSpikes.Nop.Plugins.SaleOfTheDay\Themes\Brooklyn\Content\SaleOfTheDay.css
+						- \Nop.Web\Plugins\SevenSpikes.Nop.Plugins.SaleOfTheDay\Themes\Brooklyn\Content\SaleOfTheDay.rtl.css
+						- \Nop.Web\Themes\Brooklyn\Content\css\1280.css
+						- \Nop.Web\Themes\Brooklyn\Content\css\1280.rtl.css
+						- \Nop.Web\Themes\Brooklyn\Content\css\FLI_styles.css
+						- \Nop.Web\Themes\Brooklyn\Content\css\tables.css
+						- \Nop.Web\Themes\Brooklyn\Content\css\tables.rtl.css
+05/02/2017	y. chan		Added ImageMagick.Net to compress images
+						- \Libraries\Nop.Services\Media\PictureService.cs (edit);
+						- Added ref for Magick.NET-Q16-AnyCPU.dll in Nop.Services project;
+05/23/2017	y. chan		Search - add Manufacturer Part Number and remove Full Description
+						- \Libraries\FL.Resources\DB_Scripts\StoredProcs\cre_ProductLoadAllPaged_sp.sql (new);
+						- \Libraries\Nop.Services\Catalog\IProductService.cs (edit);
+						- \Libraries\Nop.Services\Catalog\ProductService.cs (edit);
+02/05/2018  y. chan		Modified global.asax file to handle the TLS 1.1 issue (require TLS 1.2) 

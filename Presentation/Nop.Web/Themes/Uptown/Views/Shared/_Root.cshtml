@@ -1,0 +1,99 @@
+﻿@using Nop.Core
+@using Nop.Core.Infrastructure
+@using Nop.Services.Configuration
+@using Nop.Web.Models.Catalog
+@{
+    Layout = "~/Views/Shared/_Root.Head.cshtml";
+}
+
+@Html.Widget("body_start_html_tag_after")
+@Html.Partial("_Notifications")
+@Html.Action("JavaScriptDisabledWarning", "Common")
+@Html.Partial("OldInternetExplorerWarning")
+
+@{
+    var controllerName = System.Web.HttpContext.Current.Request.RequestContext.RouteData.GetRequiredString("controller");
+    var isHomePage = controllerName.Equals("home", StringComparison.InvariantCultureIgnoreCase);
+}
+
+@{
+    var currentStoreId = EngineContext.Current.Resolve<IStoreContext>().CurrentStore.Id;
+    var settingService = EngineContext.Current.Resolve<ISettingService>();
+    var numberOfItemBoxesClass = String.Empty;
+    if (isHomePage) {
+        numberOfItemBoxesClass = settingService.GetSettingByKey("uptownthemesettings.HomePageItemBoxesPerRow", "home-items-per-row-four", currentStoreId, true).ToLowerInvariant();
+    } 
+    else {
+        numberOfItemBoxesClass = settingService.GetSettingByKey("uptownthemesettings.CatalogPagesItemBoxesPerRow", "items-per-row-three", currentStoreId, true).ToLowerInvariant();
+    }
+    var headerLayout = settingService.GetSettingByKey("uptownthemesettings.headerlayout", "header-1", currentStoreId, true);
+    var isHeader2 = String.Compare(headerLayout, "header-2", true) == 0;
+    var isOneColumn = settingService.GetSettingByKey("uptownthemesettings.iscategorypageonecolumn", false, currentStoreId, true);
+    var columnsCass = isOneColumn ? "one-column" : "two-columns";
+}
+
+<div class="master-wrapper-page @numberOfItemBoxesClass @columnsCass">
+    @Html.Action("AdminHeaderLinks", "Common")
+
+    <div class="overlayOffCanvas"></div>
+
+    @Html.Partial("Header")
+
+    <script type="text/javascript">
+        AjaxCart.init(false, '.header .cart-wrapper .cart-qty', '.header-links .wishlist-qty', '.cart-wrapper');
+    </script>
+
+    <div class="main-slider-wrapper">
+
+        @if (isHomePage)
+        {
+            @Html.Widget("home_page_main_slider");
+        }
+        else
+        {
+            @Html.Widget("main_slider_not_on_home_page");
+        }
+
+        @if (isHeader2)
+        {
+            <div class="header-menu-wrapper">
+                <div class="header-menu">
+                    <div class="close-menu">
+                        <span>@T("SevenSpikes.Themes.Common.CloseMenu")</span>
+                    </div>
+                    @{
+                        var menuHtml = Html.Widget("theme_header_menu");
+                    }
+                    @if (!MvcHtmlString.IsNullOrEmpty(menuHtml))
+                    {
+                        @menuHtml
+                    }
+                    else
+                    {
+                        @Html.Action("TopMenu", "Catalog")
+                    }
+
+                    @Html.Partial("HeaderSocials")
+                </div>
+            </div>
+        }
+
+    </div>
+
+    @if (IsSectionDefined("Breadcrumb"))
+    {
+        @RenderSection("Breadcrumb")
+    }
+
+    <div class="master-wrapper-content">
+        @Html.Widget("content_before")
+        @Html.Widget("uptown_color_squares")
+        <div class="master-column-wrapper">
+            @RenderBody()
+        </div>
+        @Html.Widget("content_after")
+    </div>
+    @Html.Action("Footer", "Common")
+</div>
+@Html.Action("EuCookieLaw", "Common")
+@Html.Widget("body_end_html_tag_before")

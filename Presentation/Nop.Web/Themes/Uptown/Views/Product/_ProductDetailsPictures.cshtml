@@ -1,0 +1,75 @@
+﻿@using Nop.Web.Models.Catalog
+
+@model ProductDetailsModel
+
+@{
+    Html.AddScriptParts("~/Scripts/jquery.magnific-popup.min.js");
+    Html.AddCssFileParts("~/Content/magnific-popup/magnific-popup.css");
+}
+
+<div class="gallery">
+    <div class="picture">
+        @if (Model.DefaultPictureZoomEnabled)
+        {
+            <script type="text/javascript">
+                $(document).ready(function() {
+                    $('.gallery .picture > a').on('click', function(e) {
+                        e.preventDefault();
+
+                        $.magnificPopup.open({
+                            items: [{ src: $(this).attr('href') }],
+                            type: 'image',
+                            removalDelay: 300,
+                            tClose: '@T("Media.MagnificPopup.Close")',
+                            tLoading: '@T("Media.MagnificPopup.Loading")'
+                        });
+                    });
+                });
+            </script>
+
+            <a href="@Model.DefaultPictureModel.FullSizeImageUrl" title="@Model.DefaultPictureModel.Title" id="main-product-img-lightbox-anchor-@Model.Id">
+                <img alt="@Model.DefaultPictureModel.AlternateText" src="@Model.DefaultPictureModel.ImageUrl" title="@Model.DefaultPictureModel.Title" id="main-product-img-@Model.Id" />
+            </a>
+        }
+        else
+        {
+            <img alt="@Model.DefaultPictureModel.AlternateText" src="@Model.DefaultPictureModel.ImageUrl" title="@Model.DefaultPictureModel.Title" id="main-product-img-@Model.Id" />
+        }  
+    </div>
+    @if (Model.PictureModels.Count > 1)
+    {
+        <div class="picture-thumbs">
+            @foreach (var picture in Model.PictureModels)
+            {
+                <a class="thumb-popup-link" href="@picture.FullSizeImageUrl" title="@picture.Title">
+                    <img src="@picture.ImageUrl" alt="@picture.AlternateText" title="@picture.Title" />
+                </a>
+            }
+        </div>
+    
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('.thumb-popup-link').magnificPopup(
+                {
+                    type: 'image',
+                    removalDelay: 300,
+                    gallery: {
+                        enabled: true,
+                        tPrev: '@T("Media.MagnificPopup.Previous")',
+                        tNext: '@T("Media.MagnificPopup.Next")',
+                        tCounter: '@T("Media.MagnificPopup.Counter")'
+                    },
+                    tClose: '@T("Media.MagnificPopup.Close")',
+                    tLoading: '@T("Media.MagnificPopup.Loading")'
+                });
+            });
+        </script>
+
+        <div class="picture-thumbs-navigation-arrow picture-thumbs-prev-arrow">
+            <span>@T("SevenSpikes.Themes.Uptown.Product.ImageThumbs.Prev")</span>
+        </div>
+        <div class="picture-thumbs-navigation-arrow picture-thumbs-next-arrow">
+            <span>@T("SevenSpikes.Themes.Uptown.Product.ImageThumbs.Next")</span>
+        </div>
+    }
+</div>

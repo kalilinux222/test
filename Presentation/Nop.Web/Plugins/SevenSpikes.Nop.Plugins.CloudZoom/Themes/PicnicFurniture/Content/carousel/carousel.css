@@ -1,0 +1,65 @@
+/*
+* Copyright 2016 Seven Spikes Ltd. All rights reserved. (http://www.nop-templates.com)
+* http://www.nop-templates.com/t/licensinginfo
+*/
+
+.picture-thumbs .slick-slider {
+	padding: 0 40px;
+}
+.picture-thumbs a.cloudzoom-gallery {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 0;
+}
+.picture-thumbs .slick-prev,
+.picture-thumbs .slick-next {
+	position: absolute;
+	top: 50%;
+	width: 30px;
+	height: 30px;
+	margin-top: -15px;
+	background-color: #fff;
+	border: 1px solid #2b2b2b;
+	background-position: center;
+	background-repeat: no-repeat;
+	font-size: 0;
+	cursor: pointer;
+}
+.picture-thumbs .slick-prev {
+	left: 0;
+	background-image: url('prev-horizontal.png');
+}
+.picture-thumbs .slick-next {
+	right: 0;
+	background-image: url('next-horizontal.png');
+}
+.picture-thumbs .slick-prev.slick-disabled,
+.picture-thumbs .slick-next.slick-disabled {
+    opacity: 0.5;
+    cursor: default;
+}
+
+/* dots nav */
+
+.slick-dots {
+    margin-top: 15px;
+}
+.slick-dots button {
+    background: #333;
+    opacity: .4;
+    font-size: 0;
+    width: 6px;
+    height: 6px;
+    border: none;
+    border-radius: 50%;
+}
+.slick-dots li {
+    display: inline-block;
+    margin: 0 3px;
+}
+.slick-dots .slick-active button {
+    opacity: 1;
+    width: 8px;
+    height: 8px;
+}

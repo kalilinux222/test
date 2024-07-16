@@ -1,0 +1,105 @@
+
+.jcarousel-skin-thumbs .jcarousel-direction-rtl {
+    direction: rtl;
+}
+
+.jcarousel-skin-thumbs .jcarousel-item {
+    display: inline-block;
+    float: none !important;
+	margin: 0;
+}
+
+.jcarousel-skin-thumbs .jcarousel-item a {
+    margin: 0;
+	display: block;
+	width: 100%;
+	height: auto;
+	position: relative;
+}
+
+.jcarousel-skin-thumbs .jcarousel-item a:before {
+    content: "";
+	display: block;
+	padding-top: 100%;
+}
+.jcarousel-skin-thumbs .jcarousel-item a img {
+	position: absolute !Important;
+	top: 0 !Important;
+	right: 0 !Important;
+	bottom: 0 !Important;
+	left: 0 !Important;
+	max-width: 100% !Important;
+	max-height: 100% !Important;
+	margin: auto !Important;
+	transition: all 0.2s ease !Important;
+}
+
+@media all and (max-width: 1024px) {
+
+.jcarousel-skin-thumbs .jcarousel-list {
+	width: auto !important;
+	font-size: 0 !important;
+}/*keeps thumbs centered when screen is resized down*/
+
+.jcarousel-skin-thumbs .jcarousel-item {
+	width: 25% !important;
+}
+
+}
+
+@media all and (min-width: 1025px) {
+
+.jcarousel-container-horizontal {
+	width: 400px;
+	margin: auto;
+}
+.jcarousel-skin-thumbs .jcarousel-clip {
+	overflow: hidden;
+}
+
+.jcarousel-skin-thumbs .jcarousel-list {
+	white-space: nowrap;
+	width: 20000px !important;
+	font-size: 0 !important;
+}
+
+.jcarousel-skin-thumbs .jcarousel-item {
+	width: 100px !important;
+}
+
+.jcarousel-skin-thumbs .jcarousel-prev-horizontal,
+.jcarousel-skin-thumbs .jcarousel-next-horizontal {
+	position: absolute;
+	top: 50%;
+	width: 26px;
+	height: 26px;
+	margin-top: -13px;
+	background-color: #fff;
+	border: 1px solid #2b2b2b;
+	background-position: center;
+	background-repeat: no-repeat;
+	cursor: pointer;
+}
+
+.jcarousel-skin-thumbs .jcarousel-prev-horizontal {
+	left: -25px;
+	background-image: url('images/prev-horizontal.png');
+}
+
+.jcarousel-skin-thumbs .jcarousel-next-horizontal {
+	right: -25px;
+	background-image: url('images/next-horizontal.png');
+}
+
+}
+
+@media all and (min-width: 1525px) {
+
+.jcarousel-container-horizontal {
+	width: 500px;
+}
+.jcarousel-skin-thumbs .jcarousel-item {
+	width: 125px !important;
+}
+
+}

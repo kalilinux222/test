@@ -1,0 +1,176 @@
+﻿@using Nop.Web.Framework
+
+@model Nop.Plugin.Payments.AuthorizeNetCheck.Models.PaymentInfoModel
+
+@{
+    Layout = "";
+}
+<span class="icons check-icons"></span>
+<strong class="payment-method-hint select-payment-check-type">@T("Checkout.PaymentMethods.CheckTypeHint")</strong>
+
+<ul class="payment-info-check-list">
+    <li>
+        <div class="payment-info-check-container">
+            <input id="paymentmethodcheck_1" type="radio" name="paymentmethodcheck" value="MailIn" />
+            <label for="paymentmethodcheck_1">Mail-In</label>
+        </div>
+    </li>
+    <li>
+        <div class="payment-info-check-container">
+            <input id="paymentmethodcheck_2" type="radio" name="paymentmethodcheck" value="ECheck" />
+            <label for="paymentmethodcheck_2">E-Check</label>
+        </div>
+    </li>
+</ul>
+
+<table width="100%" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+            <div id="paymentmethodcheck-info_1" class="paymentmethodcheck-info">
+                <div class="upper">
+                    <strong class="payment-method-hint">@T("Checkout.PaymentMethods.MailCheckTo")</strong>
+                    @T("Checkout.PaymentMethods.MailCheckPaymentDetails")
+                </div>
+                <div class="lower">
+                    <strong class="payment-method-hint">@T("Checkout.PaymentMethods.MailCheckHint")</strong>
+                    @T("Checkout.PaymentMethods.MailCheckInfo")
+                </div>
+            </div>
+            <div id="paymentmethodcheck-info_2" class="paymentmethodcheck-info">
+                <strong class="payment-method-hint">@T("Checkout.PaymentMethods.NetCheckHint")</strong>
+                <table width="100%" cellspacing="2" cellpadding="1" border="0">
+                    <tr class="inputs">
+                        <td>
+                            @Html.NopLabelFor(model => model.NameOnAccount, false)
+                            @Html.RequiredHint()
+                            @Html.TextBoxFor(model => model.NameOnAccount, new { autocomplete = "off", required = "required" })
+                            @Html.ValidationMessageFor(model => model.NameOnAccount)
+                        </td>
+                    </tr>
+                    <tr class="inputs">
+                        <td>
+                            @Html.NopLabelFor(model => model.BankName, false)
+                            @Html.TextBoxFor(model => model.BankName, new { autocomplete = "off" })
+                            @Html.ValidationMessageFor(model => model.BankName)
+                        </td>
+                    </tr>
+                    <tr class="inputs">
+                        <td>
+                            @Html.NopLabelFor(model => model.RoutingNumber, false)
+                            @Html.RequiredHint()
+                            @Html.TextBoxFor(model => model.RoutingNumber, new { autocomplete = "off", required = "required", inputmode = "decimal" })
+                            @Html.ValidationMessageFor(model => model.RoutingNumber)
+                        </td>
+                    </tr>
+                    <tr class="inputs">
+                        <td>
+                            @Html.NopLabelFor(model => model.AccountNumber, false)
+                            @Html.RequiredHint()
+                            @Html.TextBoxFor(model => model.AccountNumber, new { autocomplete = "off", required = "required", inputmode = "decimal" })
+                            @Html.ValidationMessageFor(model => model.AccountNumber)
+                        </td>
+                    </tr>
+                    <tr class="address">
+                        <td>
+                            @*<label class="hint" for="ECheckBillingAddress">@T("Checkout.PaymentMethods.NetCheckAddress")</label>
+                                <span class="required">*</span>*@
+                            <div class="has-billing-address"></div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        window.oneMoreBackButtonLevel = false;
+
+        $('.paymentmethodcheck-info').hide();
+
+        $(document).off('click.paymentmethodcheck.download').on('click.paymentmethodcheck.download', '#downloadCheckForm', function() {
+
+            window.location = "@Url.Action("GetDownloadForm", "PaymentAuthorizeNetCheck")";
+        });
+
+        $(document).off('change.paymentmethodcheck.checkbox').on('change.paymentmethodcheck.checkbox', 'input[type=checkbox][name=CheckViaEmail]', function () {
+
+            $("#downloadCheckForm").prop('disabled', function (_, val) { return !val; });
+        });
+
+        $(document).off('change.paymentmethodcheck.i').on('change.paymentmethodcheck.i', 'input[name=paymentmethodcheck]', toggleCheckPaymentInfos);
+
+        $(document).off('change.paymentmethod.i').on('change.paymentmethod.i', 'input[name=paymentmethod]', togglePaymentInfos);
+
+        $(document).off('click.paymentmethodcheck.back').on('click.paymentmethodcheck.back', '#co-payment-method-form div.back-link > a', function (e) {
+
+            e.preventDefault();
+            e.stopPropagation();
+
+            if ($('.paymentmethodcheck-info:visible').length) {
+
+                //show all payment methods
+                $('ul.payment-info-check-list').show();
+
+                //hide all payment infos
+                $('.paymentmethodcheck-info').hide();
+
+                //hide continue button
+                $('.payment-method-next-step-button').hide();
+
+                $('.payment-method-hint.select-payment-check-type').show();
+
+                //reset all checked inputs
+                $('input[name=paymentmethodcheck]:checked').prop('checked', false);
+
+                $('.progress-step.fourth').prev('.separator').find('span').css('width', '33%');
+
+                //mark that we don't have inner of payments
+                window.oneMoreBackButtonLevel = false;
+            }
+        });
+
+        function toggleCheckPaymentInfos() {
+
+            var selectedPaymentInfo = '#paymentmethodcheck-info_' + $('input[name=paymentmethodcheck]:checked').attr('id').replace(/paymentmethodcheck_/, '');
+
+            //hide all payment methods
+            $('ul.payment-info-check-list').hide();
+
+            //hide all payment infos
+            $('.paymentmethodcheck-info').hide();
+
+            //show selected payment info
+            $(selectedPaymentInfo).show();
+
+            $('.payment-method-hint.select-payment-check-type').hide();
+
+            //show continue button
+            $('.payment-method-next-step-button').show();
+
+            // move the billing address inside last paymentmethodcheck-info
+            $('#checkout-billing-load').detach().appendTo('.paymentmethodcheck-info .has-billing-address');
+
+            $('.progress-step.fourth').prev('.separator').find('span').css('width', '66%');
+
+            window.oneMoreBackButtonLevel = true;
+        }
+
+        function togglePaymentInfos() {
+
+            if ($('ul.payment-info-check-list:visible').length) {
+
+                //hide continue button
+                $('.payment-method-next-step-button').hide();
+
+                // move the billing address inside last paymentmethodcheck-info
+                $('#checkout-billing-load').detach().appendTo('.paymentmethodcheck-info .has-billing-address');
+
+                $('.progress-step.fourth').prev('.separator').find('span').css('width', '33%');
+            }
+        }
+    });
+</script>

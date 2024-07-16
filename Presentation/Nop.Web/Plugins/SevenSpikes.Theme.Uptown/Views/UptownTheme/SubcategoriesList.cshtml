@@ -1,0 +1,37 @@
+﻿@using Nop.Core
+@using Nop.Core.Infrastructure
+@using Nop.Services.Configuration
+
+@{
+    var storeId = EngineContext.Current.Resolve<IStoreContext>().CurrentStore.Id;
+    var settingService = EngineContext.Current.Resolve<ISettingService>();
+    var numberofSubCategories = settingService.GetSettingByKey("uptownthemesettings.numberofsubcategories", 5, storeId, true);
+}
+
+@model Nop.Web.Models.Catalog.CategorySimpleModel
+
+<ul class="sub-category-sublist">
+
+    @foreach (var item in Model.SubCategories.Take(numberofSubCategories))
+        {
+        <li>
+            @if (item.NumberOfProducts.HasValue)
+            {
+                <a href="@Url.RouteUrl("Category", new {SeName = item.SeName})" title="@item.Name">@item.Name @T("Categories.TotalProducts", item.NumberOfProducts.Value)</a>
+            }
+            else
+            {
+                <a href="@Url.RouteUrl("Category", new {SeName = item.SeName})" title="@item.Name">@item.Name</a>
+            }
+        </li>
+    }
+
+    @if (Model.SubCategories.Count > numberofSubCategories)
+    {
+        <li>
+            <a class="view-all" href="@Url.RouteUrl("Category", new {SeName = Model.SeName})" title="@Model.Name">
+                @T("SevenSpikes.Themes.Uptown.Catalog.Subcategories.ViewAll")
+            </a>
+        </li>
+    }
+</ul>

@@ -1,0 +1,164 @@
+/*=====================================================
+    
+    SMALLER MOBILE DEVICES
+
+=====================================================*/
+
+@media all and (max-width: 480px) {
+
+    .inputs .required {
+        left: -3%;
+        right: auto;
+    }
+    .new_select {
+        background-position: 4px center;
+    }
+    .new_select > span {
+        padding: 0 5px 0 30px;
+        text-align: right;
+    }
+    .home-page-polls .title strong {
+        float: right;
+    }
+
+
+/* HEADER MENU */
+
+    .menu-title span {
+        background: url(../img/responsive-nav-icon.png) no-repeat 20px center;
+        padding: 0 20px 0 0;
+    }
+    .header-menu > ul > li > a,
+    .header-menu > ul > li > span {
+	    text-shadow: -1px 1px #fff !important; 
+	    text-align: right;
+    }
+    .header-menu > ul .plus-button {
+        right: auto;
+        left: 0;
+	    border-right: 1px solid #aaa;
+	    border-left: none;
+    }
+    .header-menu .sublist li a {
+	    background-position: 95% center;
+	    padding: 14px 32px 14px 44px;
+    }
+
+    .dropdown li a {
+        text-shadow: -1px 1px #fff;
+    }
+
+
+    .listbox .list > li > a {
+        padding: 11px 35px 11px 10px;
+        background-position: 95% center;
+    }
+    .listbox .list > li.active > a, .listbox .list > li > a.active {
+        background: #bbb url('../img/rtl-bullet5.png') 95% center no-repeat;
+        background: url('../img/rtl-bullet5.png') 95% center no-repeat, #bbb url('../img/rtl-block-pointer.png') no-repeat left top;
+    }
+    .item-box .old-price {
+        margin: 0 0 0 5px;
+    }
+    .giftcard label {
+        margin-right: 0;
+    }
+    .advanced-search .inputs {
+        padding-right: 0;
+    }
+    #username-availabilty {
+        right: 50%;
+        left: auto;
+        margin-right: -44px;
+        margin-left: 0;
+    }
+    .address-list-page .buttons, .order-list-page .buttons {
+        left: inherit;
+        right: 0;
+    }
+    .button-2.print-order-button {
+        right: 62%;
+        left: auto;
+        margin: 0 -22px 0 0 !important;
+    }
+    .button-2.pdf-order-button {
+        left: 62%;
+        right: auto;
+        margin: 0 0 0 -40px !important;
+    }
+    .order-details-page .cart-total-left {
+        text-align: left;
+    }
+    .order-details-page .cart-total-right {
+        text-align: right;
+    }
+
+/* EU COOKIE LAW & TERMS OF SERVICE */
+
+    [aria-describedby="dialog-eu-cookie-law"],
+    [aria-describedby="terms-of-service-warning-box"] {
+        right: 0 !important;
+        left: auto !important;
+        margin-right: 0 !important;
+    }
+    
+/* REGISTRATION PAGE */
+
+    .forcheckbox {
+        margin: 0 0 0 10px;
+    }
+    .enter-password-form input[type="password"] {
+        margin: 0 0 5px 5px;
+    }
+    .blog-posts .post-date {
+        left: 25px;
+        right: auto;
+    }
+    .year strong {
+        background: url('../img/bullet5.png') 12px center no-repeat, #bbb url('../img/block-pointer.png') no-repeat left center;
+    }
+    .account-page .data-table td:before,
+    .order-details-page .data-table td:before,
+    .return-request-page .data-table td:before,
+    .order-details-page .data-table td:before,
+    .shopping-cart-page .cart td:before,
+    .checkout-page .cart td:before,
+    .wishlist-page .cart td:before,
+    .compare-products-table-mobile td:before {
+        right: 10px;
+        left: auto;
+    }
+    .shopping-cart-page .cart td,
+    .checkout-page .cart td,
+    .wishlist-page .cart td,
+    .account-page .data-table td,
+    .order-details-page .data-table td,
+    .return-request-page .data-table td,
+    .compare-products-table-mobile td {
+        padding: 10px 100px 10px 20px;
+        text-align: right !important;
+        border-right: 1px solid #ddd;
+        border-left: 1px solid #ddd;
+    }
+    .compare-products-table-mobile td:first-child div {
+        position: absolute;
+        right: 10px;
+        z-index: 2;
+    }
+    .downloadable-products-page .data-table *, .back-in-stock-subscription-list-page .data-table * {
+        text-align: right;
+    }
+    .compare-products-page tr:first-child td {
+        padding: 10px 100px 10px 20px;
+    }
+    .footer-block-first li {
+        padding: 0 32px 0 0;
+    }
+    .social-sharing li {
+        margin: 0 10px 10px 0;
+    }
+    .footer-store-theme select {
+        margin-right: -50px;
+        margin-left: 0;
+    }
+}

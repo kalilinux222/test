@@ -1,0 +1,142 @@
+﻿@using SevenSpikes.Nop.Plugins.FurnitureLeisure.Models
+@using System.Collections.Generic
+@using Nop.Core;
+@using Nop.Core.Infrastructure;
+@using Nop.Web.Framework.Security.Captcha
+
+@model CatalogRequestModel
+
+@{
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+    
+    var validationSummary = Html.ValidationSummary(true);
+}
+
+<div class="page catalog-request-page">
+    <div class="side left-side">
+        <div class="page-title form-title">
+            <h1>Catalog Request Form</h1>
+        </div>
+        <form class="page-body" controller="FurnitureLeisure" action="CatalogRequest" method="post">
+            <div class="fieldset">
+                <div class="form-fields">
+                    <div class="inputs half-width">
+                        @Html.LabelFor(model => model.FirstName)
+                        @Html.TextBoxFor(model => model.FirstName)
+                        @Html.ValidationMessageFor(model => model.FirstName)
+                    </div>
+                    <div class="inputs half-width">
+                        @Html.LabelFor(model => model.LastName)
+                        @Html.TextBoxFor(model => model.LastName)
+                        @Html.ValidationMessageFor(model => model.LastName)
+                    </div>
+                    <div class="inputs half-width">
+                        @Html.LabelFor(model => model.Email)
+                        @Html.TextBoxFor(model => model.Email)
+                        @Html.ValidationMessageFor(model => model.Email)
+                    </div>
+                    <div class="inputs half-width">
+                        @Html.LabelFor(model => model.PhoneNumber)
+                        @Html.TextBoxFor(model => model.PhoneNumber)
+                        @Html.ValidationMessageFor(model => model.PhoneNumber)
+                    </div>
+                    <div class="inputs">
+                        @Html.LabelFor(model => model.CompanyName)
+                        @Html.TextBoxFor(model => model.CompanyName)
+                        @Html.ValidationMessageFor(model => model.CompanyName)
+                    </div>
+                    <div class="inputs">
+                        @Html.LabelFor(model => model.StreetAddress)
+                        @Html.TextBoxFor(model => model.StreetAddress)
+                        @Html.ValidationMessageFor(model => model.StreetAddress)
+                    </div>
+                    <div class="inputs half-width">
+                        @Html.LabelFor(model => model.City)
+                        @Html.TextBoxFor(model => model.City)
+                        @Html.ValidationMessageFor(model => model.City)
+                    </div>
+                    <div class="inputs half-width">
+                        @Html.LabelFor(model => model.StateId)
+                        @Html.DropDownListFor(model => model.StateId, Model.AvailableStates)
+                        @Html.ValidationMessageFor(model => model.StateId)
+                    </div>
+                    <div class="inputs">
+                        @Html.LabelFor(model => model.ZipCode)
+                        @Html.TextBoxFor(model => model.ZipCode)
+                        @Html.ValidationMessageFor(model => model.ZipCode)
+                    </div>
+                    <div class="inputs radio">
+                        @Html.LabelFor(model => model.CreateAccount)
+                        <div class="btn-wrap">
+                            @Html.RadioButtonFor(model => model.CreateAccount, 1, new { id = "CreateAccount_1" })
+                            <label for="CreateAccount_1">No</label>
+                            @Html.RadioButtonFor(model => model.CreateAccount, 2, new { id = "CreateAccount_2" })
+                            <label for="CreateAccount_2">Yes</label>
+                            @Html.ValidationMessageFor(model => model.CreateAccount)
+                        </div>
+                    </div>
+                    <div class="inputs radio">
+                        @Html.LabelFor(model => model.ShouldRecieveCall)
+                        <div class="btn-wrap">
+                            @Html.RadioButtonFor(model => model.ShouldRecieveCall, 1, new { id = "shouldRecieveCall_1" })
+                            <label for="shouldRecieveCall_1">No</label>
+                            @Html.RadioButtonFor(model => model.ShouldRecieveCall, 2, new { id = "shouldRecieveCall_2" })
+                            <label for="shouldRecieveCall_2">Yes</label>
+                            @Html.ValidationMessageFor(model => model.ShouldRecieveCall)
+                        </div>
+                    </div>
+                    <div class="inputs passwords">
+                        @Html.LabelFor(model => model.Password)
+                        @Html.EditorFor(model => model.Password)
+                        @Html.ValidationMessageFor(model => model.Password)
+                    </div>
+                    <div class="inputs passwords">
+                        @Html.LabelFor(model => model.ConfirmPassword)
+                        @Html.EditorFor(model => model.ConfirmPassword)
+                        @Html.ValidationMessageFor(model => model.ConfirmPassword)
+                    </div>
+                    <div class="captcha-box">
+                        @Html.Raw(Html.GenerateCaptcha())
+                        @if (!MvcHtmlString.IsNullOrEmpty(validationSummary))
+                        {
+                            <div class="message-error">@validationSummary</div>
+                        }
+                    </div>
+                    <div class="buttons">
+                        <input class="button-1 catalog-request-button" type="submit" value="submit" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="side right-side">
+        @Html.Action("TopicBlock", "Topic", new { systemName = "FurnitureLeisure.CatalogRequest" })
+    </div>
+</div>
+
+<script>
+
+    function togglePasswordVisibility() {
+
+        var shouldCreateAccountField = $('#CreateAccount_2').is(':checked');
+        var passwordField = $('#@Html.FieldIdFor(model => model.Password)').parent();
+        var confirmPasswordField = $('#@Html.FieldIdFor(model => model.ConfirmPassword)').parent();
+
+        if (shouldCreateAccountField) {
+
+            passwordField.show();
+            confirmPasswordField.show();
+        }
+        else {
+            
+            passwordField.hide();
+            confirmPasswordField.hide();
+        }
+    }
+
+    $(document).ready(function () {
+
+        $('#CreateAccount_2,#CreateAccount_1').on('change', togglePasswordVisibility);
+        togglePasswordVisibility();
+    });
+</script>

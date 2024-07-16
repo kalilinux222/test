@@ -1,0 +1,56 @@
+﻿@using SevenSpikes.Nop.Plugins.FurnitureLeisure.Models
+
+@model CatalogRequestBannerModel
+
+@{
+    Html.AddScriptParts("~/Plugins/SevenSpikes.Core/Scripts/cookiehelper.min.js");
+}
+<div class="custom-product-catalog-banner" style="display:none">
+    <a class="master-link" href="/furnitureleisure/catalogrequest">
+        <span class="text1">@Model.LeftText</span>
+        <span class="text2">@Model.Title</span>
+        <button class="close-button">x</button>
+    </a>
+</div>
+
+<script>
+    (function ($, cookieHelper) {
+
+        var BANNER_COOKIE_NAME = 'furnitureLeisureCustomProductCollectionsCookie';
+
+        function hideBanner() {
+
+            $('.custom-product-catalog-banner').css('display', 'none');
+        }
+
+        function toggleBanner() {
+
+            var bannerCookie = cookieHelper.getCookie(BANNER_COOKIE_NAME);
+
+            if ((bannerCookie !== '' && bannerCookie > 0)) {
+
+                hideBanner();
+            }
+            else {
+                
+                $('.custom-product-catalog-banner').css('display', 'block');
+            }
+        }
+
+        $(document).ready(function () {
+
+            toggleBanner();
+
+            $('.custom-product-catalog-banner .close-button').click(function (e) {
+
+                e.preventDefault();
+
+                cookieHelper.setCookie(BANNER_COOKIE_NAME, 1, 1);
+
+                hideBanner();
+
+                return false;
+            });
+        });
+    })(jQuery, cookieHelper);
+</script>

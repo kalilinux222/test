@@ -1,0 +1,50 @@
+﻿@model CheckoutCompletedModel
+@using Nop.Web.Models.Checkout;
+@{
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+
+    //title
+    Html.AddTitleParts(T("PageTitle.Checkout").Text);
+}
+<div class="page checkout-page order-completed-page">
+    @*@if (!Model.OnePageCheckoutEnabled)
+    {
+        @Html.Action("CheckoutProgress", "Checkout", new { step = CheckoutProgressStep.Complete })
+    }*@
+    <ul class="checkout-progress-bar">
+        <li class="progress-step first active">Step 1</li>
+        <li class="separator"><span style="width: 100%;"></span></li>
+        <li class="progress-step second active">Step 2</li>
+        <li class="separator"><span style="width: 100%;"></span></li>
+        <li class="progress-step third active">Step 3</li>
+        <li class="separator last"><span style="width: 100%;"></span></li>
+        <li class="progress-step fourth active">Step 4</li>
+    </ul>
+    <div class="page-title">
+        <h1>@T("Checkout.ThankYou")</h1>
+    </div>
+    <div class="page-body checkout-data">
+        @Html.Widget("checkout_completed_top", Model.OrderId)
+        <div class="section order-completed">
+            <div class="title">
+                <strong>@T("Checkout.YourOrderHasBeenSuccessfullyProcessed")</strong>
+            </div>
+            <p class="subtitle">@T("Checkout.RedirectToOrderDetails")</p>
+            <div class="details">
+                <div class="order-number">
+                    <strong>@T("Checkout.OrderNumber"): @Model.OrderId</strong>
+                </div>
+            </div>
+            <div class="buttons">
+                <a href="@Url.RouteUrl("OrderDetails", new { orderID = Model.OrderId })" class="button-1">@T("Checkout.PlacedOrderDetails")</a>
+                <input type="button" value="@T("Checkout.ThankYou.Continue")" class="button-1 order-completed-continue-button" onclick="setLocation('@Url.RouteUrl("HomePage")')" />
+            </div>
+        </div>
+        @Html.Widget("checkout_completed_bottom", Model.OrderId)
+    </div>
+    <script type="text/javascript">
+        setTimeout(function () {
+           window.location.href = "@Url.RouteUrl("OrderDetails", new { orderID = Model.OrderId })";
+        }, 3000);
+    </script>
+</div>

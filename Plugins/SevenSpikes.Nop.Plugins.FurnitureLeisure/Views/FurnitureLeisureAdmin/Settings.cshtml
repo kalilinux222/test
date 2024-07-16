@@ -1,0 +1,78 @@
+﻿@using SevenSpikes.Nop.Plugins.FurnitureLeisure.Models;
+@using Nop.Core.Domain.Common;
+@using Nop.Core.Infrastructure;
+@using SevenSpikes.Nop.Framework;
+@using Nop.Web.Framework
+
+@model FurnitureLeisureSettingsModel
+
+@{
+//Layout = AdminViewLocations.AdminLayoutViewPath;
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="section-header">
+        <div class="title">
+            <img src="@Url.Content("~/Administration/Content/images/ico-configuration.png")" alt="" />
+            @T("SevenSpikes.JsonLd.Admin.Settings")
+        </div>
+        <div class="options">
+            <button type="submit" name="save" value="save" class="k-button">@T("Admin.Common.Save")</button>
+        </div>
+    </div>
+    @Html.Action("StoreScopeConfiguration", "Setting")
+    <div class="adminGroup">
+        <div class="controlTitle">
+            <a class="toggleControl">@T("SevenSpikes.FurnitureLeisure.Admin.Settings")</a>
+        </div>        
+        <div id="adminGroupPanel1" class="adminGroupPanel">
+            <table class="adminContent">
+                <tr>
+                    <td class="adminTitle">
+                        @Html.OverrideStoreCheckboxFor(model => model.EnableCatalogRequestBanner_OverrideForStore, model => model.EnableCatalogRequestBanner, Model.ActiveStoreScopeConfiguration)
+                        @Html.NopLabelFor(model => model.EnableCatalogRequestBanner):
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.EnableCatalogRequestBanner)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminHint" colspan="2">
+                        <p>@T("SevenSpikes.FurnitureLeisure.Admin.Settings.EnableCatalogRequestBanner.Hint")</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.OverrideStoreCheckboxFor(model => model.LeftText_OverrideForStore, model => model.LeftText, Model.ActiveStoreScopeConfiguration)
+                        @Html.NopLabelFor(model => model.LeftText):
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.LeftText)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminHint" colspan="2">
+                        <p>@T("SevenSpikes.FurnitureLeisure.Admin.Settings.LeftText.Hint")</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.OverrideStoreCheckboxFor(model => model.Title_OverrideForStore, model => model.Title, Model.ActiveStoreScopeConfiguration)
+                        @Html.NopLabelFor(model => model.Title):
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.Title)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminHint" colspan="2">
+                        <p>@T("SevenSpikes.FurnitureLeisure.Admin.Settings.Title.Hint")</p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+}

@@ -1,0 +1,10 @@
+﻿@using System.Collections.Generic
+
+@model IList<string>
+
+@foreach(var script in Model)
+{
+    <script type="application/ld+json">
+@Html.Raw(script)
+    </script>
+}

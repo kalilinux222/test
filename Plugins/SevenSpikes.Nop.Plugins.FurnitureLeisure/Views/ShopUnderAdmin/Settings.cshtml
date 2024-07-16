@@ -1,0 +1,93 @@
+﻿@using SevenSpikes.Nop.Plugins.FurnitureLeisure.Models;
+@using Nop.Web.Framework
+
+@model ShopUnderModel
+
+@{
+    //Layout = AdminViewLocations.AdminLayoutViewPath;
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="section-header">
+        <div class="title">
+            <img src="@Url.Content("~/Administration/Content/images/ico-configuration.png")" alt="" />
+            Settings
+        </div>
+        <div class="options">
+            <button type="submit" name="save" value="save" class="k-button">@T("Admin.Common.Save")</button>
+        </div>
+    </div>
+
+    <div class="adminGroup">
+        <table class="adminContent">
+            <tr>
+                <td class="adminTitle">
+                    @Html.NopLabelFor(model => model.IsEnabled):
+                </td>
+                <td class="adminData">
+                    @Html.EditorFor(model => model.IsEnabled)
+                </td>
+            </tr>
+            <tr>
+                <td class="adminHint" colspan="2">
+                    <p>@T("SevenSpikes.FurnitureLeisure.Admin.ShopUnder.Settings.IsEnabled.Hint")</p>
+                </td>
+            </tr>
+            <tr>
+                <td class="adminTitle">
+                    @Html.NopLabelFor(model => model.CategoryId):
+                </td>
+                <td class="adminData">
+                    @Html.DropDownListFor(model => model.CategoryId, Model.AvailableCategories)
+                </td>
+            </tr>
+            <tr>
+                <td class="adminHint" colspan="2">
+                    <p>@T("SevenSpikes.FurnitureLeisure.Admin.ShopUnder.Settings.CategoryId.Hint")</p>
+                </td>
+            </tr>
+            <tr>
+                <td class="adminTitle">
+                    @Html.NopLabelFor(model => model.ShopUnder):
+                </td>
+                <td class="adminData">
+                    @Html.EditorFor(model => model.ShopUnder)
+                </td>
+            </tr>
+            <tr>
+                <td class="adminHint" colspan="2">
+                    <p>@T("SevenSpikes.FurnitureLeisure.Admin.ShopUnder.Settings.ShopUnder.Hint")</p>
+                </td>
+            </tr>
+            <tr>
+                <td class="adminTitle">
+                    @Html.NopLabelFor(model => model.TitleText):
+                </td>
+                <td class="adminData">
+                    @Html.EditorFor(model => model.TitleText)
+                </td>
+            </tr>
+            <tr>
+                <td class="adminHint" colspan="2">
+                    <p>@T("SevenSpikes.FurnitureLeisure.Admin.ShopUnder.Settings.TitleText.Hint")</p>
+                </td>
+            </tr>
+            <tr>
+                <td class="adminTitle">
+                    @Html.NopLabelFor(model => model.ButtonText):
+                </td>
+                <td class="adminData">
+                    @Html.EditorFor(model => model.ButtonText)
+                </td>
+            </tr>
+            <tr>
+                <td class="adminHint" colspan="2">
+                    <p>@T("SevenSpikes.FurnitureLeisure.Admin.ShopUnder.Settings.ButtonText.Hint")</p>
+                </td>
+            </tr>
+        </table>
+    </div>
+}

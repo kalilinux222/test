@@ -1,0 +1,58 @@
+﻿.search-box form > * {
+    float: right !important;
+}
+input.instant-search-busy,
+span.search-box-text input.instant-search-busy {
+	background-position: 10px center !important;
+}
+
+.instant-search-item .img-block {
+    float: right;
+}
+.instant-search-item .detail {
+    margin-left: 0;
+    margin-right: 70px;
+}
+
+/*=====================================================
+    
+    TABLETS PORTRAIT & SMARTPHONES LANDSCAPE
+
+=====================================================*/
+
+@media all and (max-width: 768px) and (min-width: 481px) {
+
+    .instantSearch {
+        width: 318px !important;
+    }
+    .k-list-container {
+        max-width: 100% !important;
+    }
+    
+}
+
+
+/*=====================================================
+    
+    SMALLER MOBILE DEVICES
+
+=====================================================*/
+
+@media all and (max-width: 480px) {
+
+    .instantSearch,
+    .instantSearch.resize {
+        width: 228px !important;
+    }
+    .instantSearch {
+        margin-left: -32px !important;
+    }
+    .instantSearch .k-list-container {
+        width: auto !important;
+    }
+
+    .instant-search-item .detail {
+        margin-right: 0;
+    }
+
+}

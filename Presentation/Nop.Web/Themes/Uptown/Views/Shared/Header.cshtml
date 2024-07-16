@@ -1,0 +1,127 @@
+﻿@using Nop.Core
+@using Nop.Core.Infrastructure
+@using Nop.Services.Configuration
+@using Nop.Services.Localization
+@using Nop.Web.Framework.Themes
+@{
+    //logo path
+    var currentThemeName = EngineContext.Current.Resolve<IThemeContext>().WorkingThemeName;
+    var logoPath = "~/Themes/" + currentThemeName + "/Content/img/logo.png";
+
+    var themeLogo = @Html.Widget("uptown_theme_logo");
+}
+@{
+    var storeId = EngineContext.Current.Resolve<IStoreContext>().CurrentStore.Id;
+    var headerLayout = EngineContext.Current.Resolve<ISettingService>().GetSettingByKey("uptownthemesettings.headerlayout", "header-1", storeId, true);
+    var isHeader1 = String.Compare(headerLayout, "header-1", true) == 0;
+}
+
+@{
+    var warningText = Html.Action("TopicBlock", "Topic", new { systemName = "WarningMessage" });
+    var warningTextParentClass = string.Empty;
+}
+@if (!MvcHtmlString.IsNullOrEmpty(warningText))
+{
+    warningTextParentClass = "warning-text-on";
+}
+
+<div class="header @headerLayout @warningTextParentClass">
+
+    @if (!MvcHtmlString.IsNullOrEmpty(warningText))
+    {
+        <div class="warning-text">
+            @Html.Action("TopicBlock", "Topic", new { systemName = "WarningMessage" })
+        </div>
+    }
+
+    @Html.Widget("header")
+
+    <div class="header-upper">
+        <div class="header-centering">
+            <div class="header-logo">
+                <h1>
+                    <a href="@Url.RouteUrl("HomePage")" class="logo">@T("SevenSpikes.Themes.Uptown.Common.Store.Name")</a>
+                </h1>
+                <h2 class="slogan">@T("SevenSpikes.Themes.Uptown.Common.Store.Slogan")</h2>
+                @*<a href="@Url.RouteUrl("HomePage")" class="logo">
+                        @if (!MvcHtmlString.IsNullOrEmpty(themeLogo))
+                        {
+                            @themeLogo
+                        }
+                        else
+                        {
+                            string storeName = EngineContext.Current.Resolve<IStoreContext>().CurrentStore.GetLocalized(x => x.Name);
+                            <img title="" alt="@storeName" src="@Url.Content(logoPath)">
+                        }
+                    </a>*@
+            </div>
+            <div class="search-box store-search-box">
+                @Html.Action("SearchBox", "Catalog")
+            </div>
+            <div class="header-welcome-message">
+                <div class="working-hours">@T("SevenSpikes.Themes.Uptown.Common.Working.Hours")</div>
+                <div class="main-phone"><label>@T("SevenSpikes.Themes.Uptown.Common.Main.Phone.Label")</label><span>@T("SevenSpikes.Themes.Uptown.Common.Main.Phone")</span></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-lower">
+        <div class="header-centering">
+            <div class="header-menu-wrapper">
+                <div class="header-menu">
+                    <div class="close-menu">
+                        <span>@T("SevenSpikes.Themes.Common.CloseMenu")</span>
+                    </div>
+                    @{
+                        var menuHtml = Html.Widget("theme_header_menu");
+                    }
+                    @if (!MvcHtmlString.IsNullOrEmpty(menuHtml))
+                    {
+                        @menuHtml
+                    }
+                    else
+                    {
+                        @Html.Action("TopMenu", "Catalog")
+                    }
+                </div>
+            </div>
+
+            <div class="responsive-nav-wrapper-parent">
+                <div class="responsive-nav-wrapper">
+                    <div class="menu-title">
+                        <span>@T("SevenSpikes.Themes.Common.MenuTitle")</span>
+                    </div>
+                    <div class="search-wrap">
+                        <span>@T("Search")</span>
+                    </div>
+                    @*<div class="personal-button" id="header-links-opener">
+                            <span>@T("SevenSpikes.Themes.Common.Personal")</span>
+                        </div>*@
+                    <div class="account-links" id="account-links">
+                        <span>@T("Account.MyAccount")</span>
+                    </div>
+                    <div class="custom-button">
+                        <span><a href="@Url.RouteUrl("Wishlist")">&nbsp;</a></span>
+                    </div>
+                    @*<div class="filters-button">
+                            <span>@T("SevenSpikes.Themes.Common.Filters")</span>
+                        </div>*@
+                </div>
+            </div>
+
+            <div class="header-links-selectors-wrapper">
+                <div class="header-links-wrapper">
+                    @Html.Action("HeaderLinks", "Common")
+                </div>
+                <div class="header-selectors-wrapper">
+                    @Html.Action("TaxTypeSelector", "Common")
+                    @Html.Action("CurrencySelector", "Common")
+                    @Html.Action("LanguageSelector", "Common")
+                    @Html.Widget("header_selectors")
+                </div>
+                @Html.Action("FlyoutShoppingCart", "ShoppingCart")
+            </div>
+        </div>
+    </div>
+
+</div>

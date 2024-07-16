@@ -1,0 +1,16 @@
+﻿@model SevenSpikes.Nop.Plugins.UltimateCarousel.Models.CarouselItemModel
+
+<div class="store-picture">
+    <a class="store-link" target="@(Model.OpenInNewWindow ? "_blank" : "_self")" href="@Model.Url" title="@Model.Title">
+        <img class="store-img" src="@Model.PictureSrc" alt="@Model.Title" title="@Model.Title" />
+    </a>
+</div>
+<h3 class="store-title">
+    <a class="store-link" target="@(Model.OpenInNewWindow ? "_blank" : "_self")" href="@Model.Url" title="@Model.Title">@Model.Title</a>
+</h3>
+@if (!String.IsNullOrEmpty(Model.Description))
+{
+    <div class="store-description">
+        @Html.Raw(Model.Description)
+    </div>
+}

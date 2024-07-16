@@ -1,0 +1,65 @@
+﻿@{
+    Layout = "~/Views/Shared/_Root.Head.cshtml";
+}
+@{
+    var warningText = Html.Action("TopicBlock", "Topic", new { systemName = "WarningMessage" });
+}
+
+@Html.Widget("body_start_html_tag_after")
+
+@if (!MvcHtmlString.IsNullOrEmpty(warningText))
+{
+    <div class="warning-text">
+        @Html.Action("TopicBlock", "Topic", new { systemName = "WarningMessage" })
+    </div>
+}
+
+@Html.Partial("_Notifications")
+@Html.Action("AdminHeaderLinks", "Common")
+
+<div class="master-wrapper-page">
+    <div class="header-line">
+        <div class="header-links-wrapper">
+            @Html.Action("HeaderLinks", "Common")
+            @Html.Action("FlyoutShoppingCart", "ShoppingCart")
+        </div>
+    </div>
+    @Html.Action("JavaScriptDisabledWarning", "Common")
+    @Html.Partial("OldInternetExplorerWarning")
+    <div class="master-wrapper-content">
+        <script type="text/javascript">
+            AjaxCart.init(false, '.header-links .cart-qty', '.header-links .wishlist-qty', '#flyout-cart');
+        </script>
+
+        @Html.Partial("Header")
+
+        @{
+        var menu = @Html.Widget("theme_header_menu");
+        }
+
+        <div class="header-menu">
+            @if (MvcHtmlString.IsNullOrEmpty(menu))
+            {
+            @Html.Action("TopMenu", "Catalog")
+            }
+            else
+            {
+            @menu
+            }
+        </div>
+
+        @Html.Widget("content_before")
+        @*ajax loading window*@
+        <div class="ajax-loading-block-window" style="display: none">
+            <div class="loading-image">
+            </div>
+        </div>
+        <div class="master-column-wrapper">
+            @RenderBody()
+        </div>
+        @Html.Widget("content_after")
+    </div>
+    @Html.Action("Footer", "Common")
+</div>
+@Html.Action("EuCookieLaw", "Common")
+@Html.Widget("body_end_html_tag_before")

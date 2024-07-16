@@ -1,0 +1,8 @@
+﻿Group: Shipping rate computation
+FriendlyName: Shipping by quantity
+SystemName: Shipping.ByQuantity
+Version: 1.01
+SupportedVersions: 3.70
+Author: Kevin Yochum
+DisplayOrder: 1
+FileName: FurnitureLeisure.Plugin.Shipping.ByQuantity.dll

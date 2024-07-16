@@ -1,0 +1,121 @@
+/*
+* Copyright 2014 Seven Spikes Ltd. All rights reserved. (http://www.nop-templates.com)
+* http://www.nop-templates.com/t/licensinginfo
+*/
+
+@media all and (max-width: 1000px) {
+
+#sevenspikes-cloud-zoom:before {
+	display: none;
+}
+#sevenspikes-cloud-zoom img {
+	position: static;
+}
+
+}
+
+@media all and (min-width: 1001px) {
+
+/* theme overwritting styles */
+
+.gallery {
+	font-size: 0;
+}
+.gallery .picture-wrapper {
+	/*** !!! set line-height to the appropriate height  !!! ***/
+	line-height: 320px;
+}
+.gallery .picture-wrapper .picture:before {
+	display: none;
+}
+
+/* main picture styles */
+
+#sevenspikes-cloud-zoom {
+	margin: 0;
+	overflow: visible;
+	text-align: center;
+	font-size: 0;
+}
+#sevenspikes-cloud-zoom:before {
+	display: none;
+}
+#wrap {
+	display: inline-block;
+	max-width: 100%;
+	vertical-align: middle;
+	line-height: 0;
+}
+#wrap a {
+	display: inline-block !important;
+	max-width: 100%;
+	vertical-align: middle;
+	line-height: 0;
+}
+#wrap img {
+	position: static !important;
+}
+
+/* This is the overlay element. */
+
+#wrap > .mousetrap {
+	right: 0;
+	bottom: 0;
+	margin: auto;
+}
+.cloud-zoom-lens {
+	margin: 0;
+	border: none;
+	background-color: #fff;
+	cursor: crosshair;
+}
+
+/* This is the zoom window. */
+
+#cloudZoomWindowElement {
+	left: 0;
+	top: 0;
+	z-index: 1;
+}
+#cloud-zoom-big {
+	border: none;
+	overflow: hidden;
+}
+.overview #cloud-zoom-big {
+	position: static !important; /* fix for the zoom window so that its wrapper takes the dimensions */
+}
+
+/* This is the title text. */
+
+.cloud-zoom-title {
+	background-color: #000;
+	padding: 15px;
+	text-align: center;
+	font-size: 14px;
+	line-height: normal;
+	color: #fff;
+}
+
+/* This is the loading message. */
+
+.cloud-zoom-loading {
+	display: none !important; /*no loading message*/
+	background-color: #000;
+	padding: 3px;
+	font-size: 14px;
+	line-height: normal;
+	color: #fff;
+}
+
+/* with product ribbons enabled */
+
+.gallery .ribbon-wrapper {
+	/*never display as inline or inline-block*/
+	vertical-align: middle;
+	line-height: 0;
+}
+.gallery .ribbon-wrapper:hover .ribbon-position {
+	opacity: 0;
+}
+
+}

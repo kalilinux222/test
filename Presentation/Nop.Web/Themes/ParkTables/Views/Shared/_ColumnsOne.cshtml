@@ -1,0 +1,24 @@
+﻿@{
+    Layout = "~/Views/Shared/_Root.cshtml";
+}
+@if (IsSectionDefined("Breadcrumb"))
+{
+    @section Breadcrumb {
+        @RenderSection("Breadcrumb")
+    }
+}
+@if (IsSectionDefined("ProductPage"))
+{
+    @section ProductPage {
+        @RenderSection("ProductPage")
+    }
+}
+<div class="center-1">
+    @if (IsSectionDefined("blogpost"))
+    {
+        @RenderSection("blogpost")
+    }
+    @Html.Widget("main_column_before")
+    @RenderBody()
+    @Html.Widget("main_column_after")
+</div>

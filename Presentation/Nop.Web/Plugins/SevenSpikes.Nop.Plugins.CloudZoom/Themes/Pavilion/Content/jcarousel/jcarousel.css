@@ -1,0 +1,99 @@
+
+.jcarousel-skin-thumbs .jcarousel-direction-rtl {
+    direction: rtl;
+}
+
+.jcarousel-skin-thumbs .jcarousel-item {
+    display: inline-block;
+    float: none !important;
+    width: 60px;
+    height: 60px;
+    margin: 0 5px 10px;
+}
+
+.jcarousel-skin-thumbs .jcarousel-item a {
+    margin: 0;
+}
+
+.jcarousel-skin-thumbs .jcarousel-item a {
+    display: block;
+}
+
+@media all and (max-width: 1000px) {
+
+.jcarousel-skin-thumbs .jcarousel-list {
+	position: static !important;
+	width: auto !important;
+}
+/*keeps thumbs centered when screen is resized down*/
+
+}
+
+@media all and (min-width: 769px) {
+
+.jcarousel-skin-thumbs .jcarousel-item {
+	width: 18%;
+	margin: 0 1% 10px;
+}
+
+.jcarousel-skin-thumbs .jcarousel-item a {
+	width: 100%;
+}
+}
+
+@media all and (min-width: 1001px) {
+
+.jcarousel-skin-thumbs .jcarousel-clip {
+	margin: 0 10px;
+	overflow: hidden;
+}
+
+.jcarousel-skin-thumbs .jcarousel-list {
+	white-space: nowrap;
+}
+
+.jcarousel-skin-thumbs .jcarousel-item {
+	width: auto;
+	margin: 0 5px;
+}
+
+.jcarousel-skin-thumbs .jcarousel-item a {
+	width: 85px;
+	height: 85px;
+}
+
+.jcarousel-skin-thumbs .jcarousel-prev-horizontal,
+.jcarousel-skin-thumbs .jcarousel-next-horizontal {
+	position: absolute;
+	top: 50%;
+	width: 10px;
+	height: 30px;
+	margin-top: -15px;
+	background-color: #fff;
+	background-position: center;
+	background-repeat: no-repeat;
+	cursor: pointer;
+}
+
+.jcarousel-skin-thumbs .jcarousel-prev-horizontal {
+	left: -3px;
+	background-image: url('images/prev-horizontal.png');
+}
+
+.jcarousel-skin-thumbs .jcarousel-next-horizontal {
+	right: -3px;
+	background-image: url('images/next-horizontal.png');
+}
+}
+
+@media all and (min-width: 1281px) {
+
+.jcarousel-skin-thumbs .jcarousel-clip {
+	margin: 0 20px;
+}
+
+.jcarousel-skin-thumbs .jcarousel-item a {
+	width: 86px;
+	height: 86px;
+}
+}

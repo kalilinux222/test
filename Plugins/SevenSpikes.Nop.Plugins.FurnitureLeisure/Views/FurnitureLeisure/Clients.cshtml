@@ -1,0 +1,50 @@
+﻿@using SevenSpikes.Nop.Plugins.FurnitureLeisure.Models;
+
+@model IList<CarouselImageModel>
+
+@if (Model.Count > 0)
+{
+    Html.AddCssFileParts("~/Plugins/SevenSpikes.Nop.Plugins.JCarousel/Themes/Brooklyn/Content/JCarousel.css");
+
+    Html.AddScriptParts("~/Plugins/SevenSpikes.Core/Scripts/swipeEvents.min.js");
+    Html.AddScriptParts("~/Plugins/SevenSpikes.Nop.Plugins.JCarousel/Scripts/jquery.disable.text.select.js");
+    Html.AddScriptParts("~/Plugins/SevenSpikes.Nop.Plugins.JCarousel/Scripts/jquery.jcarousel.min.js");
+    
+    var random = new Random();
+    int randomNumberId = random.Next(0, 300);
+    int randomNumber = random.Next(0, 500);
+    
+    string elementId = string.Format("jcarousel-{0}-{1}", randomNumberId, randomNumber);
+
+    <div class="jCarouselMainWrapper @elementId"
+         data-carouselHtmlElementId="@elementId"
+         data-supportRtl="false"
+         data-carouselItemMinWidth="100"
+         data-numberOfVisibleItems="4"
+         data-vertical="false"
+         data-startIndex="1"
+         data-scrollItems="1"
+         data-animationSpeed=""
+         data-autoscroll="0"
+         data-size="@Model.Count"
+         data-easing=""
+         data-wrap="">
+
+        <div class="nop-jcarousel">
+            <h2 class="carousel-title"><span>@T("SevenSpikes.FurnitureLeisure.Public.PreviousCustomers")</span></h2>
+
+            <ul id="@elementId">
+                @foreach (var item in Model)
+                {
+                    <li>
+                        <div class="item-holder">
+                            <div class="item-picture">
+                                <img src="@item.PictureUrl" title="" alt=""/>
+                            </div>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+}

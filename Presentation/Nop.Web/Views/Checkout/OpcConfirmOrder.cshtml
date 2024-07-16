@@ -1,0 +1,92 @@
+﻿@model CheckoutConfirmModel
+@using Nop.Web.Models.Checkout;
+<div class="checkout-data">
+    <div class="section order-summary">
+        @Html.Action("OrderSummary", "ShoppingCart", new { prepareAndDisplayOrderReviewData = true })
+    </div>
+    @Html.Widget("op_checkout_confirm_top")
+    <div class="section confirm-order">
+        <div>
+            @if (!String.IsNullOrEmpty(Model.MinOrderTotalWarning))
+            {
+                <span class="min-order-warning">@Model.MinOrderTotalWarning</span>
+            }
+        </div>
+        @if (Model.Warnings.Count > 0)
+        {
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    setTimeout(function(){
+                        $("#error-dialog").dialog();
+                    }, 100);
+                });
+            </script>
+
+            <div class="card-error-message" id="error-dialog" title="Error" style="display: none;">
+                <ul>
+                    @foreach (var warning in Model.Warnings)
+                    {
+                        <li class="message-error">@warning</li>
+                    }
+                    
+                    <li class="hint">
+                        @*@T("Plugins.Payments.AuthorizeNet.Errors.GeneralMessage")*@
+                        <p>Please use the back button to return to the Payment Section and review your payment information before resubmitting.</p>
+                        <p>For larger purchases you may need to contact your bank to authorize the transaction.</p>
+                        <p><strong>If issues persist please contact us at <span class="no-wrap">1-800-213-2401</span> and one of our sales experts can assist you in placing your order.</strong><p>
+                    </li>
+                </ul>
+            </div>
+        }
+    </div>
+
+    @*<div class="section confirm-order-info">
+        <strong>@T("Checkout.ConfirmOrder.ShippingInfoHint")</strong>
+        <p>@T("Checkout.ConfirmOrder.ShippingInfoText")</p>
+    </div>*@
+
+    @Html.Widget("op_checkout_confirm_bottom")
+
+    @if (Model.CustomProperties.ContainsKey("checkoutAttributes"))
+    {
+        @Html.Partial("../ShoppingCart/_CheckoutAttributes", Model.CustomProperties["checkoutAttributes"], new ViewDataDictionary())
+
+        <script type="text/javascript">
+            $(document).ready(function() {
+
+                var checkoutAttributes = $('#opc-confirm_order .checkout-attributes');
+
+                if (checkoutAttributes.find('textarea').length) {
+
+                    checkoutAttributes.find('strong').hide();
+
+                    checkoutAttributes.find('dt:not(:last)').hide();
+                    checkoutAttributes.find('dd:not(:last)').hide();
+                }
+            });
+        </script>
+    }
+
+    @if (String.IsNullOrEmpty(Model.MinOrderTotalWarning) && Model.TermsOfServiceOnOrderConfirmPage)
+    {
+        <div id="terms-of-service-warning-box" title="@T("Checkout.TermsOfService")" style="display:none;">
+            <p>@T("Checkout.TermsOfService.PleaseAccept")</p>
+        </div>
+        <div class="terms-of-service">
+            <input id="termsofservice" type="checkbox" name="termsofservice" />
+            @*<label for="termsofservice"><span>@T("Checkout.TermsOfService.IAccept")</span> <a class="read" onclick="javascript:OpenWindow('@Url.RouteUrl("TopicPopup", new { SystemName = "conditionsofuse" })', 450, 500, true)">@T("Checkout.TermsOfService.Read")</a></label>*@
+            <label for="termsofservice">I agree with the <a class="read" onclick="javascript:OpenWindow('@Url.RouteUrl("TopicPopup", new { SystemName = "conditionsofuse" })', 450, 500, true)">Terms of Service</a> and I adhere to them unconditionally.</label>
+        </div>
+    }
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.progress-step.fourth').prev('.separator').find('span').css('width', '100%');
+    });
+
+    $(document).off('click.confirmorder.back').on('click.confirmorder.back', '#opc-confirm_order div.back-link > a', function (e) {
+
+        $('.progress-step.fourth').prev('.separator').find('span').css('width', '66%');
+    });
+</script>

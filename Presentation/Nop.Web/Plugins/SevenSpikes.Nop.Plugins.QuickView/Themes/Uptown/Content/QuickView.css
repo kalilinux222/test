@@ -1,0 +1,547 @@
+﻿ /*
+* Copyright 2016 Seven Spikes Ltd. All rights reserved. (http://www.nop-templates.com)
+* http://www.nop-templates.com/t/licensinginfo
+*/
+
+.quickViewData {
+    display: none;
+}
+@media all and (max-width: 1200px) {
+	.quick-view-button {
+		display: none;
+	}
+}
+
+/* TRIGGER BUTTON */
+
+.quick-view-button {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	margin: auto;
+	z-index: 2;
+    font-size: 0;
+    width: 46px;
+    height: 46px;
+}
+.quick-view-button a {
+    display: block;
+    height: 100%;
+	border-radius: 50%;
+	box-shadow: 0 0 0 2px #0686f1;
+    background: #fff url('images/quickview.png') center no-repeat;
+    transition: all .2s ease;
+	opacity: 0;
+}
+.item-box:hover .quick-view-button a {
+	opacity: 1;
+}
+.quick-view-button a:before {
+	display: none !important; /*only if rendered inside "picture" element*/
+}
+
+
+/* DATA LOADER */
+
+
+.k-overlay {
+    position: fixed;
+    z-index: 1060;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,.7);
+    opacity: 1 !important;
+}
+.quickView .k-loading-mask {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+
+/* MAIN WINDOW & HEADERS */
+
+
+.mfp-wrap {
+	z-index: 1080 !important;
+}
+.quickView {
+    position: absolute;
+	left: 50% !important;
+    z-index: 1070;
+	width: 790px;
+	margin: 0 0 0 -395px;
+    background-color: #fff;
+	padding-top: 0 !important;
+}
+
+.quickView .k-window-titlebar {
+	margin: 0 30px !important;
+    padding: 40px 0 10px;
+    border-bottom: 1px solid #e2e2e2;
+    font-weight: bold;
+    font-size: 22px;
+}
+.quickView .k-window-titlebar .k-window-actions {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	z-index: 1;
+}
+.quickView .k-window-titlebar .k-window-actions a {
+    width: 38px;
+    height: 38px;
+    border: 1px solid #a39f9f;
+    position: absolute;
+    top: -10px;
+    right: -53px;
+    background: url('images/close.png') center no-repeat;
+    font-size: 0;
+}
+
+.quickView .product-essential {
+	float: none;
+	width: auto;
+    margin: 0;
+}
+.quickView .popup-header {
+}
+.quickView .popup-header h1 {
+	position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 40px 30px 10px;
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+/* PRODUCT GALLERY */
+
+
+.quickView .gallery {
+	float: left;
+    width: 40.5%;
+	margin: 0;
+	padding: 30px 12.5px 30px 30px;
+}
+.quickView .gallery .picture {
+	border: none; /*placing border here will confuse #warp element's width*/
+	text-align: center;
+	font-size: 0;
+}
+.quickView .gallery .picture:before {
+    display: none; /*theme specific, change if necessary*/
+}
+.quickView .gallery .picture > img {
+    position: static !important;
+}
+.quickView #cloudZoomImage {
+    position: static !important;
+}
+
+.quickView .links-panel {
+    margin: 20px 0 0;
+}
+.quickView .links-panel a {
+    display: block;
+    text-align: center;
+    color: #5a5a5a;
+    padding: 5px;
+	font-size: 16px;
+	text-transform: uppercase;
+    transition: all .10s ease;
+}
+.quickView .links-panel a:before {
+    content: '>';
+    margin: 0 12px 0 0;
+}
+.quickView .links-panel a:hover {
+    color: #0686f1;
+}
+.quickView ul.social-sharing {
+    text-align: center;
+}
+
+/* PRODUCT OVERVIEW */
+
+
+.quickView .overview {
+    float: right;
+    width: 59.5%;
+	margin: 0;
+	padding: 30px 30px 30px 12.5px;
+}
+
+.quickView .ui-accordion {
+}
+.quickView .ui-accordion-header {
+	position: relative;
+	margin: 0 0 3px;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: normal;
+    border-top: 1px solid #f1f1f1;
+	border-bottom: 1px solid #f1f1f1;
+	background-color: #f8f8f8;
+    padding: 10px 40px 10px 15px;
+    text-align: left;
+	cursor: pointer;  
+}
+.quickView .ui-accordion-header span {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    right: 19px;
+    width: 8px;
+    height: 9px;
+    cursor: pointer;
+    background: url('images/arrow.png') center no-repeat;
+    transition: all .3s ease;
+}
+.quickView .ui-accordion-header-active span {
+    -ms-transform: rotate(180deg); /* IE 9 */
+    -webkit-transform: rotate(180deg); /* Safari */
+    transform: rotate(180deg);
+}
+.quickView .ui-accordion-content {
+	position: relative;
+	padding: 20px 0 20px 15px;
+    margin: 0 0 2px;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box; /* no scrolls fix*/     
+}
+.quickView .ui-accordion-content:after {
+    content: '';
+    display: block;
+    clear: both;
+}
+.quickView .ui-accordion-content:last-child {
+    border-bottom: none;
+}
+
+.quickView .overview .left {
+	margin: 0 0 10px;
+    text-align: left;
+}
+.quickView .overview .left > div {
+    margin: 5px 0;
+}
+.quickView .overview .right {
+    float: right;
+	margin: 9px 0;
+    text-align: right;
+}
+/*wishlist and compare buttons are theme specific,
+change or remove the code block below if necessary*/
+.quickView .overview .right > div {
+	display: inline-block;
+}
+.quickView .overview .add-to-wishlist-button-wrapper,
+.quickView .overview .compare-products-button-wrapper,
+.quickView .overview .email-a-friend-button-wrapper {
+    position: relative;
+}
+
+.quickView .overview .add-to-wishlist:before,
+.quickView .overview .compare-products:before,
+.quickView .overview .email-a-friend:before {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+.quickView .overview .add-to-wishlist-button,
+.quickView .overview .add-to-compare-list-button,
+.quickView .overview .email-a-friend-button {
+	width: 31px;
+	height: 31px;
+	font-size: 0;
+    padding: 0;
+}
+.quick-view-button-tooltip {
+    position: absolute;
+    bottom: 31px;
+    left: 50%;
+    margin: 0 0 0 -75px;
+    width: 150px;
+    text-align: center;
+    background: #454545;
+    padding: 4px 10px;
+    color: #fff;
+    font: 13px 'Droid Serif', serif;
+    font-style: italic;
+    opacity: 0;
+    z-index: -1;
+    -webkit-transition: all .2s ease-in-out;
+    -moz-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+}
+.quick-view-button-tooltip:before {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 8px 8px 0 8px;
+    border-color: #454545 transparent transparent transparent;
+}
+.quickView .overview .add-to-wishlist-button-wrapper:hover .quick-view-button-tooltip,
+.quickView .overview .compare-products-button-wrapper:hover .quick-view-button-tooltip,
+.quickView .overview .email-a-friend-button-wrapper:hover .quick-view-button-tooltip {
+    opacity: 1;
+    z-index: 2;
+}
+
+.quickView .overview .right + div {
+	clear: both;
+}
+
+.quickView .overview .attributes li {
+	margin: 8px 0 0; /*theme specific, change or remove*/
+}
+.quickView .overview .attributes dd .custom-select,
+.quickView .overview .attributes dd select {
+	width: 260px;
+}
+.quickView .overview .attributes .color-squares li {
+	margin: 0 4px 0 0;
+}
+.quickView .giftcard div:last-child textarea {
+    max-width: 100%;
+}
+
+.quickView .overview .attributes ~ .purchase-area {
+    border-top: none;
+    padding: 0;
+}
+
+.quickView .overview .purchase-area {
+	border-top: 1px solid #f1f1f1;
+    padding: 35px 0 0;
+    z-index: 1;
+}
+.quickView .overview .purchase-area:after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+.quickView .overview .prices {
+    padding: 0 0 20px;
+}
+.quickView .overview .product-price {
+	font-size: 20px;
+}
+.quickView .overview .old-product-price {
+    font-size: 18px;
+}
+.quickView .overview .add-to-cart {
+    float: left;
+}
+.quickView .overview .title {
+    display: none;
+}
+
+.quickView .overview .attributes {
+	padding: 0;
+}
+
+.quickView .overview .tier-prices,
+.quickView .overview .product-specs-box {
+    clear: both;
+}
+.quickView .overview .tier-prices .title {
+    display: block;
+	font-size: 18px;
+}
+
+.quickView .overview .short-description,
+.quickView .overview .full-description {
+    margin: 0 0 30px;
+    font-family: 'Droid Serif', serif;
+    font-size: 14px;
+    font-style: italic;
+    color: #909090;
+    line-height: 25px;
+    text-align: justify;
+}
+.secondary-font .quickView .overview .short-description,
+.secondary-font .quickView .overview .full-description {
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+}
+
+.quickView .giftcard {
+    padding: 0;
+    margin: 0 0 30px;
+    background: #fff;
+    border: none;
+}
+
+/* PRODUCT GRIDS */
+
+
+.quickView .product-content:after {
+	content: '';
+    display: block;
+    clear: both;
+}
+.quickView .product-grid {
+	display: none;
+    padding: 40px 30px 30px;
+    margin: 0;
+    background: #f8f8f8;
+}
+.quickView .product-grid .title {
+	font-size: 18px;
+    margin: 0 0 30px;
+	text-align: center;
+    border-bottom: 1px solid #f1f1f1;
+}
+.quickView .product-grid .item-grid {
+	overflow: hidden;
+}
+
+.quickView .product-grid .title {
+    font-size: 18px;
+    margin: 0 0 30px;
+}
+
+.quickView .product-grid .item-box {
+    width: 23.5%;
+}
+.quickView .product-grid .item-box:nth-child(3n+1) {
+    clear: none;
+    margin-left: 2%;
+}
+.quickView .product-grid .item-box:nth-child(4n+1) {
+    clear: both;
+    margin-left: 0;
+}
+.quickView .product-grid .item-box .buttons {
+    display: none;
+}
+.quickView .product-grid .item-box .add-info {
+
+}
+.quickView .item-box .product-title a {
+    height: 36px;
+}
+
+
+/* PRODUCT VARIANTS */
+
+
+.quickView .product-variant-list {
+    margin: 0 0 15px;
+}
+.quickView .product-variant {
+    position: relative;
+    float: left;
+    width: 32%; /*3 items per row*/
+	margin: 0 0 2% 2%;
+	overflow: hidden;
+    text-align: center;
+}
+.quickView .product-variant:nth-of-type(3n+1) {
+	margin-left: 0;
+}
+.quickView .variant-picture {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+}
+.quickView .variant-picture a {
+	display: block;
+	overflow: hidden;
+}
+
+.quickView .variant-picture:before {
+    display: none;
+}
+.quickView .variant-picture a:before {
+	content: "";
+	display: block;
+	padding-top: 125%;
+}
+.quickView .moreInfoHover {
+    position: absolute;
+	left: 0;
+    bottom: 0;
+	width: 100%;
+    background: rgba(0,0,0,.5);
+	padding: 3px;
+    text-align: center;
+    font-size: 10px;
+	color: #fff;
+    transition: all 0.5s ease;
+}
+.quickView .variant-info {
+    position: absolute;
+	top: 0;
+    left: -101%;
+    width: 100%;
+	height: 100%;
+    background: rgba(0,0,0,.5);
+	padding: 40px 10px 10px;
+    text-align: center;
+    font-size: 11px;
+	color: #fff;
+    transition: all 0.5s ease;
+}
+.quickView .product-variant:hover .moreInfoHover {
+	left: 101%;
+}
+.quickView .product-variant:hover .variant-info {
+	left: 0;
+}
+.quickView .variant-info .variant-name {
+	max-height: 30px;
+	margin: 0 0 15px;
+    overflow: hidden;
+	font-size: 13px;
+}
+.quickView .variant-info .variant-name a {
+	display: block;
+}
+.quickView .variant-info .prices {
+    float: none;
+    height: auto;
+	margin: 0;
+    border: none;
+    padding: 0;
+}
+.quickView .variant-info .prices > * {
+	float: none;
+	color: #fff !important;
+}
+.quickView .variant-info .prices label {
+    display: none;
+}
+.quickView .variant-info .product-price {
+	font-size: 16px;
+}
+.quickView .variant-info .tax-shipping-info {
+	display: none;
+}
+.quickView .variant-grid-info .compare-products {
+	display: none;
+}

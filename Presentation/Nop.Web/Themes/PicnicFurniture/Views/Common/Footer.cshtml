@@ -1,0 +1,210 @@
+﻿@model FooterModel
+@using Nop.Web.Models.Common;
+@using Nop.Core.Domain.Tax;
+@using Nop.Core.Infrastructure;
+@using Nop.Services.Configuration
+@using Nop.Core;
+
+@{
+    var storeId = EngineContext.Current.Resolve<IStoreContext>().CurrentStore.Id;
+    var footerLayout = EngineContext.Current.Resolve<ISettingService>().GetSettingByKey("brooklynthemesettings.footerlayout", "footer-1", storeId, true);
+    var removeDesignedBy = EngineContext.Current.Resolve<ISettingService>().GetSettingByKey("brooklynthemesettings.removedesignedby", false, storeId, true);
+    var removeCopyright = EngineContext.Current.Resolve<ISettingService>().GetSettingByKey("brooklynthemesettings.removecopyright", false, storeId, true);
+    bool isFooter1 = String.Compare(footerLayout, "footer-1", true) == 0;
+    var currentThemeName = EngineContext.Current.Resolve<Nop.Web.Framework.Themes.IThemeContext>().WorkingThemeName;
+    var bbbPath = "~/Themes/" + currentThemeName + "/Content/img/footer_bbb.jpg";
+    var gsaPath = "~/Themes/" + currentThemeName + "/Content/img/footer_GSALogo.png";
+    var nrpaPath = "~/Themes/" + currentThemeName + "/Content/img/footer_nrpa.jpg";
+
+    var settingService = EngineContext.Current.Resolve<ISettingService>();
+    var lazyLoadImages = settingService.GetSettingByKey("BrooklynThemeSettings.LazyLoadImages", false, storeId, true);
+}
+
+<div class="footer @footerLayout">
+
+    @if (isFooter1)
+    {
+        <div class="footer-upper">
+            @Html.Partial("Socials", Model)
+        </div>
+    }
+
+    <div class="footer-middle">
+        <div class="footer-block footer-topic">
+            <div class="title">
+                <strong>@T("Footer.Information")</strong>
+            </div>
+            <div class="list">
+                <p>@T("SevenSpikes.Themes.Brooklyn.Footer.Information.Text")</p>
+            </div>
+        </div>
+
+        <div class="footer-block quick-contact">
+            <div class="title">
+                <strong>@T("ContactUs")</strong>
+            </div>
+            <ul class="list">
+                <li class="phone"><span>@T("SevenSpikes.Themes.Brooklyn.PF.Footer.Phone")</span></li>
+                <li class="fax"><span>@T("SevenSpikes.Themes.Brooklyn.PF.Footer.Fax")</span></li>
+                <li class="email"><span>@T("SevenSpikes.Themes.Brooklyn.PF.Footer.Email")</span></li>
+                <li class="address"><span>@T("SevenSpikes.Themes.Brooklyn.PF.Footer.Address")</span></li>
+            </ul>
+        </div>
+
+        <div class="footer-block footer-links">
+            <div class="title">
+                <strong>@T("Footer.CustomerService")</strong>
+            </div>
+            <ul class="list">
+                <li><a href="@Url.RouteUrl("ContactUs")">@T("ContactUsFormLinkLabel")</a></li>
+                @foreach (var topic in Model.Topics.Where(x => x.IncludeInFooterColumn3).ToList())
+                {
+                    <li><a href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })">@topic.Name</a></li>
+                }
+                @if (Model.SitemapEnabled)
+                {
+                    <li><a href="@Url.RouteUrl("Sitemap")">@T("Sitemap")</a></li>
+                }
+                @if (Model.AllowCustomersToApplyForVendorAccount)
+                {
+                    <li><a href="@Url.RouteUrl("ApplyVendorAccount")">@T("Vendors.ApplyAccount")</a></li>
+                }
+            </ul>
+        </div>
+
+        <div class="footer-block footer-links">
+            <div class="title">
+                <strong>@T("Footer.MyAccount")</strong>
+            </div>
+            <ul class="list">
+                <li><a href="@Url.RouteUrl("CustomerOrders")">@T("Account.CustomerOrders")</a></li>
+                <li><a href="@Url.RouteUrl("CustomerAddresses")" class="">@T("Account.CustomerAddresses")</a></li>
+                @if (Model.ShoppingCartEnabled)
+                {
+                    <li><a href="@Url.RouteUrl("ShoppingCart")" class="ico-cart">@T("ShoppingCart")</a></li>
+                }
+                @if (Model.WishlistEnabled)
+                {
+                    <li><a href="@Url.RouteUrl("Wishlist")" class="ico-wishlist">@T("Wishlist")</a></li>
+                }
+                @foreach (var topic in Model.Topics.Where(x => x.IncludeInFooterColumn2).ToList())
+                {
+                    <li><a href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })">@topic.Name</a></li>
+                }
+            </ul>
+        </div>
+        
+        @*<div class="footer-block newsletter-block">
+            @if (!isFooter1)
+            {
+                <div class="title">
+                    <strong>@T("Footer.FollowUs")</strong>
+                </div>
+            }
+            @if (!isFooter1)
+            {
+                <div class="wrapper">
+                    @Html.Action("NewsletterBox", "Newsletter")
+                    @Html.Partial("Socials", Model)
+                </div>
+            }
+
+        </div>*@
+    </div>
+    <div class="footer-lower">
+        <div class="footer-lower-center"> 
+            @*@if (!removeCopyright)
+            {
+                <div class="footer-powered-by">
+                    Powered by <a href="http://www.nopcommerce.com/">nopCommerce</a>
+                </div>
+            }
+            @if (!removeDesignedBy)
+            {
+                <div class="footer-designed-by">
+                    Designed by <a href="http://www.nop-templates.com/" target="_blank">Nop-Templates.com</a>
+                </div>
+            }*@
+            @*@if (Model.DisplayTaxShippingInfoFooter)
+            {
+                var inclTax = EngineContext.Current.Resolve<IWorkContext>().TaxDisplayType == TaxDisplayType.IncludingTax;
+                <div class="footer-tax-shipping">
+                    @T(inclTax ? "Footer.TaxShipping.InclTax" : "Footer.TaxShipping.ExclTax", Url.RouteUrl("Topic", new { SeName = Html.GetTopicSeName("shippinginfo") }))
+                </div>
+            }*@
+            <div class="google-reviews">
+                <a href="https://search.google.com/local/reviews?placeid=ChIJpTnqKmbr5ogRiX7f_m9TYjM" target="_blank">
+                    <span class="txt">@T("UltimateCarousel.ItemNumber")</span>
+                </a>
+            </div>
+            <div class="div-image-footer">
+                <a target="_blank" href="http://www.gsa.gov/">
+                    @if (lazyLoadImages)
+                    {
+                        <img data-lazyloadsrc="@Url.Content(gsaPath)"
+                             src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                             alt="General Services Administration Logo for Furniture Leisure, Inc. - Contract #GS-03F-0167V / #GS-03F-0166V"
+                             title="General Services Administration Logo for Furniture Leisure, Inc. - Contract #GS-03F-0167V / #GS-03F-0166V"
+                             id="Footer_Image2"
+                             class="imgfooter"
+                             style="border-width: 0px;" />
+                    }
+                    else
+                    {
+                        <img id="Footer_Image2" alt="General Services Administration Logo for Furniture Leisure, Inc. - Contract #GS-03F-0167V / #GS-03F-0166V" title="General Services Administration Logo for Furniture Leisure, Inc. - Contract #GS-03F-0167V / #GS-03F-0166V" class="imgfooter" src="@Url.Content(gsaPath)" style="border-width: 0px;"/>
+                    }
+                </a>
+                @*<a target="_blank" href="http://www.nrpa.org/">
+                    @if (lazyLoadImages)
+                    {
+                        <img data-lazyloadsrc="@Url.Content(nrpaPath)"
+                             src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                             alt="National Recreation and Park Association"
+                             title="National Recreation and Park Association"
+                             id="Footer_Image3"
+                             class="imgfooter"
+                             style="border-width: 0px;" />
+                    }
+                    else
+                    {
+                        <img id="Footer_Image3" alt="National Recreation and Park Association" title="National Recreation and Park Association" class="imgfooter" src="@Url.Content(nrpaPath)" style="border-width: 0px;" />
+                    }
+                </a>*@
+                <a target="_blank" href="http://www.bbb.org/north-east-florida/business-reviews/furniture-outdoor/furniture-leisure-inc-in-bunnell-fl-182616223/#bbbonlineclick">
+                    @if (lazyLoadImages)
+                    {
+                        <img data-lazyloadsrc="@Url.Content(bbbPath)"
+                             src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                             alt="Verify BBB accreditation and see a BBB report."
+                             title="Verify BBB accreditation and see a BBB report."
+                             id="Footer_Image1"
+                             class="imgfooter"
+                             style="border-width: 0px;" />
+                    }
+                    else
+                    {
+                        <img id="Footer_Image1" alt="Verify BBB accreditation and see a BBB report." title="Verify BBB accreditation and see a BBB report." class="imgfooter" src="@Url.Content(bbbPath)" style="border-width: 0px;" />
+                    }
+                </a>
+                <div class="AuthorizeNetSeal">
+                <script type="text/javascript" language="javascript" data-fixedscript="1">var ANS_customer_id = "6d0fe0c1-4023-406e-841a-f0a3c3a1a39b";</script>
+                <script type="text/javascript" language="javascript" data-fixedscript="1" src="//verify.authorize.net/anetseal/seal.js"></script><a href="http://www.authorize.net/" id="AuthorizeNetText" target="_blank">Accept Credit Cards</a>
+            </div>
+            </div>
+            <ul class="accepted-payments">
+                <li class="method1"><img alt="" src="@Url.Content("~/Themes/" + currentThemeName + "/Content/img/payment-1.png")" /></li>
+                <li class="method2"><img alt="" src="@Url.Content("~/Themes/" + currentThemeName + "/Content/img/payment-2.png")" /></li>
+                <li class="method3"><img alt="" src="@Url.Content("~/Themes/" + currentThemeName + "/Content/img/payment-3.png")" /></li>
+                <li class="method4"><img alt="" src="@Url.Content("~/Themes/" + currentThemeName + "/Content/img/payment-4.png")" /></li>
+            </ul>
+            <div class="footer-disclaimer">
+                <span>@T("Content.CopyrightNotice", DateTime.Now.Year, Model.StoreName)</span>
+            </div>
+            <div class="footer-store-theme">
+                @Html.Action("StoreThemeSelector", "Common")
+            </div>                   
+        </div>
+    </div>
+    @Html.Widget("footer")
+
+</div>

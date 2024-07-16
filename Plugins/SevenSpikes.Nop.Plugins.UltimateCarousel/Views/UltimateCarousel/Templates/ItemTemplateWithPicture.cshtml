@@ -1,0 +1,22 @@
+﻿@model SevenSpikes.Nop.Plugins.UltimateCarousel.Models.CarouselItemModel
+
+@if (string.IsNullOrWhiteSpace(Model.Url))
+{
+    if (Model.IsPictureVisible)
+    {
+        <div class="item-image">
+            <img src="@Model.PictureSrc" alt="@Model.Title" title="@Model.Title" />
+        </div>
+    }
+    <div class="item-title">@Model.Title</div>
+}
+else
+{
+    if (Model.IsPictureVisible)
+    {
+        <a class="item-image" target="@(Model.OpenInNewWindow ? "_blank" : "_self")" href="@Model.Url" title="@Model.Title">
+            <img src="@Model.PictureSrc" alt="@Model.Title" title="@Model.Title" />
+        </a>
+    }
+    <a class="item-title" target="@(Model.OpenInNewWindow ? "_blank" : "_self")" href="@Model.Url" title="@Model.Title">@Model.Title</a>
+}

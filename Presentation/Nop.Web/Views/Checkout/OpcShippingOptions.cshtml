@@ -1,0 +1,47 @@
+﻿@model IList<Nop.Web.Models.ShoppingCart.ShoppingCartModel.CheckoutAttributeModel>
+
+<div class="checkout-data">
+    <div class="section shipping-options">
+        @Html.Widget("op_checkout_shipping_options_top")
+
+        <p class="warning">@T("Checkout.DeliveryOptions.Warning")</p>
+
+        @Html.Partial("../ShoppingCart/_CheckoutAttributes", Model, new ViewDataDictionary())
+
+        <div class="shipping-options-info">
+            <strong>@T("Checkout.DeliveryOptions.Title")</strong>
+            <p>@T("Checkout.DeliveryOptions.Info")</p>
+        </div>
+
+        @Html.Widget("op_checkout_shipping_options_bottom")
+    </div>
+</div>
+
+<div class="section order-summary">
+    <div class="title">
+        <strong>@T("Checkout.OrderSummary")</strong>
+    </div>
+    @Html.Action("OrderSummary", "ShoppingCart")
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        var checkoutAttributes = $('#opc-shipping_options .checkout-attributes');
+
+        if (checkoutAttributes.find('textarea').length) {
+
+            checkoutAttributes.find('dt:last').hide();
+            checkoutAttributes.find('dd:last').hide();
+        }
+
+        $('.progress-step.second').addClass('active');
+        $('.progress-step.second').prev('.separator').find('span').css('width', '100%');
+    });
+
+    $(document).off('click.shippingoptions.back').on('click.shippingoptions.back', '#co-shipping-options-form div.back-link > a', function (e) {
+
+        $('.progress-step.second').removeClass('active');
+        $('.progress-step.second').prev('.separator').find('span').css('width', '0');
+    });
+</script>

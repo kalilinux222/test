@@ -1,0 +1,41 @@
+﻿@{
+    Layout = "~/Administration/Views/Shared/_AdminPopupLayout.cshtml";
+}
+@using System.Web.Mvc
+@using SevenSpikes.Nop.Plugins.UltimateCarousel
+
+@model SevenSpikes.Nop.Plugins.UltimateCarousel.Models.CarouselItemModel
+
+@{
+    if (ViewBag.RefreshPage == true || ViewBag.isTrialVersion == true)
+    {
+        <script type="text/javascript">
+            try {
+                var gridElement = window.opener.document.getElementById("@ViewBag.btnId");
+                $(gridElement).click();
+            }
+            catch (e) {
+                console.log("@ViewBag.btnId");
+            }
+            window.close();
+        </script>
+    }
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="section-header">
+        <div class="title">
+            <img src="@Url.Content("~/Administration/Content/images/ico-catalog.png")" alt="Catalog Icon"/>
+            <span>@T("SevenSpikes.Plugins.UltimateCarousel.Admin.CarouselItem.AddNew")</span>
+        </div>
+        <div class="options">
+            <input type="submit" name="save" class="k-button" value="@T("Admin.Common.Save")" />
+        </div>
+    </div>
+    <input type="hidden" name="refreshButtonId" value="btnRefreshItems" />
+
+    @Html.Partial(Constants.ViewAdminCarouselItemCreateOrUpdate, Model)
+}

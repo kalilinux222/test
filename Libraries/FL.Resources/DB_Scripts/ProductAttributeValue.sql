@@ -1,0 +1,1 @@
+ALTER TABLE ProductAttributeValue ADD [AttributeValuePictureId] INT NOT NULL DEFAULT 0;

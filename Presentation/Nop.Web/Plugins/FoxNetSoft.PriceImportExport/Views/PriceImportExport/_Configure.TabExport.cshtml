@@ -1,0 +1,129 @@
+﻿@model FoxNetSoft.Plugin.Misc.PriceImportExport.Models.PriceImportExportSettingsModel
+@using System.Web.Mvc.Html
+@using FoxNetSoft.Plugin.Misc.PriceImportExport.Models
+@using Nop.Web.Framework
+@if (!Model.IsRunning)
+{
+    <div>
+    @using (Html.BeginForm("ExportPriceToFile", "PriceImportExportSettings", FormMethod.Post, new { id = "export-form" }))
+    {
+    @Html.AntiForgeryToken()
+    <table class="adminContent">
+        <tr>
+            <td colspan="2">
+                <b>@T("Admin.FoxNetSoft.Plugin.Misc.PriceImportExport.Export.Message")</b>
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.SearchProductName):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => Model.SearchProductName)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.SearchCategoryId):
+            </td>
+            <td class="adminData">
+                @Html.DropDownList("SearchCategoryId", Model.AvailableCategories)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.SearchIncludeSubCategories):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.SearchIncludeSubCategories)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.SearchManufacturerId):
+            </td>
+            <td class="adminData">
+                @Html.DropDownList("SearchManufacturerId", Model.AvailableManufacturers)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.SearchStoreId):
+            </td>
+            <td class="adminData">
+                @Html.DropDownList("SearchStoreId", Model.AvailableStores)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.SearchVendorId):
+            </td>
+            <td class="adminData">
+                @Html.DropDownList("SearchVendorId", Model.AvailableVendors)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.SearchProductTypeId):
+            </td>
+            <td class="adminData">
+                @Html.DropDownList("SearchProductTypeId", Model.AvailableProductTypes)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.SearchPublishedId):
+            </td>
+            <td class="adminData">
+                @Html.DropDownList("SearchPublishedId", Model.AvailablePublishedOptions)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.AvailableForSale):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => Model.AvailableForSale)
+                @Html.ValidationMessageFor(model => model.AvailableForSale)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.ExportCreatedOnFrom):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.ExportCreatedOnFrom)
+                @Html.ValidationMessageFor(model => model.ExportCreatedOnFrom)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.ExportCreatedOnTo):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => Model.ExportCreatedOnTo)
+                @Html.ValidationMessageFor(model => model.ExportCreatedOnTo)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.ExportCustomerRoleId):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => Model.ExportCustomerRoleId)
+                @Html.ValidationMessageFor(model => model.ExportCustomerRoleId)
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="submit" name="exportpricelist" class="k-button" value="@T("Admin.FoxNetSoft.Plugin.Misc.PriceImportExport.Export.Button")" />
+            </td>
+        </tr>
+    </table>
+    }
+    </div>
+}
+else
+{
+    @Model.MessageThead
+}

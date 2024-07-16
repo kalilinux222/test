@@ -1,0 +1,152 @@
+﻿@using Nop.Core.Domain.Common;
+@using Nop.Core.Infrastructure;
+@using SevenSpikes.Nop.Framework
+
+@{
+    Layout = AdminViewLocations.AdminLayoutViewPath;
+
+    var defaultGridPageSize = EngineContext.Current.Resolve<AdminAreaSettings>().DefaultGridPageSize;
+    var gridPageSizes = EngineContext.Current.Resolve<AdminAreaSettings>().GridPageSizes;
+}
+
+@Html.AntiForgeryToken()
+
+<div class="section-header">
+    <div class="title">
+        <img src="@Url.Content("~/Administration/Content/images/ico-catalog.png")" alt="Catalog Icon" />
+        Home page categories custom description
+    </div>
+</div>
+
+<table class="adminContent">
+    <tr>
+        <td>
+            <div id="categories-grid"></div>
+
+            <script>
+                $(document).ready(function () {
+                    $("#categories-grid").kendoGrid({
+                        dataSource: {
+                            type: "json",
+                            transport: {
+                                read: {
+                                    url: "@Html.Raw(Url.Action("List", "HomePageCategoriesAdmin"))",
+                                    type: "POST",
+                                    dataType: "json",
+                                    data: addAntiForgeryToken
+                                },
+                                update: {
+                                    url:"@Html.Raw(Url.Action("Update", "HomePageCategoriesAdmin"))",
+                                    type: "POST",
+                                    dataType: "json",
+                                    data: addAntiForgeryToken
+                                },
+                                destroy: {
+                                    url: "@Html.Raw(Url.Action("Delete", "HomePageCategoriesAdmin"))",
+                                    type: "POST",
+                                    dataType: "json",
+                                    data: addAntiForgeryToken
+                                },
+                                create: {
+                                    url: "@Html.Raw(Url.Action("Create", "HomePageCategoriesAdmin"))",
+                                    type: "POST",
+                                    dataType: "json",
+                                    data: addAntiForgeryToken,
+                                    complete: function () {
+
+                                        $("#categories-grid").data("kendoGrid").dataSource.read();
+                                    }
+                                }
+                            },
+                            schema: {
+                                data: "Data",
+                                total: "Total",
+                                errors: "Errors",
+                                model: {
+                                    id: "Id",
+                                    fields: {
+                                        CategoryName: { editable: true, type: "string" },
+                                        CategoryDescription: { editable: true, type: "string" }
+                                    }
+                                }
+                            },
+                            requestEnd: function (e) {
+                                if (e.type === 'create' || e.type === 'update') {
+                                    this.read();
+                                }
+                            },
+                            error: function (e) {
+                                display_kendoui_grid_error(e);
+
+                                this.cancelChanges();
+                            },
+                            pageSize: "@(defaultGridPageSize)",
+                            serverPaging: true,
+                            serverFiltering: true,
+                            serverSorting: true
+                        },
+                        pageable: {
+                            refresh: true,
+                            pageSizes: [@(gridPageSizes)]
+                        },
+                        editable: {
+                            confirmation: true,
+                            mode: "inline"
+                        },
+                        toolbar: ["create"],
+                        edit: function(e) {
+                            if (!e.model.isNew()) {
+                                //replacing the whole dropdown with the specification name
+                                e.container.find('.k-widget.k-dropdown.k-header').replaceWith(e.model.CategoryName);
+                            }
+                        },
+                        filterable: {
+                            extra: false
+                        },
+                        sortable: true,
+                        scrollable: false,
+                        columns: [{
+                            field: "CategoryName",
+                            title: "Category",
+                            width: 200,
+                            editor: categoryEditor
+                        }, {
+                            field: "CategoryDescription",
+                            title: "Description",
+                            width: 400
+                        }, {
+                            command: [{
+                                name: "edit",
+                                text: {
+                                    edit: "@T("Admin.Common.Edit")",
+                                    update: "@T("Admin.Common.Update")",
+                                    cancel: "@T("Admin.Common.Cancel")"
+                                }
+                            }, {
+                                name: "destroy",
+                                text: "@T("Admin.Common.Delete")"
+                            }],
+                            width: 200
+                        }]
+                    });
+                });
+
+                function categoryEditor(container, options) {
+                    $('<select style="width: 100%" required data-bind="value: ' + options.field + '" />')
+                        .appendTo(container)
+                        .kendoDropDownList({
+                            dataTextField: "Text",
+                            dataValueField: "Value",
+                            autoBind: false,
+                            dataSource: {
+                                transport: {
+                                    read: "@Html.Raw(Url.Action("GetCategories", "HomePageCategoriesAdmin"))"
+                                }
+                            }
+                        });
+
+                }
+            </script>
+        </td>
+    </tr>
+</table>

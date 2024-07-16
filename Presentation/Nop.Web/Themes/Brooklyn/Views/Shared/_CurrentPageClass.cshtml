@@ -1,0 +1,91 @@
+﻿@{
+    var controllerName = System.Web.HttpContext.Current.Request.RequestContext.RouteData.GetRequiredString("controller");
+    var actionName = System.Web.HttpContext.Current.Request.RequestContext.RouteData.GetRequiredString("action");
+
+    var isHomePage = controllerName.Equals("home", StringComparison.InvariantCultureIgnoreCase) &&
+                        actionName.Equals("index", StringComparison.InvariantCultureIgnoreCase);
+
+    if (isHomePage)
+    {
+        <text>home-page-body</text>
+        return;
+    }
+
+    var isCategoryPage = controllerName.Equals("catalog", StringComparison.InvariantCultureIgnoreCase) &&
+                        actionName.Equals("category", StringComparison.InvariantCultureIgnoreCase);
+
+    if (isCategoryPage)
+    {
+        <text>category-page-body</text>
+        return;
+    }
+
+    var isProductPage = controllerName.Equals("product", StringComparison.InvariantCultureIgnoreCase) &&
+                        actionName.Equals("productdetails", StringComparison.InvariantCultureIgnoreCase);
+
+    if (isProductPage)
+    {
+        <text>product-details-page-body</text>
+        return;
+    }
+
+    var isShoppingCartPage = controllerName.Equals("shoppingcart", StringComparison.InvariantCultureIgnoreCase) &&
+                        actionName.Equals("cart", StringComparison.InvariantCultureIgnoreCase);
+
+    if (isShoppingCartPage)
+    {
+        <text>shopping-cart-page-body</text>
+        return;
+    }
+
+    var isCheckoutPage = controllerName.Equals("checkout", StringComparison.InvariantCultureIgnoreCase) ||
+                        controllerName.Equals("realonepagecheckout", StringComparison.InvariantCultureIgnoreCase);
+
+    if (isCheckoutPage)
+    {
+        <text>checkout-pages-body</text>
+        return;
+    }
+
+    var isAccountPage = controllerName.Equals("customer", StringComparison.InvariantCultureIgnoreCase);
+
+    if (isAccountPage)
+    {
+        <text>customer-pages-body</text>
+        return;
+    }
+
+    var isTopicPage = controllerName.Equals("topic", StringComparison.InvariantCultureIgnoreCase) &&
+                        actionName.Equals("topicdetails", StringComparison.InvariantCultureIgnoreCase);
+
+    if (isTopicPage)
+    {
+        <text>topic-page-body</text>
+        return;
+    }
+
+    var isSearchPage = (controllerName.Equals("catalog", StringComparison.InvariantCultureIgnoreCase) && actionName.Equals("search", StringComparison.InvariantCultureIgnoreCase)
+                    || controllerName.Equals("catalog7spikes", StringComparison.InvariantCultureIgnoreCase) && actionName.Equals("ajaxfilterssearch", StringComparison.InvariantCultureIgnoreCase));
+
+    if (isSearchPage)
+    {
+        <text>search-page-body</text>
+        return;
+    }
+    
+    var isNewsPage = controllerName.Equals("news", StringComparison.InvariantCultureIgnoreCase);
+
+    if (isNewsPage)
+    {
+        <text>news-pages-body</text>
+        return;
+    }
+    
+    var isBlogPage = controllerName.Equals("blog", StringComparison.InvariantCultureIgnoreCase);
+
+    if (isBlogPage)
+    {
+        <text>blog-pages-body</text>
+        return;
+    }
+}

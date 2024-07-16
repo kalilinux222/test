@@ -1,0 +1,134 @@
+﻿@using Nop.Core
+@using Nop.Core.Infrastructure
+@using Nop.Services.Localization
+@using Nop.Services.Configuration
+@using Nop.Web.Framework.Themes
+@using Nop.Services.Security;
+
+@{
+    var storeId = EngineContext.Current.Resolve<IStoreContext>().CurrentStore.Id;
+    var headerLayout = EngineContext.Current.Resolve<ISettingService>().GetSettingByKey("brooklynthemesettings.headerlayout", "header-1", storeId, true);
+    var isHeader1 = String.Compare(headerLayout, "header-1", true) == 0;
+    var currentThemeName = EngineContext.Current.Resolve<IThemeContext>().WorkingThemeName;
+    var headerPhonePath = "~/Themes/" + currentThemeName + "/Content/img/FL_PhoneNumber_Header.png";
+
+    var megaMenuWithPicturesLayout = EngineContext.Current.Resolve<ISettingService>().GetSettingByKey("brooklynthemesettings.megamenuwithpictureslayout", "pictures-per-row-four", storeId, true);
+
+    var permissionService = EngineContext.Current.Resolve<IPermissionService>();
+    var shoppingCartEnabled = permissionService.Authorize(StandardPermissionProvider.EnableShoppingCart);
+    var wishlistEnabled = permissionService.Authorize(StandardPermissionProvider.EnableWishlist);
+}
+
+@{
+    var warningText = Html.Action("TopicBlock", "Topic", new { systemName = "WarningMessage" });
+    var warningTextParentClass = string.Empty;
+}
+@if (!MvcHtmlString.IsNullOrEmpty(warningText))
+{
+    warningTextParentClass = "warning-text-on";
+}
+
+<div class="header @headerLayout @warningTextParentClass">
+
+    @if (!MvcHtmlString.IsNullOrEmpty(warningText))
+    {
+        <div class="warning-text">
+            @Html.Action("TopicBlock", "Topic", new { systemName = "WarningMessage" })
+        </div>
+    }
+
+    @Html.Widget("header")
+    <div id="headerTop" class="header-top">
+        <div class="header-options-top-wrapper">
+            <div class="header-options">
+                @Html.Action("AdminHeaderLinks", "Common")
+                @*<div class="header-selectors-wrapper">
+                    @Html.Action("TaxTypeSelector", "Common")
+                    @Html.Action("CurrencySelector", "Common")
+                    @Html.Action("LanguageSelector", "Common")
+                    @Html.Widget("header_selectors")
+                </div>*@
+            </div>
+            <div class="header-top-msg-wrap">
+                <span class="header-top-message">@T("Sevenspikes.Themes.Brooklyn.PF.Header.Top.Message")</span>
+            </div>
+            <div class="header-phone">
+                <span class="label">@T("Sevenspikes.Themes.Brooklyn.PF.Header.Hint")</span>
+                <a class="phone" href="tel:@T("Sevenspikes.Themes.Brooklyn.PF.Header.Phone")">@T("Sevenspikes.Themes.Brooklyn.PF.Header.Phone")</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-upper">
+        <div class="header-options-wrapper">
+                @Html.Partial("Logo")
+                <div class="search-box store-search-box">
+                    @Html.Action("SearchBox", "Catalog")
+                </div>
+            <div class="header-options">
+                <div class="header-links-wrapper">
+                    @Html.Action("HeaderLinks", "Common")
+                </div>
+                <div class="header-phone">
+                    <span class="label">@T("Sevenspikes.Themes.Brooklyn.PF.Header.Hint")</span>
+                    <a class="phone" href="tel:@T("Sevenspikes.Themes.Brooklyn.PF.Header.Phone")">@T("Sevenspikes.Themes.Brooklyn.PF.Header.Phone")</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="headerLower" class="header-lower">
+        <div class="header-actions-wrapper">
+            @*<div class="header-logo-mobile">
+                <a href="@Url.RouteUrl("HomePage")">
+                    @{var storeNameMob = EngineContext.Current.Resolve<IStoreContext>().CurrentStore.GetLocalized(x => x.Name);
+                        var logoPathMobile = "~/Themes/" + currentThemeName + "/Content/img/FL_Logo_MobileTransparent.png";}
+                    <img class="logo-mobile" title="" alt="@storeNameMob" src="@Url.Content(logoPathMobile)">
+                </a>
+                <a href="tel:+1-800-213-2401">
+                    @{var logoPathMobilePhone = "~/Themes/" + currentThemeName + "/Content/img/PhoneNumber_Mobile.png";}
+                    <img class="phone-mobile" title="Call an expert: 1-800-213-2401" alt="Questions? Call an expert: 1-800-213-2401" src="@Url.Content(logoPathMobilePhone)">
+                </a>
+            </div>*@
+            @{
+                var menuHtml = Html.Widget("theme_header_menu");
+            }
+            @if (MvcHtmlString.IsNullOrEmpty(menuHtml)) // if no mega menu, no need for additional class
+            {
+                megaMenuWithPicturesLayout = String.Empty;
+            }
+
+            <div class="header-menu @megaMenuWithPicturesLayout">
+                <div class="close-menu">
+                    <label>@T("SevenSpikes.Themes.Brooklyn.MenuTitle")</label>
+                    <span>@T("SevenSpikes.Themes.Common.CloseMenu")</span>
+                </div>
+
+                @if (!MvcHtmlString.IsNullOrEmpty(menuHtml))
+                {
+                    @menuHtml
+                }
+                else
+                {
+                    @Html.Action("TopMenu", "Catalog")
+                }
+            </div>
+            <div class="header-actions">
+                @Html.Action("HeaderLinks", "Common")
+
+                @if (wishlistEnabled)
+                {
+                    <a href="@Url.RouteUrl("Wishlist")" class="ico-wishlist" title="@T("wishlist")">
+                        <span class="wishlist-qty"></span>
+                    </a>
+                }
+                @if (shoppingCartEnabled)
+                {
+                    @*<a href="@Url.RouteUrl("ShoppingCart")" class="ico-cart">
+                        <span class="cart-qty"></span>
+                    </a>*@
+                    @Html.Action("FlyoutShoppingCart", "ShoppingCart")
+                }
+            </div>
+        </div>
+    </div>
+</div>

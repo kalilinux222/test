@@ -1,0 +1,169 @@
+﻿/*
+* Copyright 2014 Seven Spikes Ltd. All rights reserved. (http://www.nop-templates.com)
+* http://www.nop-templates.com/t/licensinginfo
+*/
+
+span.search-box-text {
+	float: left;
+	background: #fff;
+}
+input.instant-search-busy {
+	background: url('../../../images/ajax-loader-small.gif') no-repeat 312px center !important;
+}
+input.search-box-text.narrow {
+	width: 236px !important;
+}
+input.instant-search-busy.narrow {
+	background-position: 214px center !important;
+}
+
+/* AUTOCOMPLETE */
+
+.instantSearch {
+	width: 334px !important;
+	height: auto !important;
+    background: #fff !important;
+    border: 1px solid #999;
+    border-top: none;
+}
+.instantSearch .k-list-container {
+	position: static !important;
+	width: auto !important;
+    height: auto !important;
+}
+.instantSearch.resize {
+	width: 353px !important;
+}
+.instantSearch .k-item {
+	border-top: 1px solid #ccc;
+}
+.instantSearch .k-item:first-child {
+	border-top: 0;
+}
+.instant-search-item {
+	border: 1px solid #fff;
+	overflow: hidden;
+	background: #fff;
+	padding: 5px 8px;
+}
+.instant-search-item .img-block {
+	position: relative;
+	float: left;
+	border: 1px solid transparent;
+	overflow: hidden;
+	width: 60px;
+	height: 60px;
+	background-color: #fff;
+	text-align: center;
+}
+.instant-search-item .img-block img {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	max-width: 100%;
+	max-height: 100%;
+	margin: auto;
+}
+.instant-search-item .detail {
+	margin-left: 70px;
+	min-height: 60px;
+}
+.instant-search-item .detail .title {
+	margin-bottom: 5px;
+	color: #333;
+	font-size: 12px;
+}
+.instant-search-item .detail .price {
+	font-weight: bold;
+	color: #000;
+}
+.instant-search-item .detail .sku {
+    margin: 0 0 5px;
+}
+.k-item.k-state-hover .instant-search-item, 
+.k-item.k-state-focused .instant-search-item {
+	background: #eee;
+	cursor: pointer;
+}
+.k-item.k-state-hover .instant-search-item .img-block, 
+.k-item.k-state-focused .instant-search-item .img-block {
+	border-color: #ddd;
+}
+
+
+
+/*=====================================================
+    
+    TABLETS LANDSCAPE & NETBOOKS
+
+=====================================================*/
+
+@media all and (max-width: 990px) and (min-width: 769px) {
+
+    .instantSearch {
+        width: 280px !important;
+    }
+
+}
+
+/*=====================================================
+    
+    TABLETS PORTRAIT & SMARTPHONES LANDSCAPE
+
+=====================================================*/
+
+@media all and (max-width: 768px) and (min-width: 481px) {
+
+    .instantSearch {
+        width: 350px !important;
+    }
+	.instantSearch.resize {
+		width: 385px !important;
+	}
+    input.instant-search-busy.narrow {
+	background-position: 214px center !important;
+}
+
+}
+
+
+
+/*=====================================================
+    
+    SMALLER MOBILE DEVICES
+
+=====================================================*/
+
+@media all and (max-width: 480px) {
+
+    input.search-box-text.narrow {
+		width: 198px !important;
+	}
+	input.instant-search-busy.narrow {
+		background-position: 176px center !important;
+	}
+	#instant-search-categories {
+		width: 35px;
+	}
+	.instantSearch {
+        width: 250px !important;
+    }
+	.instantSearch.resize {
+		width: 262px !important;
+	}
+	.instantSearch .img-block {
+		display: none;
+	}
+	.instantSearch .detail {
+		margin: 0;
+	}
+    .instant-search-item .detail .title {
+        font-size: 14px;
+    }
+    .instant-search-item .detail .price {
+        font-size: 12px;
+    }
+
+}

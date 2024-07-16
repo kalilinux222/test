@@ -1,0 +1,8 @@
+﻿Group: Payment methods
+FriendlyName: Check
+SystemName: Payments.AuthorizeNetCheck
+Version: 1.00
+SupportedVersions: 3.70
+Author: Nop-Templates
+DisplayOrder: 1
+FileName: Nop.Plugin.Payments.AuthorizeNetCheck.dll

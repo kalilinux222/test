@@ -1,0 +1,185 @@
+﻿@using SevenSpikes.Nop.Plugins.JsonLD.Models.Admin
+@using SevenSpikes.Nop.Framework.MVCExtensions
+@using Nop.Web.Framework
+
+@model JsonLdAdminModel
+
+@{
+
+    Html.AppendCssFileParts("~/Plugins/SevenSpikes.Core/Styles/adminstyles.css");
+    Html.AddScriptParts("~/Plugins/SevenSpikes.Core/Scripts/animatedcollapse.js");
+    Html.AddScriptParts("~/Plugins/SevenSpikes.Core/Scripts/adminAnimatedCollapse.js");
+
+    var additionalPagesInputId = Html.FieldIdFor(model => model.AdditionalPages);
+}
+
+
+<script src="https://kendo.cdn.telerik.com/2019.3.917/js/kendo.all.min.js"></script>
+
+<script type="text/javascript">
+    animatedcollapse.addDiv('adminGroupPanel1', 'fade=1, speed=400');
+    animatedcollapse.addDiv('adminGroupPanel2', 'fade=1, speed=400, hide=1');
+
+    animatedcollapse.init();
+</script>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="section-header">
+        <div class="title">
+            <img src="@Url.Content("~/Administration/Content/images/ico-configuration.png")" alt="" />
+            @T("SevenSpikes.JsonLd.Admin.Settings")
+        </div>
+        <div class="options">
+            <button type="submit" name="save" value="save" class="k-button">@T("Admin.Common.Save")</button>
+        </div>
+    </div>
+    @Html.Action("StoreScopeConfiguration", "Setting")
+    <div class="adminGroup">
+        <div class="controlTitle">
+            <a class="toggleControl">@T("SevenSpikes.JsonLd.Admin.Settings.GeneralSettingsTitle")</a>
+        </div>
+        <div id="adminGroupPanel1" class="adminGroupPanel">
+            <table class="adminContent">
+                <tr>
+                    <td class="adminTitle">
+                        @Html.OverrideStoreCheckboxFor(model => model.Enable_OverrideForStore, model => model.Enable, Model.ActiveStoreScopeConfiguration)
+                        @Html.NopLabelFor(model => model.Enable):
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.Enable)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminHint" colspan="2">
+                        <p>@T("SevenSpikes.JsonLd.Admin.Settings.Enable.Hint")</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.OverrideStoreCheckboxFor(model => model.Name_OverrideForStore, model => model.Name, Model.ActiveStoreScopeConfiguration)
+                        @Html.NopLabelFor(model => model.Name):
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.Name)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminHint" colspan="2">
+                        <p>@T("SevenSpikes.JsonLd.Admin.Settings.Name.Hint")</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.OverrideStoreCheckboxFor(model => model.Description_OverrideForStore, model => model.Description, Model.ActiveStoreScopeConfiguration)
+                        @Html.NopLabelFor(model => model.Description):
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.Description)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminHint" colspan="2">
+                        <p>@T("SevenSpikes.JsonLd.Admin.Settings.Description.Hint")</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.OverrideStoreCheckboxFor(model => model.PictureId_OverrideForStore, model => model.PictureId, Model.ActiveStoreScopeConfiguration)
+                        @Html.NopLabelFor(model => model.PictureId):
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.PictureId)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminHint" colspan="2">
+                        <p>@T("SevenSpikes.JsonLd.Admin.Settings.PictureId.Hint")</p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="adminGroup">
+        <div class="controlTitle">
+            <a class="toggleControl">@T("SevenSpikes.JsonLd.Admin.Settings.AddressSettingsTitle")</a>
+        </div>
+        <div id="adminGroupPanel2" class="adminGroupPanel">
+            <table class="adminContent">
+                <tr>
+                    <td class="adminTitle">
+                        @Html.OverrideStoreCheckboxFor(model => model.StreetAddress_OverrideForStore, model => model.StreetAddress, Model.ActiveStoreScopeConfiguration)
+                        @Html.NopLabelFor(model => model.StreetAddress):
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.StreetAddress)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminHint" colspan="2">
+                        <p>@T("SevenSpikes.JsonLd.Admin.Settings.StreetAddress.Hint")</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.OverrideStoreCheckboxFor(model => model.AddressLocality_OverrideForStore, model => model.AddressLocality, Model.ActiveStoreScopeConfiguration)
+                        @Html.NopLabelFor(model => model.AddressLocality):
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.AddressLocality)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminHint" colspan="2">
+                        <p>@T("SevenSpikes.JsonLd.Admin.Settings.AddressLocality.Hint")</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.OverrideStoreCheckboxFor(model => model.PostalCode_OverrideForStore, model => model.PostalCode, Model.ActiveStoreScopeConfiguration)
+                        @Html.NopLabelFor(model => model.PostalCode):
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.PostalCode)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminHint" colspan="2">
+                        <p>@T("SevenSpikes.JsonLd.Admin.Settings.PostalCode.Hint")</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.OverrideStoreCheckboxFor(model => model.Country_OverrideForStore, model => model.Country, Model.ActiveStoreScopeConfiguration)
+                        @Html.NopLabelFor(model => model.Country):
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.Country)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminHint" colspan="2">
+                        <p>@T("SevenSpikes.JsonLd.Admin.Settings.Country.Hint")</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        @Html.OverrideStoreCheckboxFor(model => model.Phone_OverrideForStore, model => model.Phone, Model.ActiveStoreScopeConfiguration)
+                        @Html.NopLabelFor(model => model.Phone):
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.Phone)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminHint" colspan="2">
+                        <p>@T("SevenSpikes.JsonLd.Admin.Settings.Phone.Hint")</p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+}

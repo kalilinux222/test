@@ -1,0 +1,22 @@
+﻿.mega-menu .title {
+    padding: 8px 25px 8px 0;
+    background: url('images/rtl-bullet.png') right center no-repeat;
+}
+.mega-menu .box li a {
+    background: url('images/rtl-arrow.png') right center no-repeat;
+    padding-right: 10px;
+    padding-left: 0;
+}
+.mega-menu .dropdown.fullWidth {
+    right: 0;
+}
+.mega-menu .box {
+    float: right;
+}
+
+.mega-menu .picture {
+    float: right;
+}
+.mega-menu .subcategories {
+    margin: 0 100px 0 0;
+}

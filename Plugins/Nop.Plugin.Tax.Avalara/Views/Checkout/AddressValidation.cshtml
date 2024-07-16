@@ -1,0 +1,79 @@
+﻿@model Nop.Plugin.Tax.Avalara.Models.Checkout.AddressValidationModel
+@{
+    var popupTitle = Model.IsError ? "Plugins.Tax.Avalara.AddressValidation.PopupTitleValidationError" : "Plugins.Tax.Avalara.AddressValidation.PopupTitle";
+}
+<h1 class="title">@T(popupTitle)</h1>
+<div class="address-validation-details">
+    @if (Model.IsError)
+    {
+        <div class="error-message">
+            <div class="text-wrapper">
+                <p>@T("Plugins.Tax.Avalara.AddressValidation.ValidatingAddressErrorDescription")</p>
+                <ul>
+                    <li><strong>@Model.Address.Address1</strong></li>
+                    <li><strong>@(Model.Address.City)@(!string.IsNullOrEmpty(Model.Address.StateProvinceName) ? ", " + Model.Address.StateProvinceName : string.Empty)@(!string.IsNullOrEmpty(Model.Address.ZipPostalCode) ? ", " + Model.Address.ZipPostalCode : string.Empty)</strong></li>
+                </ul>
+                <strong>Error: @Model.Message</strong>
+                <p>@T("Plugins.Tax.Avalara.AddressValidation.ValidatingAddressErrorDescription2")</p>
+            </div>
+            <div class="buttons">
+                <input type="button" id="backToShippingAddressButton" class="button-1" value="@T("Common.Back")" />
+                <input type="button" class="button-2" value="@T("Plugins.Tax.Avalara.UseEnteredAddress")" onclick="$('.avalaraAddressValidationWindow').data('kendoWindow').close(); return false;" />
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="confirm-address">
+            <p>@T("Plugins.Tax.Avalara.AddressValidation.Confirm")</p>
+            <strong>Recommended address</strong>
+            <ul>
+                @if (!string.IsNullOrEmpty(Model.Address.Address1))
+                {
+                    <li>@if (Model.Address1Changed)
+                    {@Html.Raw("<strong>")}@Model.Address.Address1@if (Model.Address1Changed)
+                    {@Html.Raw("</strong>")}</li>
+                }
+                @if (!string.IsNullOrEmpty(Model.Address.StateProvinceName))
+                {
+                    <li>
+                        @if (Model.CityChanged)
+                        {@Html.Raw("<strong>")}@Model.Address.City@if (Model.CityChanged)
+                        {@Html.Raw("</strong>")}@if (Model.StateProvinceNameChanged)
+                        {@Html.Raw("<strong>")}@(", " + Model.Address.StateProvinceName)@if (Model.StateProvinceNameChanged)
+                        {@Html.Raw("</strong>")}@if (Model.ZipPostalCodeChanged)
+                        {@Html.Raw("<strong>")}@(!string.IsNullOrEmpty(Model.Address.ZipPostalCode) ? ", " + Model.Address.ZipPostalCode : string.Empty)@if (Model.ZipPostalCodeChanged)
+                        {@Html.Raw("</strong>")}
+                    </li>
+                }
+            </ul>
+        </div>
+        <div class="buttons">
+            <input type="button" class="button-1" id="useValidatedAddressButton" value="@T("Plugins.Tax.Avalara.UseValidatedAddress")" onclick="" />
+            <input type="button" class="button-2" value="@T("Plugins.Tax.Avalara.UseEnteredAddress")" onclick="$('.avalaraAddressValidationWindow').data('kendoWindow').close(); return false;" />
+        </div>
+    }
+</div>
+<script>
+    $(document).ready(function () {
+
+        $("#useValidatedAddressButton").on('click', function() {
+            var url = '@Url.Action("UseValidatedAddress", "AddressValidation")';
+            var address = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Address, Newtonsoft.Json.Formatting.Indented));
+            AvalaraTax.useValidatedAddress(url, '@Model.AddressId', @Model.IsNewAddress.ToString().ToLower(), address);
+
+            $('.avalaraAddressValidationWindow').data('kendoWindow').close();
+
+        });
+
+        $("#backToShippingAddressButton").on('click', function() {
+            
+            $('.avalaraAddressValidationWindow').data('kendoWindow').close();
+
+            $('.progress-step.second').removeClass('active');
+            $('.progress-step.second').prev('.separator').find('span').css('width', '0');
+
+            Checkout.back();
+        });
+    });
+</script>

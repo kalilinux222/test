@@ -1,0 +1,284 @@
+﻿@using Nop.Web.Framework
+@using SevenSpikes.Nop.Plugins.UltimateCarousel.Models
+
+@model CarouselModel
+
+@{
+    Html.AppendCssFileParts("~/Plugins/SevenSpikes.Core/Styles/adminstyles.css");
+    Html.AddScriptParts("~/Plugins/SevenSpikes.Core/Scripts/animatedcollapse.js");
+    Html.AddScriptParts("~/Plugins/SevenSpikes.Core/Scripts/adminAnimatedCollapse.js");
+}
+
+<script type="text/javascript">
+    animatedcollapse.addDiv('adminGroupPanel1', 'fade=1, speed=400');
+    animatedcollapse.addDiv('adminGroupPanel2', 'fade=1, speed=400, hide=1');
+    animatedcollapse.addDiv('adminGroupPanel3', 'fade=1, speed=400, hide=1');
+
+    animatedcollapse.init();
+</script>
+
+<div class="adminGroup">
+    <div class="controlTitle">
+        <a class="toggleControl">@T("SevenSpikes.UltimateCarousel.Admin.Carousel.Settings.TabTitle.CommonSettings")</a>
+    </div>
+    <div id="adminGroupPanel1" class="adminGroupPanel">
+        <table class="adminContent">
+            <tr>
+                <td class="adminTitle">
+                    @Html.NopLabelFor(model => model.IsEnabled):
+                </td>
+                <td class="adminData">
+                    @Html.EditorFor(model => model.IsEnabled, Model.IsEnabled)
+                </td>
+            </tr>
+            <tr>
+                <td class="adminHint" colspan="2">
+                    <p>@T("sevenspikes.ultimatecarousel.admin.carousel.IsEnabled.Hint")</p>
+                </td>
+            </tr>
+        </table>
+
+        @(Html.LocalizedEditor<CarouselModel, CarouselLocalizedModel>("carousel-name-localized",
+        @<table class="adminContent">
+            <tr>
+                <td class="adminTitle" style="display: inline-block;">
+                    @Html.NopLabelFor(model => model.Locales[item].PublicTitle):
+                </td>
+                <td class="adminData" style="display: inline-block;">
+                    @Html.EditorFor(model => model.Locales[item].PublicTitle)
+                    @Html.ValidationMessageFor(model => model.Locales[item].PublicTitle)
+                </td>
+            </tr>
+            <tr>
+                <td class="adminHint" colspan="2">
+                    <p>@T("SevenSpikes.UltimateCarousel.Admin.Carousel.PublicTitle.Hint")</p>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    @Html.HiddenFor(model => model.Locales[item].LanguageId)
+                </td>
+            </tr>
+        </table>
+        ,@<table class="adminContent">
+            <tr>
+                <td class="adminTitle" style="display: inline-block;">
+                    @Html.NopLabelFor(model => model.PublicTitle):
+                </td>
+                <td class="adminData" style="display: inline-block;">
+                    @Html.EditorFor(model => model.PublicTitle)
+                    @Html.ValidationMessageFor(model => model.PublicTitle)
+                </td>
+            </tr>
+            <tr>
+                <td class="adminHint" colspan="2">
+                    <p>@T("SevenSpikes.UltimateCarousel.Admin.Carousel.PublicTitle.Hint")</p>
+                </td>
+            </tr>
+        </table>
+        ))
+        <table class="adminContent">
+            <tr>
+                <td class="adminTitle">
+                    @Html.NopLabelFor(model => model.CarouselCssClass):
+                </td>
+                <td class="adminData">
+                    @Html.EditorFor(model => model.CarouselCssClass)
+                    @Html.ValidationMessageFor(model => model.CarouselCssClass)
+                </td>
+            </tr>
+            <tr>
+                <td class="adminHint" colspan="2">
+                    <p>@T("sevenspikes.ultimatecarousel.admin.carousel.CarouselCssClass.Hint")</p>
+                </td>
+            </tr>
+            <tr>
+                <td class="adminTitle">
+                    @Html.NopLabelFor(model => model.CarouselItemsTemplate):
+                </td>
+                @if (Model.CarouselItemsTemplatesList.Count == 0)
+                {
+                    <td class="adminData">
+                        @T("SevenSpikes.Plugins.UltimateCarousel.Fields.CarouselItemsTemplatesList.Missing")
+                    </td>
+                }
+                else
+                {
+                    <td class="adminData">
+                        @Html.DropDownListFor(model => model.CarouselItemsTemplate, Model.CarouselItemsTemplatesList)
+                        @Html.ValidationMessageFor(model => model.CarouselItemsTemplate)
+                    </td>
+                }
+            </tr>
+            <tr>
+                <td class="adminHint" colspan="2">
+                    <p>@T("sevenspikes.ultimatecarousel.admin.carousel.CarouselItemsTemplate.Hint")</p>
+                </td>
+            </tr>
+            <tr>
+                <td class="adminTitle">
+                    @Html.NopLabelFor(model => model.PictureSize):
+                </td>
+                <td class="adminData">
+                    @Html.EditorFor(model => model.PictureSize)
+                </td>
+            </tr>
+            <tr>
+                <td class="adminHint" colspan="2">
+                    <p>@T("SevenSpikes.UltimateCarousel.Admin.Carousel.PictureSize.Hint")</p>
+                </td>
+            </tr>
+            <tr>
+                <td class="adminTitle">
+                    @Html.NopLabelFor(model => model.DisplayOrder):
+                </td>
+                <td class="adminData">
+                    @Html.EditorFor(model => model.DisplayOrder)
+                </td>
+            </tr>
+            <tr>
+                <td class="adminHint" colspan="2">
+                    <p>@T("SevenSpikes.UltimateCarousel.Admin.Carousel.DisplayOrder.Hint")</p>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div class="adminGroup">
+    <div class="controlTitle">
+        <a class="toggleControl">@T("SevenSpikes.UltimateCarousel.Admin.Carousel.Settings.TabTitle.SpecificSettings")</a>
+    </div>
+    <div id="adminGroupPanel2" class="adminGroupPanel">
+        <table class="adminContent">
+            <tr>
+                <td class="adminTitle">
+                    @Html.NopLabelFor(model => model.SettingCenter):
+                </td>
+                <td class="adminData">
+                    @Html.EditorFor(model => model.SettingCenter)
+                </td>
+            </tr>
+            <tr>
+                <td class="adminHint" colspan="2">
+                    <p>@T("SevenSpikes.UltimateCarousel.Admin.Carousel.SettingCenter.Hint")</p>
+                </td>
+            </tr>
+            <tr>
+                <td class="adminTitle">
+                    @Html.NopLabelFor(model => model.SettingLoop):
+                </td>
+                <td class="adminData">
+                    @Html.EditorFor(model => model.SettingLoop)
+                </td>
+            </tr>
+            <tr>
+                <td class="adminHint" colspan="2">
+                    <p>@T("SevenSpikes.UltimateCarousel.Admin.Carousel.SettingLoop.Hint")</p>
+                </td>
+            </tr>
+            <tr>
+                <td class="adminTitle">
+                    @Html.NopLabelFor(model => model.SettingMargin):
+                </td>
+                <td class="adminData">
+                    @Html.EditorFor(model => model.SettingMargin)
+                </td>
+            </tr>
+            <tr>
+                <td class="adminHint" colspan="2">
+                    <p>@T("SevenSpikes.UltimateCarousel.Admin.Carousel.SettingMargin.Hint")</p>
+                </td>
+            </tr>
+            <tr>
+                <td class="adminTitle">
+                    @Html.NopLabelFor(model => model.SettingNav):
+                </td>
+                <td class="adminData">
+                    @Html.EditorFor(model => model.SettingNav)
+                </td>
+            </tr>
+            <tr>
+                <td class="adminHint" colspan="2">
+                    <p>@T("SevenSpikes.UltimateCarousel.Admin.Carousel.SettingNav.Hint")</p>
+                </td>
+            </tr>
+            <tr>
+                <td class="adminTitle">
+                    @Html.NopLabelFor(model => model.SettingResponsive):
+                </td>
+                <td class="adminData">
+                    @Html.EditorFor(model => model.SettingResponsive)
+                </td>
+            </tr>
+            <tr>
+                <td class="adminHint" colspan="2">
+                    <p>@T("SevenSpikes.UltimateCarousel.Admin.Carousel.SettingResponsive.Hint")</p>
+                </td>
+            </tr>
+            <tr>
+                <td class="adminTitle">
+                    @Html.NopLabelFor(model => model.SettingAutoPlay):
+                </td>
+                <td class="adminData">
+                    @Html.EditorFor(model => model.SettingAutoPlay)
+                </td>
+            </tr>
+            <tr>
+                <td class="adminHint" colspan="2">
+                    <p>@T("SevenSpikes.UltimateCarousel.Admin.Carousel.SettingAutoPlay.Hint")</p>
+                </td>
+            </tr>
+            <tr>
+                <td class="adminTitle">
+                    @Html.NopLabelFor(model => model.SettingAutoplayTimeout):
+                </td>
+                <td class="adminData">
+                    @Html.EditorFor(model => model.SettingAutoplayTimeout)
+                </td>
+            </tr>
+            <tr>
+                <td class="adminHint" colspan="2">
+                    <p>@T("SevenSpikes.UltimateCarousel.Admin.Carousel.SettingAutoplayTimeout.Hint")</p>
+                </td>
+            </tr>
+            <tr>
+                <td class="adminTitle">
+                    @Html.NopLabelFor(model => model.SettingAutoPlayHoverOnPause):
+                </td>
+                <td class="adminData">
+                    @Html.EditorFor(model => model.SettingAutoPlayHoverOnPause)
+                </td>
+            </tr>
+            <tr>
+                <td class="adminHint" colspan="2">
+                    <p>@T("SevenSpikes.UltimateCarousel.Admin.Carousel.SettingAutoPlayHoverOnPause.Hint")</p>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+
+<div class="adminGroup">
+    <div class="controlTitle">
+        <a class="toggleControl">@T("SevenSpikes.UltimateCarousel.Admin.Carousel.Settings.TabTitle.AdvancedSettings")</a>
+    </div>
+    <div id="adminGroupPanel3" class="adminGroupPanel">
+        <table class="adminContent">
+            <tr>
+                <td class="adminTitle">
+                    @Html.NopLabelFor(model => model.SettingAdvancedSettings):
+                </td>
+                <td class="adminData">
+                    @Html.TextAreaFor(model => model.SettingAdvancedSettings)
+                </td>
+            </tr>
+            <tr>
+                <td class="adminHint" colspan="2">
+                    <p>@T("SevenSpikes.UltimateCarousel.Admin.Carousel.SettingAdvancedSettings.Hint")</p>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,290 @@
+﻿@using Nop.Core
+@using Nop.Core.Domain.Tax
+@using Nop.Core.Infrastructure
+@using Nop.Services.Configuration
+@using Nop.Web.Models.Common
+
+@model FooterModel
+
+@{
+    var storeId = EngineContext.Current.Resolve<IStoreContext>().CurrentStore.Id;
+    var settingService = EngineContext.Current.Resolve<ISettingService>();
+    var footerLayout = settingService.GetSettingByKey("uptownthemesettings.footerlayout", "footer-1", storeId, true);
+    var isFooter1 = string.Compare(footerLayout, "footer-1", StringComparison.InvariantCultureIgnoreCase) == 0;
+}
+
+@helper RenderFooterLower(int storeId, ISettingService settingService)
+{
+    var removeCopyright = settingService.GetSettingByKey("uptownthemesettings.removecopyright", false, storeId, true);
+    var removeDesignedBy = settingService.GetSettingByKey("uptownthemesettings.removedesignedby", false, storeId, true);
+
+    <div class="footer-disclaimer">
+        @T("Content.CopyrightNotice", DateTime.Now.Year, Model.StoreName)
+    </div>
+    if (Model.DisplayTaxShippingInfoFooter)
+    {
+        var inclTax = EngineContext.Current.Resolve<IWorkContext>().TaxDisplayType == TaxDisplayType.IncludingTax;
+        <div class="footer-tax-shipping">
+            @T(inclTax ? "Footer.TaxShipping.InclTax" : "Footer.TaxShipping.ExclTax", Url.RouteUrl("Topic", new { SeName = Html.GetTopicSeName("shippinginfo") }))
+        </div>
+    }
+    @*if (!removeCopyright)
+    {
+        <div class="footer-powered-by">
+            Powered by <a href="http://www.nopcommerce.com/">nopCommerce</a>
+        </div>
+
+    }
+    if (!removeDesignedBy)
+    {
+        <div class="footer-designed-by">
+            Designed by <a href="http://www.nop-templates.com/" target="_blank">Nop-Templates.com</a>
+        </div>
+    }*@
+
+    <div class="google-reviews">
+        <a href="https://search.google.com/local/reviews?placeid=ChIJtwrpKmbr5ogRPDnARrUe0dw" target="_blank">
+            <span class="txt">@T("UltimateCarousel.ItemNumber")</span>
+        </a>
+    </div>
+
+    @Html.Action("StoreThemeSelector", "Common")
+}
+
+@helper RenderFooterBlocks(bool isFooter1, int storeId, ISettingService settingService)
+{
+    if (isFooter1)
+    {
+        var pinterestUrl = settingService.GetSettingByKey("uptownthemesettings.pinteresturl", String.Empty, storeId, true);
+        var vimeoUrl = settingService.GetSettingByKey("uptownthemesettings.vimeourl", String.Empty, storeId, true);
+        var instagramUrl = settingService.GetSettingByKey("uptownthemesettings.instagramurl", String.Empty, storeId, true);
+
+        <div class="footer-block first">
+            <h3 class="title">
+                <span>@T("SevenSpikes.Themes.Uptown.ContactInfo")</span>
+            </h3>
+            <ul class="footer-menu footer-collapse">
+                <li class="address">
+                    <span>@T("SevenSpikes.Themes.Uptown.Common.Address")</span>
+                </li>
+                <li class="phone">
+                    <span>@T("SevenSpikes.Themes.Uptown.Common.Phone")</span>
+                </li>
+                <li class="email">
+                    <span>@T("SevenSpikes.Themes.Uptown.Common.EmailName")@T("SevenSpikes.Themes.Uptown.Common.EmailAt")@T("SevenSpikes.Themes.Uptown.Common.EmailDomain")</span>
+                </li>
+            </ul>
+            <ul class="social-sharing">
+                @if (!String.IsNullOrEmpty(Model.FacebookLink))
+                {
+                    <li class="facebook">
+                        <a target="_blank" href="@Model.FacebookLink">
+                            <span class="flip"></span>
+                        </a>
+                    </li>
+                }
+                @if (!String.IsNullOrEmpty(Model.TwitterLink))
+                {
+                    <li class="twitter">
+                        <a target="_blank" href="@Model.TwitterLink">
+                            <span class="flip"></span>
+                        </a>
+                    </li>
+                }
+                @if (!String.IsNullOrEmpty(pinterestUrl))
+                {
+                    <li class="pinterest">
+                        <a target="_blank" href="@pinterestUrl">
+                            <span class="flip"></span>
+                        </a>
+                    </li>
+                }
+                @if (!String.IsNullOrEmpty(instagramUrl))
+                {
+                    <li class="instagram">
+                        <a target="_blank" href="@instagramUrl">
+                            <span class="flip"></span>
+                        </a>
+                    </li>
+                }
+                @if (!String.IsNullOrEmpty(Model.YoutubeLink))
+                {
+                    <li class="youtube">
+                        <a target="_blank" href="@Model.YoutubeLink">
+                            <span class="flip"></span>
+                        </a>
+                    </li>
+                }
+                @if (!String.IsNullOrEmpty(vimeoUrl))
+                {
+                    <li class="vimeo">
+                        <a target="_blank" href="@vimeoUrl">
+                            <span class="flip"></span>
+                        </a>
+                    </li>
+                }
+                @if (Model.NewsEnabled)
+                {
+                    <li class="rss">
+                        <a target="_blank" href="@Url.RouteUrl("NewsRSS", new {languageId = Model.WorkingLanguageId})">
+                            <span class="flip"></span>
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+    }
+    else
+    {
+        <div class="footer-block first">
+            <a href="@Url.RouteUrl("HomePage")" class="logo">
+                @Html.Widget("uptown_theme_footer_logo")
+            </a>
+            <h3 class="title">
+                <span>@T("SevenSpikes.Themes.Uptown.AboutUs.Title")</span>
+            </h3>
+            <p class="footer-about-us footer-collapse">@T("SevenSpikes.Themes.Uptown.AboutUs")</p>
+            @Html.Action("NewsletterBox", "Newsletter")
+        </div>
+    }
+
+    <div class="footer-block">
+        <h3 class="title">
+            <span>@T("SevenSpikes.Themes.Uptown.Information")</span>
+        </h3>
+        <ul class="footer-menu footer-collapse">
+            @foreach (var topic in Model.Topics.Where(x => x.IncludeInFooterColumn1).ToList())
+            {
+                <li><a href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })">@topic.Name</a></li>
+            }
+            @*<li><a href="@Url.RouteUrl("ManufacturerList")">@T("Manufacturers")</a></li>*@
+            @if (Model.BlogEnabled)
+            {
+                <li><a href="@Url.RouteUrl("Blog")">@T("Blog")</a></li>
+            }
+            <li><a href="@Url.RouteUrl("ContactUs")">@T("ContactUs")</a></li>
+            @if (Model.SitemapEnabled)
+            {
+                <li><a href="@Url.RouteUrl("Sitemap")">@T("Sitemap")</a></li>
+            }
+        </ul>
+    </div>
+
+    <div class="footer-block">
+        <h3 class="title">
+            <span>@T("Footer.MyAccount")</span>
+        </h3>
+        <ul class="footer-menu footer-collapse">
+            <li><a href="@Url.RouteUrl("CustomerInfo")">@T("Account.CustomerInfo")</a></li>
+            <li><a href="@Url.RouteUrl("CustomerAddresses")">@T("Account.CustomerAddresses")</a></li>
+            <li><a href="@Url.RouteUrl("CustomerOrders")">@T("Account.CustomerOrders")</a></li>
+            @if (Model.ShoppingCartEnabled)
+            {
+                <li><a href="@Url.RouteUrl("ShoppingCart")">@T("ShoppingCart")</a></li>
+            }
+            @if (Model.WishlistEnabled)
+            {
+                <li><a href="@Url.RouteUrl("Wishlist")">@T("Wishlist")</a></li>
+            }
+            @if (Model.AllowCustomersToApplyForVendorAccount)
+            {
+                <li><a href="@Url.RouteUrl("ApplyVendorAccount")">@T("Vendors.ApplyAccount")</a></li>
+            }
+            @foreach (var topic in Model.Topics.Where(x => x.IncludeInFooterColumn2).ToList())
+            {
+                <li><a href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })">@topic.Name</a></li>
+            }
+        </ul>
+    </div>
+
+    if (isFooter1)
+    {
+        <div class="footer-block last">
+            <h3 class="title">
+                <span>@T("SevenSpikes.Themes.Uptown.AboutUs.Title")</span>
+            </h3>
+            <p class="footer-about-us footer-collapse">@T("SevenSpikes.Themes.Uptown.AboutUs")</p>
+        </div>
+    }
+    else
+    {
+        <div class="footer-block last">
+            <h3 class="title">
+                <span>@T("SevenSpikes.Themes.Uptown.ContactInfo")</span>
+            </h3>
+            <ul class="footer-menu footer-collapse">
+                <li class="address">
+                    <span>@T("SevenSpikes.Themes.Uptown.Common.Address")</span>
+                </li>
+                <li class="phone">
+                    <span>@T("SevenSpikes.Themes.Uptown.Common.Phone")</span>
+                </li>
+                <li class="email">
+                    <span>@T("SevenSpikes.Themes.Uptown.Common.EmailName")@T("SevenSpikes.Themes.Uptown.Common.EmailAt")@T("SevenSpikes.Themes.Uptown.Common.EmailDomain")</span>
+                </li>
+            </ul>
+        </div>
+    }
+}
+
+@helper RenderPayments()
+{
+    <ul class="accepted-payment-methods">
+        <li class="method1"></li>
+        <li class="method2"></li>
+        <li class="method3"></li>
+        <li class="method4"></li>
+        <li class="method5"></li>
+    </ul>
+}
+
+<div class="footer @footerLayout">
+    <div class="footer-upper">
+        @if (isFooter1)
+        {
+            @Html.Widget("uptown_footer_social_feed")
+
+            @Html.Action("NewsletterBox", "Newsletter")
+        }
+        else
+        {
+            <div class="footer-centering">
+                @RenderFooterBlocks(isFooter1, storeId, settingService)
+            </div>
+        }
+    </div>
+
+    @if (isFooter1)
+    {
+        <div class="footer-middle">
+            <div class="footer-centering">
+                @RenderFooterBlocks(isFooter1, storeId, settingService)
+            </div>
+        </div>
+    }
+
+    <div class="footer-lower">
+        @if (isFooter1)
+        {
+            @RenderPayments()
+            <div class="footer-end">
+                <span class="icon-1"></span>
+                <span class="icon-2"></span>
+                <span class="icon-3"></span>
+            </div>
+            @RenderFooterLower(storeId, settingService)
+            
+        }
+        else
+        {
+            <div class="footer-centering">
+                <div class="footer-lower-right">
+                    @RenderPayments()
+                </div>
+                <div class="footer-lower-left">
+                    @RenderFooterLower(storeId, settingService)
+                </div>
+            </div>
+        }
+    </div>
+</div>

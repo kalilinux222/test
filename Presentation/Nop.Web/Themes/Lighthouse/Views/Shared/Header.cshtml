@@ -1,0 +1,44 @@
+﻿@using Nop.Core
+@using Nop.Core.Infrastructure
+@using Nop.Services.Localization
+@using Nop.Web.Framework.Themes
+@{
+    var currentThemeName = EngineContext.Current.Resolve<IThemeContext>().WorkingThemeName;
+    var logoPath = "~/Themes/" + currentThemeName + "/Content/img/logo.png";
+
+    var lighthouseLogo = @Html.Widget("lighthouse_theme_logo");
+}
+<div class="header">
+    @Html.Widget("header")
+    <div class="header-logo">
+        <a href="@Url.RouteUrl("HomePage")" class="logo">
+            @if (!MvcHtmlString.IsNullOrEmpty(lighthouseLogo))
+            {
+                @lighthouseLogo
+            }
+            else
+            {
+                string storeName = EngineContext.Current.Resolve<IStoreContext>().CurrentStore.GetLocalized(x => x.Name);
+                <img title="" alt="@storeName" src="@Url.Content(logoPath)">
+            }
+        </a>
+    </div>
+    <div class="header-toll-free">Toll Free: 1-844-289-3044<br /><span style="font-size: 12px;">Mon. - Fri. 9:00 AM - 5:00 PM EST</span></div>
+    <div class="header-selectors-wrapper">
+        @Html.Action("TaxTypeSelector", "Common")
+        @Html.Action("CurrencySelector", "Common")
+        @Html.Action("LanguageSelector", "Common")
+        @Html.Widget("header_selectors")
+    </div>
+    <div class-"header-chat-icon">
+        <!--Begin Comm100 Live Chat Code-->
+        <div id="comm100-button-2565"></div>
+        <script type="text/javascript">
+            var Comm100API = Comm100API || {}; (function (t) { function e(e) { var a = document.createElement("script"), c = document.getElementsByTagName("script")[0]; a.type = "text/javascript", a.async = !0, a.src = e + t.site_id, c.parentNode.insertBefore(a, c) } t.chat_buttons = t.chat_buttons || [], t.chat_buttons.push({ code_plan: 2565, div_id: "comm100-button-2565" }), t.site_id = 69400, t.main_code_plan = 2565, e("https://vue.comm100.com/livechat.ashx?siteId="), setTimeout(function () { t.loaded || e("https://standby.comm100vue.com/livechat.ashx?siteId=") }, 5e3) })(Comm100API || {})
+        </script>
+        <!--End Comm100 Live Chat Code-->
+    </div>
+    <div class="search-box">
+        @Html.Action("SearchBox", "Catalog")
+    </div>
+</div>

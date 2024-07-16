@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<SupportedWidgetZones>
+  <WidgetZone>plugin_product_page_live_stores</WidgetZone>
+  <WidgetZone>theme_product_page_live_stores</WidgetZone>
+  <WidgetZone>product_page_testimonials</WidgetZone>
+  <WidgetZone>home_page_bestsellers</WidgetZone>
+  <WidgetZone>home_page_testimonials</WidgetZone>
+  <WidgetZone>categorydetails_bottom_plugins</WidgetZone>
+  <WidgetZone>categorydetails_bottom_themes</WidgetZone>
+  <WidgetZone>campaign_page_plugins_live_stores</WidgetZone>
+  <WidgetZone>campaign_page_themes_live_stores</WidgetZone>
+  <WidgetZone>campaign_page_testimonials</WidgetZone>
+</SupportedWidgetZones>

@@ -1,0 +1,144 @@
+﻿@using Nop.Web.Framework
+@using Nop.Core.Domain.Common;
+@using Nop.Core.Infrastructure;
+@using SevenSpikes.Nop.Plugins.UltimateCarousel.Models
+
+@model CarouselModel
+
+@Html.HiddenFor(model => model.Id)
+
+@{
+    var gridPageSize = EngineContext.Current.Resolve<AdminAreaSettings>().DefaultGridPageSize;
+    var gridPageSizes = EngineContext.Current.Resolve<AdminAreaSettings>().GridPageSizes;
+}
+
+<div id="carousel-items-grid"></div>
+
+<script type="text/x-kendo-template" id="add-new-item-template">
+    <input type="submit" id="btnAddNewImg" name="btnAddNewImg" value="@T("SevenSpikes.UltimateCarousel.Admin.Carousel.AddNew")" onclick="javascript:OpenWindow('@(Url.Action("CarouselItemCreate", "UltimateCarouselAdmin", new { carouselId = Model.Id }))', 950, 700, true); return false;" class="k-button" />
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#carousel-items-grid").kendoGrid({
+            dataSource: {
+                type: "json",
+                transport: {
+                    read: {
+                        url: "@Html.Raw(Url.Action("CarouselItemList", "UltimateCarouselAdmin", new { carouselId = Model.Id }))",
+                        type: "POST",
+                        dataType: "json",
+                        data: addAntiForgeryToken
+                    },
+                    update: {
+                        url: "@Html.Raw(Url.Action("CarouselItemUpdate", "UltimateCarouselAdmin"))",
+                        type: "POST",
+                        dataType: "json",
+                        data: addAntiForgeryToken
+                    },
+                    destroy: {
+                        url: "@Html.Raw(Url.Action("CarouselItemDelete", "UltimateCarouselAdmin"))",
+                        type: "POST",
+                        dataType: "json",
+                        data: addAntiForgeryToken
+                    }
+                },
+                schema: {
+                    data: "Data",
+                    total: "Total",
+                    errors: "Errors",
+                    model: {
+                        id: "Id",
+                        fields: {
+                            Id: { editable: false, type: "number" },
+                            Visible: { editable: false, type: "boolean" },
+                            Title: { editable: false, type: "string" },
+                            Url: { editable: false, type: "string" },
+                            IsPictureVisible: { editable: false, type: "boolean" },
+                            PictureId: { editable: false, type: "number" },
+                            DisplayOrder: { editable: true, type: "number" },
+                        }
+                    }
+                },
+                requestEnd: function (e) {
+                    if (e.type == "update") {
+                        this.read();
+                    }
+                },
+                error: function (e) {
+                    display_kendoui_grid_error(e);
+                    // Cancel the changes
+                    this.cancelChanges();
+                },
+                pageSize: @(gridPageSize)
+                },
+            pageable: {
+                refresh: true,
+                pageSizes: [@(gridPageSizes)]
+            },
+            editable: {
+                confirmation: true,
+                mode: "popup"
+            },
+            toolbar: kendo.template($("#add-new-item-template").html()),
+            filterable: false,
+            sortable: true,
+            scrollable: false,
+            columns: [{
+                field: "Visible",
+                title: "@T("SevenSpikes.UltimateCarousel.Admin.CarouselItem.Visible")"
+            }, {
+                field: "Title",
+                title: "@T("SevenSpikes.UltimateCarousel.Admin.CarouselItem.Title")"
+            }, {
+                field: "Url",
+                title: "@T("SevenSpikes.UltimateCarousel.Admin.CarouselItem.Url")"
+            }, {
+                field: "IsPictureVisible",
+                title: "@T("SevenSpikes.UltimateCarousel.Admin.CarouselItem.IsPictureVisible")"
+            }, {
+                field: "PictureId",
+                title: "@T("SevenSpikes.UltimateCarousel.Admin.CarouselItem.Picture")",
+                template: '<img alt="#= Title #" src="#= PictureSrc #" style="max-width: 240px; max-height: 200px;" />'
+            }, {
+                field: "DisplayOrder",
+                title: "@T("SevenSpikes.UltimateCarousel.Admin.CarouselItem.DisplayOrder")",
+                format: "{0:0}"
+            }, {
+                title: "@T("Admin.Common.Edit")",
+                command: [{
+                    name: "editImg",
+                    text: "@T("Admin.Common.Edit")",
+                    imageClass: "k-icon k-edit",
+                    click: function(e) {
+                        // Recommended way by Kendo to get the Id
+                        var tr = $(e.target).closest("tr");
+                        var data = this.dataItem(tr);
+                        OpenWindow('@Url.Action("CarouselItemUpdate", "UltimateCarouselAdmin")/' + data.id, 950, 700, true);
+                    }
+                }],
+                width: 80
+            }, {
+                title: "@T("Admin.Common.Delete")",
+                command: [{
+                    name: "destroy",
+                    text: "@T("Admin.Common.Delete")"
+                }],
+                width: 80
+            }]
+        });
+    });
+</script>
+
+<input type="submit" id="btnRefreshItems" name="btnRefreshItems" style="display: none" />
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#btnRefreshItems').on("click", function (e) {
+            //refresh grid
+            var optionsGrid = $("#carousel-items-grid");
+            optionsGrid.data('kendoGrid').dataSource.read();
+
+            e.preventDefault(); //don't reload the page
+        });
+    });
+</script>

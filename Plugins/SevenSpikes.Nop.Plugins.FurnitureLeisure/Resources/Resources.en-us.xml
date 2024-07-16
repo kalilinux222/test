@@ -1,0 +1,222 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Language Name="English">
+  <LocaleResource Name="SevenSpikes.FurnitureLeisure">
+    <Value>Nop Furniture Leisure</Value>
+  </LocaleResource>
+
+  <LocaleResource Name="SevenSpikes.FurnitureLeisure.Admin.Submenus.CarouselImages">
+    <Value>Client Pictures</Value>
+  </LocaleResource>
+
+  <LocaleResource Name="SevenSpikes.FurnitureLeisure.Admin.Submenus.ProductTagsImport">
+	<Value>Product Tags Import</Value>
+  </LocaleResource>
+
+  <LocaleResource Name="SevenSpikes.FurnitureLeisure.Admin.CarouselImages">
+    <Value>List of client pictures</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.FurnitureLeisure.Admin.CarouselImages.AddPicture">
+    <Value>Add Picture</Value>
+  </LocaleResource>
+
+  <LocaleResource Name="SevenSpikes.FurnitureLeisure.Public.PreviousCustomers">
+    <Value>Previous Customers</Value>
+  </LocaleResource>
+
+  <LocaleResource Name="SevenSpikes.FurnitureLeisure.Public.CatalogRequest.FirstName">
+    <Value>First name:*</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.FurnitureLeisure.Public.CatalogRequest.LastName">
+    <Value>Last name:*</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.FurnitureLeisure.Public.CatalogRequest.Email">
+    <Value>Email:*</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.FurnitureLeisure.Public.CatalogRequest.CompanyName">
+    <Value>Company/Business name:*</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.FurnitureLeisure.Public.CatalogRequest.StreetAddress">
+    <Value>Street Address:*</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.FurnitureLeisure.Public.CatalogRequest.City">
+    <Value>City:*</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.FurnitureLeisure.Public.CatalogRequest.StateId">
+    <Value>State:*</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.FurnitureLeisure.Public.CatalogRequest.ZipCode">
+    <Value>Zip Code:*</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.FurnitureLeisure.Public.CatalogRequest.PhoneNumber">
+    <Value>Phone Number:*</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.FurnitureLeisure.Public.CatalogRequest.IsUsefullInformation">
+    <Value>Use this information to create a Furniture Leisure Account?*</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.FurnitureLeisure.Public.CatalogRequest.ShouldRecieveCall">
+    <Value>Have a Furniture Leisure representative call you upon completion?*</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.FurnitureLeisure.Public.CatalogRequest.Password">
+    <Value>Password:</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.FurnitureLeisure.Public.CatalogRequest.ConfirmPassword">
+    <Value>ConfirmPassword:</Value>
+  </LocaleResource>
+
+  <LocaleResource Name="SevenSpikes.Plugins.FurnitureLeisure.CatalogRequest.Fields.FirstName.Error">
+    <Value>Please enter First name</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.Plugins.FurnitureLeisure.CatalogRequest.Fields.LastName.Error">
+    <Value>Please enter Last name</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.Plugins.FurnitureLeisure.CatalogRequest.Fields.Email.Error">
+    <Value>Please enter Email</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.Plugins.FurnitureLeisure.CatalogRequest.Fields.PhoneNumber.Error">
+    <Value>Please enter Phone number</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.Plugins.FurnitureLeisure.CatalogRequest.Fields.CompanyName.Error">
+    <Value>Please enter Company/Business name</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.Plugins.FurnitureLeisure.CatalogRequest.Fields.StreetAddress.Error">
+    <Value>Please enter Street address</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.Plugins.FurnitureLeisure.CatalogRequest.Fields.City.Error">
+    <Value>Please enter City</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.Plugins.FurnitureLeisure.CatalogRequest.Fields.StateId.Error">
+    <Value>Please select a State</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.Plugins.FurnitureLeisure.CatalogRequest.Fields.ZipCode.Error">
+    <Value>Please enter Zip Code</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.Plugins.FurnitureLeisure.CatalogRequest.Fields.IsUsefullInformation.Error">
+    <Value>Please select an answer to the question</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.Plugins.FurnitureLeisure.CatalogRequest.Fields.ShouldRecieveCall.Error">
+    <Value>Please select an answer to the question</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.Plugins.FurnitureLeisure.CatalogRequest.Fields.Password.Error">
+    <Value>Please enter a password</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.Plugins.FurnitureLeisure.CatalogRequest.Fields.ConfirmPassword.Error.Empty">
+    <Value>Please confirm your password</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.Plugins.FurnitureLeisure.CatalogRequest.Fields.ConfirmPassword.Error.DontMatch">
+    <Value>Password and Confirm Password fields don't match</Value>
+  </LocaleResource>
+  
+  <LocaleResource Name="SevenSpikes.Plugins.FurnitureLeisure.CatalogRequest.RegisterCustomer.Error.CustomerExists">
+    <Value>Customer with the specified email already exists.</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.Plugins.FurnitureLeisure.CatalogRequest.RegisterCustomer.Success">
+    <Value>You've successfully requested a catalog and your registration was successful. A registration activation code was sent to your email. You will be redirected to the home page...</Value>
+  </LocaleResource>
+
+  <LocaleResource Name="SevenSpikes.Plugins.FurnitureLeisure.CatalogRequest.Success">
+    <Value>You've successfully requested a catalog. You will be redirected to the home page...</Value>
+  </LocaleResource>
+  
+  <LocaleResource Name="SevenSpikes.FurnitureLeisure.Admin.Submenus.Settings">
+    <Value>Settings</Value>
+  </LocaleResource>  
+  <LocaleResource Name="SevenSpikes.FurnitureLeisure.Admin.Settings">
+    <Value>Settings</Value>
+  </LocaleResource>
+
+  <LocaleResource Name="SevenSpikes.FurnitureLeisure.Admin.Settings.EnableCatalogRequestBanner">
+    <Value>Enable Catalog Request Banner</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.FurnitureLeisure.Admin.Settings.EnableCatalogRequestBanner.Hint">
+    <Value>Specifies if the banner is enabled.</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.FurnitureLeisure.Admin.Settings.LeftText">
+    <Value>Banner Left Side Text</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.FurnitureLeisure.Admin.Settings.LeftText.Hint">
+    <Value>Specifies the banner left side text.</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.FurnitureLeisure.Admin.Settings.Title">
+    <Value>Banner Title</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.FurnitureLeisure.Admin.Settings.Title.Hint">
+    <Value>Specifies the banner title.</Value>
+  </LocaleResource>
+
+
+  <LocaleResource Name="SevenSpikes.FurnitureLeisure.Admin.ProductTagsImport.Title">
+	<Value>Product Tags Import/Export</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.FurnitureLeisure.Admin.ProductTagsImport.ExportToCsvSelected">
+	<Value>Export Csv(selected)</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.FurnitureLeisure.Admin.ProductTagsImport.ExportToCsvAll">
+	<Value>Export Csv All</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.FurnitureLeisure.Admin.ProductTagsImport.ImportCsv">
+	<Value>Import</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.FurnitureLeisure.Admin.ProductTagsImport.ImportCsvTip">
+	<Value>Imported products are distinguished by their Id.</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.FurnitureLeisure.Admin.ProductTagsImport.ImportCsvAllTip">
+	<Value>Imported products are distinguished by their Id. All product tags are deleted before the import of product tags beginds.</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.FurnitureLeisure.Admin.ProductTagsImport.ImportFile">
+	<Value>CSV file</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.FurnitureLeisure.Admin.ProductTagsImport.ImportFromCsv">
+	<Value>Import from CSV</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.FurnitureLeisure.Admin.ProductTagsImport.ImportCsvAll">
+	<Value>Delete all and Import</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.FurnitureLeisure.Admin.ProductTagsImport.ImportCsvTitle">
+	<Value>Import from CSV</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.FurnitureLeisure.Admin.ProductTagsImport.ProductTagsImported">
+	<Value>Product tags have been imported successfully.</Value>
+  </LocaleResource>
+
+  <LocaleResource Name="SevenSpikes.FurnitureLeisure.Admin.Submenus.ShopUnderSettings">
+    <Value>Shop under settings</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.FurnitureLeisure.Admin.ShopUnder.Settings.IsEnabled">
+	  <Value>Is enabled</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.FurnitureLeisure.Admin.ShopUnder.Settings.IsEnabled.Hint">
+	  <Value>Specify if this will be enabled as a feature</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.FurnitureLeisure.Admin.ShopUnder.Settings.CategoryId">
+	  <Value>Category</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.FurnitureLeisure.Admin.ShopUnder.Settings.CategoryId.Hint">
+	  <Value>Select the category from which the featured products will be shown</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.FurnitureLeisure.Admin.ShopUnder.Settings.ShopUnder">
+	  <Value>Shop under</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.FurnitureLeisure.Admin.ShopUnder.Settings.ShopUnder.Hint">
+	  <Value>Specify the shop under number</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.FurnitureLeisure.Admin.ShopUnder.Settings.TitleText">
+	  <Value>Title</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.FurnitureLeisure.Admin.ShopUnder.Settings.TitleText.Hint">
+	  <Value>Specify the title text</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.FurnitureLeisure.Admin.ShopUnder.Settings.ButtonText">
+	  <Value>Button</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.FurnitureLeisure.Admin.ShopUnder.Settings.ButtonText.Hint">
+	  <Value>Specify the button text</Value>
+  </LocaleResource>
+
+  <LocaleResource Name="SevenSpikes.FurnitureLeisure.Admin.Submenus.HomePageCategories">
+    <Value>Home Page categories settings</Value>
+  </LocaleResource>
+
+  <LocaleResource Name="SevenSpikes.FurnitureLeisure.Admin.Submenus.PopularCategories">
+    <Value>Popular categories settings</Value>
+  </LocaleResource>
+</Language>

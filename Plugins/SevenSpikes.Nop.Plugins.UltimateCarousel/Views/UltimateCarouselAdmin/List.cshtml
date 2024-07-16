@@ -1,0 +1,132 @@
+﻿@{
+    Layout = AdminViewLocations.AdminLayoutViewPath;
+}
+
+@using SevenSpikes.Nop.Framework
+@using SevenSpikes.Nop.Framework.MVCExtensions
+@using Nop.Core.Domain.Common;
+@using Nop.Core.Infrastructure;
+@using SevenSpikes.Nop.Plugins.UltimateCarousel
+@using SevenSpikes.Nop.Plugins.UltimateCarousel.Models
+
+@model UltimateCarouselSettingsModel
+
+@{
+    var gridPageSize = EngineContext.Current.Resolve<AdminAreaSettings>().DefaultGridPageSize;
+    var gridPageSizes = EngineContext.Current.Resolve<AdminAreaSettings>().GridPageSizes;
+}
+
+<div class="section-header">
+    <div class="title">
+        <img src="@Url.Content("~/Administration/Content/images/ico-catalog.png")" alt="Catalog Icon" />
+        @T("SevenSpikes.UltimateCarousel")
+    </div>
+    <div class="options">
+        <a href="@Html.Raw(Url.Action("Create", "UltimateCarouselAdmin"))" class="k-button">@T("SevenSpikes.UltimateCarousel.Admin.Carousel.AddNew")</a>
+    </div>
+</div>
+
+@Html.TrialMessage(Model.IsTrialVersion, Constants.PluginName, Constants.PluginUrlInStore)
+
+@Html.AntiForgeryToken()
+
+@* STORES GRID *@
+<div>
+    <table class="adminContent">
+        <tr>
+            <td>
+                <div id="carousels-grid"></div>
+                <script>
+                    $(document).ready(function () {
+                        $("#carousels-grid").kendoGrid({
+                            dataSource: {
+                                type: "json",
+                                transport: {
+                                    read: {
+                                        url: "@Html.Raw(Url.Action("List", "UltimateCarouselAdmin"))",
+                                        type: "POST",
+                                        dataType: "json",
+                                        data: addAntiForgeryToken
+                                    },
+                                    destroy: {
+                                        url: "@Html.Raw(Url.Action("DeleteCarousel", "UltimateCarouselAdmin"))",
+                                        type: "POST",
+                                        dataType: "json",
+                                        data: addAntiForgeryToken
+                                    }
+                                },
+                                schema: {
+                                    data: "Data",
+                                    total: "Total",
+                                    errors: "Errors",
+                                    model: {
+                                        id: "Id",
+                                        fields: {
+                                            Id: { editable: false, type: "number" },
+                                            PublicTitle: { editable: false, type: "string" },
+                                            DisplayOrder: { editable: false, type: "number" },
+                                            IsEnabled: { editable: true, type: "boolean" }
+                                        }
+                                    }
+                                },
+                                requestEnd: function (e) {
+                                    if (e.type == "update") {
+                                        this.read();
+                                    }
+                                },
+                                error: function (e) {
+                                    display_kendoui_grid_error(e);
+                                    // Cancel the changes
+                                    this.cancelChanges();
+                                },
+                                pageSize: @gridPageSize
+                                },
+                            pageable: {
+                                refresh: true,
+                                pageSizes: [@(gridPageSizes)]
+                            },
+                            editable: {
+                                confirmation: true,
+                                mode: "inline"
+                            },
+                            filterable: false,
+                            sortable: true,
+                            scrollable: false,
+                            columns: [{
+                                field: "PublicTitle",
+                                title: "@T("SevenSpikes.UltimateCarousel.Admin.Carousel.PublicTitle")",
+                                sortable: true
+                            }, {
+                                field: "IsEnabled",
+                                title: "@T("SevenSpikes.UltimateCarousel.Admin.Carousel.CarouselIsVisible")"
+                            }, {
+                                template: "#= DisplayOrder #",
+                                title: "@T("SevenSpikes.UltimateCarousel.Admin.Carousel.DisplayOrder")"
+                            }, {
+                                title: "@T("Admin.Common.Edit")",
+                                template: kendo.template($("#commands-template").html()),
+                                filterable: false,
+                                sortable: false,
+                                width: 100
+                            }, {
+                                title: "@T("Admin.Common.Delete")",
+                                command: [{
+                                    name: "destroy",
+                                    text: "@T("Admin.Common.Delete")"
+                                }],
+                                width: 100
+                            }]
+                        });
+                    });
+                </script>
+            </td>
+        </tr>
+    </table>
+
+    <script id="commands-template" type="text/x-kendo-template">
+        <a class="k-button" href="Edit/#: Id#" title="@T("Admin.Common.Edit")">
+            <span class="k-icon k-edit"></span>
+            @T("Admin.Common.Edit")
+        </a>
+    </script>
+</div>

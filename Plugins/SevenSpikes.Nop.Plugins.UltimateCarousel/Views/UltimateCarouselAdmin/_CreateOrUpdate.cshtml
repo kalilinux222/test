@@ -1,0 +1,145 @@
+﻿@using System.Web.UI.WebControls
+@using Nop.Web.Framework;
+@using Nop.Core.Domain.Common;
+@using Nop.Core.Infrastructure;
+@using SevenSpikes.Nop.Plugins.UltimateCarousel
+
+@model SevenSpikes.Nop.Plugins.UltimateCarousel.Models.CarouselModel
+
+@Html.ValidationSummary(false)
+@Html.HiddenFor(model => model.Id)
+
+<div id="carousel-create-or-edit" class="k-content">
+    <ul>
+        <li class="k-state-active">@T("SevenSpikes.UltimateCarousel.Admin.Carousel.TabTitle.Settings")</li>
+        <li>@T("SevenSpikes.UltimateCarousel.Admin.Carousel.TabTitle.Items")</li>
+        <li>@T("SevenSpikes.UltimateCarousel.Admin.Carousel.TabTitle.Conditions")</li>
+        <li>@T("SevenSpikes.UltimateCarousel.Admin.Carousel.TabTitle.ProductOverrides")</li>
+        <li>@T("SevenSpikes.UltimateCarousel.Admin.Carousel.TabTitle.Widgets")</li>
+        <li>@T("SevenSpikes.UltimateCarousel.Admin.Carousel.TabTitle.Stores")</li>
+    </ul>
+
+    <div>@TabSettings()</div>
+    <div>@TabItems()</div>
+    <div>@TabConditions()</div>
+    <div>@TabProductOverrides()</div>
+    <div>@TabWidgets()</div>
+    <div>@TabStores()</div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#carousel-create-or-edit").kendoTabStrip({
+            animation: {
+                open: {
+                    effects: "none"
+                }
+            }
+        });
+    });
+</script>
+
+@helper TabSettings()
+{
+    @Html.Partial(Constants.ViewAdminCarouselSettings, Model)
+}
+
+@helper TabItems()
+{
+    @Html.Partial(Constants.ViewAdminCarouselItems, Model)
+}
+
+@helper TabConditions()
+{
+    if (Model.Id > 0)
+    {
+        @Html.Action("Create", "ConditionsAdmin", new { entityType = Constants.EntityType, entityId = Model.Id, availableConditionTypes = Constants.AvailableConditionTypes, active = true, defaultGroupState = true })
+    }
+    else
+    {
+        @T("SevenSpikes.UltimateCarousel.Admin.Carousel.SaveBeforeEdit")
+    }
+}
+
+@helper TabProductOverrides()
+{
+    if (Model.Id > 0)
+    {
+        @Html.Action("Create", "ProductOverridesAdmin", new { entityType = Constants.EntityType, entityId = Model.Id })
+    }
+    else
+    {
+        @T("SevenSpikes.Conditions.Admin.ProductOverrides.TabTitle.SaveBeforeEdit")
+    }
+}
+
+@helper TabWidgets()
+{
+    if (Model.Id > 0)
+    {      
+        @Html.Action("List", "WidgetMappingsAdmin", new { entityType = Constants.EntityType, entityId = Model.Id, pluginFolderName = Constants.PluginFolderName })
+    }
+    else
+    {
+        @T("SevenSpikes.UltimateCarousel.Admin.Carousel.SaveBeforeEdit")
+    }
+}
+
+@helper TabStores()
+{
+    if (Model.Id > 0)
+    {
+        <script type="text/javascript">
+            $(document).ready(function() {
+
+                $("#@Html.FieldIdFor(model => model.LimitedToStores)").click(toggleStoreMapping);
+
+                toggleStoreMapping();
+            });
+
+
+            function toggleStoreMapping() {
+                if ($('#@Html.FieldIdFor(model => model.LimitedToStores)').is(':checked')) {
+                    $('#pnl-available-stores').show();
+                } else {
+                    $('#pnl-available-stores').hide();
+                }
+            }
+
+        </script>
+        <table class="adminContent">
+            <tr>
+                <td class="adminTitle">
+                    @Html.NopLabelFor(model => model.LimitedToStores):
+                </td>
+                <td class="adminData">
+                    @Html.EditorFor(model => model.LimitedToStores)
+                    @Html.ValidationMessageFor(model => model.LimitedToStores)
+                </td>
+            </tr>
+            <tr id="pnl-available-stores">
+                <td class="adminTitle">
+                    @Html.NopLabelFor(model => model.MappingToStores.AvailableStores):
+                </td>
+                <td class="adminData">
+                    @if (Model.MappingToStores.AvailableStores != null && Model.MappingToStores.AvailableStores.Count > 0)
+                    {
+                        foreach (var store in Model.MappingToStores.AvailableStores)
+                        {
+                            <div>
+                                <input type="checkbox" name="MappingToStores.SelectedStoreIds" value="@store.Id" checked="@(Model.MappingToStores.SelectedStoreIds != null && Model.MappingToStores.SelectedStoreIds.Contains(store.Id))" />@store.Name
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div>No stores defined</div>
+                    }</td>
+            </tr>
+        </table>
+    }
+    else
+    {
+            @T("SevenSpikes.UltimateCarousel.Admin.Carousel.SaveBeforeEdit")
+    }
+}

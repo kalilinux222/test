@@ -1,0 +1,183 @@
+﻿@using Nop.Core
+@using Nop.Core.Infrastructure
+@using Nop.Services.Configuration
+@using Nop.Services.Localization
+@using Nop.Web.Framework.Themes
+@using System.Web.Mvc
+@{
+    //logo path
+    var currentThemeName = EngineContext.Current.Resolve<IThemeContext>().WorkingThemeName;
+    var logoPath = "~/Themes/" + currentThemeName + "/Content/img/PARK_TABLES_LOGO.png";
+    var logoPathMob = "~/Themes/" + currentThemeName + "/Content/img/ParkTables_MobileLogo.png";
+    var logoPhonePathMob = "~/Themes/" + currentThemeName + "/Content/img/Mobile_PhoneNumber.png";
+
+    var themeLogo = Html.Widget("pavilion_theme_logo");
+
+    var controllerName = HttpContext.Current.Request.RequestContext.RouteData.GetRequiredString("controller");
+    var actionName = HttpContext.Current.Request.RequestContext.RouteData.GetRequiredString("action");
+    var isHomePage = controllerName.Equals("home", StringComparison.InvariantCultureIgnoreCase) &&
+                        actionName.Equals("index", StringComparison.InvariantCultureIgnoreCase);
+
+    var currentStore = EngineContext.Current.Resolve<IStoreContext>().CurrentStore;
+    int storeId = currentStore.Id;
+    var settingsService = EngineContext.Current.Resolve<ISettingService>();
+    bool isHomeSliderFullWidth = settingsService.GetSettingByKey("pavilionthemesettings.ishomepagemainsliderfullwidth", false, storeId, true);
+
+    var homePageMainSlider = new MvcHtmlString("");
+    string storeName = currentStore.GetLocalized(x => x.Name);
+    if (isHomePage)
+    {
+        homePageMainSlider = Html.Widget("home_page_main_slider");
+    }
+}
+
+@{
+    var warningText = Html.Action("TopicBlock", "Topic", new { systemName = "WarningMessage" });
+    var warningTextParentClass = string.Empty;
+}
+@if (!MvcHtmlString.IsNullOrEmpty(warningText))
+{
+    warningTextParentClass = "warning-text-on";
+}
+
+<div class="header @warningTextParentClass">
+
+    @if (!MvcHtmlString.IsNullOrEmpty(warningText))
+    {
+        <div class="warning-text">
+            @Html.Action("TopicBlock", "Topic", new { systemName = "WarningMessage" })
+        </div>
+    }
+
+    @Html.Widget("header")
+
+    <div class="header-upper">
+        <div class="center">
+            @Html.Action("AdminHeaderLinks", "Common")
+            @{
+                var taxTypeSelectorHtml = @Html.Action("TaxTypeSelector", "Common");
+                var currencySelectorHtml = @Html.Action("CurrencySelector", "Common");
+                var languageSelectorHtml = @Html.Action("LanguageSelector", "Common");
+                var headerSelectorWidgetHtml = @Html.Widget("header_selectors");
+            }
+
+            @if (!MvcHtmlString.IsNullOrEmpty(taxTypeSelectorHtml) ||
+                 !MvcHtmlString.IsNullOrEmpty(currencySelectorHtml) ||
+                 !MvcHtmlString.IsNullOrEmpty(languageSelectorHtml) ||
+                 !MvcHtmlString.IsNullOrEmpty(headerSelectorWidgetHtml))
+            {
+                <div class="header-selectors-wrapper">
+                    <label>@T("SevenSpikes.Themes.Pavilion.Header.Preferences")</label>
+                    <div class="header-selectors">
+                        @taxTypeSelectorHtml
+                        @currencySelectorHtml
+                        @languageSelectorHtml
+                        @headerSelectorWidgetHtml
+                    </div>
+                </div>
+
+            }
+            <div class="header-links-wrapper">
+                <label>@T("SevenSpikes.Themes.Pavilion.Header.MyAccount")</label>
+                @Html.Action("HeaderLinks", "Common")
+            </div>
+        </div>
+    </div>
+
+    <div class="header-middle">
+        <div class="center">
+            <div class="header-logo">
+                <a href="@Url.RouteUrl("HomePage")" class="logo">
+                    @if (!MvcHtmlString.IsNullOrEmpty(themeLogo))
+                    {
+                        @themeLogo
+                    }
+                    else
+                    {
+                        //string storeName = currentStore.GetLocalized(x => x.Name);
+                        <img title="" alt="@storeName" src="@Url.Content(logoPath)">
+                    }
+                </a>
+            </div>
+            <div class="header-logo-mobile">
+                <a href="@Url.RouteUrl("HomePage")" class="logo">
+                    <img title="" alt="@storeName" src="@Url.Content(logoPathMob)">
+                </a>
+                <a href="tel:+18663302388" class="">
+                    <img title="" alt="@storeName" src="@Url.Content(logoPhonePathMob)">
+                </a>
+            </div>
+            <div class="header-menu-parent">
+                <div class="header-menu">
+                    <div class="close-menu">
+                        <span>@T("SevenSpikes.Themes.Common.CloseMenu")</span>
+                    </div>
+                    @{
+                        var menuHtml = Html.Widget("theme_header_menu");
+                    }
+                    @if (!MvcHtmlString.IsNullOrEmpty(menuHtml))
+                    {
+                        @menuHtml
+                    }
+                    else
+                    {
+                        @Html.Action("TopMenu", "Catalog")
+                    }
+                </div>
+            </div>
+            <a href="tel:+18663302388"><div class="header-phone-and-hours"></div></a>
+            @Html.Action("FlyoutShoppingCart", "ShoppingCart")
+        </div>
+    </div>
+
+    <div class="header-lower">
+        <div class="center">
+            <span class="category-navigation-title">@T("SevenSpikes.Themes.Pavilion.Header.AllCategories")</span>
+
+            @if (!isHomePage || isHomeSliderFullWidth)
+            {
+                <div class="category-navigation-list-wrapper">
+                    <ul class="category-navigation-list"></ul>
+                </div>
+            }
+
+            <div class="search-box store-search-box">
+                @Html.Action("SearchBox", "Catalog")
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@if (isHomePage)
+{
+    var homePageSliderCss = isHomeSliderFullWidth ? "slider-fullwidth" : "slider-right-column";
+
+    <div class="two-columns-area @homePageSliderCss">
+        @if (isHomeSliderFullWidth)
+        {
+            @homePageMainSlider
+        }
+
+        <div class="center">
+            <div class="two-colums-area-left">
+                @if (!isHomeSliderFullWidth)
+                {
+                    <div class="category-navigation-list-wrapper">
+                        <ul class="category-navigation-list"></ul>
+                    </div>
+                }
+
+                @Html.Action("HomepageProducts", "Product")
+            </div>
+            <div class="two-colums-area-right">
+                @if (!isHomeSliderFullWidth)
+                {
+                    @homePageMainSlider
+                }
+                @Html.Action("TopicBlock", "Topic", new { systemName = "HomePageText" })
+                @Html.Widget("homepage_slider_after")
+            </div>
+        </div>
+    </div>
+}

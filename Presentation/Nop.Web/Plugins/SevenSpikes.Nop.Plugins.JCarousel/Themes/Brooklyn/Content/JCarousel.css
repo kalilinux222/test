@@ -1,0 +1,400 @@
+/*
+* Copyright 2012 Seven Spikes Ltd. All rights reserved. (http://www.nop-templates.com)
+* http://www.nop-templates.com/t/licensinginfo
+*/
+
+/*** TITLE & CONTAINERS ***/
+
+.nop-jcarousel {
+	position: relative;
+    margin: 20px 0 80px;
+}
+.nop-jcarousel .carousel-title {
+	/*padding: 8px 65px 48px;
+    text-align: center;
+    font-size: 22px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #444;
+    letter-spacing: 3.3px;*/
+}
+.nop-jcarousel .carousel-title span {
+}
+.nop-jcarousel .jcarousel-container {
+	position: static !important;
+ }
+.nop-jcarousel .jcarousel-clip {
+    overflow: hidden;
+}
+.nop-jcarousel .jcarousel-list-horizontal {
+    min-width: 15000px;
+    padding: 10px 0 !important;
+}
+
+/*** VERTICAL TITLE & CONTAINERS ***/
+
+.nop-jcarousel .carousel-title.vertical {
+    margin: -80px 0 0;
+}
+.nop-jcarousel .jcarousel-container-vertical {
+	padding: 5px;
+}
+.nop-jcarousel .jcarousel-clip-vertical {
+    height: 370px !important;
+}
+
+/*** NAVIGATION ***/
+
+.nop-jcarousel .jcarousel-prev-horizontal,
+.nop-jcarousel .jcarousel-next-horizontal {
+    position: absolute;
+    top: 6px;
+    width: 26px;
+    height: 26px;
+    border: 1px solid #2b2b2b;
+	background-position: center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    -webkit-transition: all .2s ease;
+    -moz-transition: all .2s ease;
+    transition: all .2s ease;
+}
+.nop-jcarousel .jcarousel-prev-horizontal {
+    right: 30px;
+    background: url('images/prev-horizontal.png') no-repeat center;
+}
+.nop-jcarousel .jcarousel-next-horizontal {
+    right: 0;
+    background: url('images/next-horizontal.png') no-repeat center;
+}
+.nop-jcarousel .jcarousel-prev-horizontal:hover,
+.nop-jcarousel .jcarousel-next-horizontal:hover {
+}
+.nop-jcarousel .jcarousel-prev-vertical,
+.nop-jcarousel .jcarousel-next-vertical {
+	position: absolute;
+    top: -54px;
+	width: 48px;
+	height: 48px;
+	background-color: #e73f39;
+	background-position: center;
+    background-repeat: no-repeat;
+	cursor: pointer;
+}
+.nop-jcarousel .jcarousel-prev-vertical {
+	left: 50%;
+    margin-left: -50px;
+    background-image: url('images/prev-vertical.png');
+}
+.nop-jcarousel .jcarousel-next-vertical {
+	right: 50%;
+    margin-right: -50px;
+    background-image: url('images/next-vertical.png');
+}
+.nop-jcarousel .jcarousel-prev-vertical:hover,
+.nop-jcarousel .jcarousel-next-vertical:hover {
+
+}
+
+.nop-jcarousel .jcarousel-next-disabled-horizontal,
+.nop-jcarousel .jcarousel-next-disabled-horizontal:hover,
+.nop-jcarousel .jcarousel-prev-disabled-horizontal,
+.nop-jcarousel .jcarousel-prev-disabled-horizontal:hover,
+.nop-jcarousel .jcarousel-prev-disabled-vertical,
+.nop-jcarousel .jcarousel-prev-disabled-vertical:hover,
+.nop-jcarousel .jcarousel-next-disabled-vertical,
+.nop-jcarousel .jcarousel-next-disabled-vertical:hover {
+    /*opacity: 0.3;
+	filter: alpha(opacity=30);*/
+    cursor: default;
+}
+
+/*** JCAROUSEL ITEM BOX ***/
+
+/*  If you change the margin from below to padding,
+	make sure that you have the border-sizing set to content-box,
+	so that the jcarousel script can calculate correctly the width of the item.  */
+	
+.nop-jcarousel .jcarousel-item-horizontal {
+    text-align: center;
+    margin: 0;
+    -webkit-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+.nop-jcarousel .jcarousel-item-vertical {
+    width: 100%;
+	padding: 5px;
+}
+
+.nop-jcarousel .item-picture img {
+    max-width: 100%;
+}
+
+/* products */
+
+.products-carousel .item-holder {
+	padding: 10px;
+}
+.products-carousel .item-picture {
+	position: relative;
+    margin: 0 0 20px;
+	max-height: 230px;
+	overflow: hidden;
+}
+.products-carousel .item-picture a {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+.products-carousel .item-info {
+	max-width: 296px;
+	margin: 0 auto;
+    text-align: left;
+}
+.products-carousel .item-info .jcarousel-product-title {
+    height: 45px;
+	margin: 0 0 5px;
+	overflow: hidden;
+	font-weight: 400;
+	text-align: left;
+	font-size: 16px;
+}
+.products-carousel .item-info .jcarousel-product-title a {
+	display: block;
+    color: #444;
+}
+.products-carousel .item-info .jcarousel-product-title a:hover {
+    color: #e73f39;
+}
+.products-carousel .item-info .short-description {
+	height: 36px;
+	margin: 0 0 10px;
+	overflow: hidden;
+	text-align: left;
+	font-size: 14px;
+}
+.products-carousel .item-info .prices {
+    margin: 0 0 10px;
+}
+.products-carousel .item-info .old-price {
+	color: #999;
+	text-decoration: line-through;
+}
+.products-carousel .item-info .actual-price {
+	font-size: 16px;
+	color: #e73f39;
+	font-weight: 700;
+}
+.products-carousel .item-info .product-rating-box {
+	margin: 0 0 15px;
+}
+.products-carousel .item-info .rating {
+	background: url('images/rating-1.png') repeat-x;
+	width: 90px;
+    height: 15px;
+}
+.products-carousel .item-info .rating div {
+    background: #e73f39 url('images/rating-2.png') repeat-x;
+    height: 15px;
+}
+.products-carousel .item-info .button {
+    display: inline-block;
+    padding: 8px 16px;
+    border: 2px solid #eee;
+	background: #f9f9f9;
+    font-size: 12px;
+    font-weight: bold;
+    color: #e73f39;
+    text-transform: uppercase;
+    -webkit-transition: all 0.2s ease 0s;
+    transition: all 0.2s ease 0s;
+}
+.products-carousel .item-info .button:hover {
+	background-color: #eee;
+}
+
+/* manufacturers */
+
+.manufacturers-carousel {
+	padding-bottom: 25px;
+}
+.manufacturers-carousel .item-picture a {
+	display: inline-block;
+}
+.manufacturers-carousel .item-info {
+	display: none;
+}
+
+/* categories */
+
+.categories-carousel .item-holder {
+    padding: 7px;
+    -webkit-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+.categories-carousel .item-holder:hover{
+   box-shadow: 0 1px 8px 2px rgba(0, 0, 0, 0.12);
+}
+.categories-carousel .item-holder .jcarousel-product-title {
+    padding:5px 10px;
+    font-size: 15px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #444;
+}
+.categories-carousel .item-holder .jcarousel-product-title a {
+}
+.categories-carousel .item-holder:hover .jcarousel-product-title a {
+}
+
+.categories-carousel .item-holder .item-picture a {
+}
+.categories-carousel .item-holder .item-picture img {
+/* remove this line if there's no transitional effects on the image */
+/*-webkit-transform: translateZ(0) scale(1.0, 1.0);*/
+/* fixes the bug of the 1px moving product images when hover on category */
+}
+.categories-carousel .item-holder:hover .item-picture img {
+}
+
+/*** ADDITIONAL STYLES ***/
+
+
+/* If the wrap is set to circular and the carousel skin can display more items than there are,
+the carousel adds additional <li> elements to fill the empty spaces.
+This class is added only for those empty elements. They should not be visible. */
+
+.nop-jcarousel .jcarousel-item-placeholder-horizontal {
+    visibility: hidden;
+}
+
+/* carousel in left column */
+
+.side-2 .nop-jcarousel {
+    display: none;
+}
+
+
+
+@media all and (min-width: 769px) {
+
+.nop-jcarousel .jcarousel-container {
+    position: relative !important;
+	padding: 0 35px;
+} 
+
+.nop-jcarousel .jcarousel-prev-horizontal,
+.nop-jcarousel .jcarousel-next-horizontal {
+	margin: 0;
+	top: 50%;
+	margin-top: -13px;
+    
+    opacity: 1;
+    cursor: pointer;
+    -webkit-transition: all .2s ease;
+    -moz-transition: all .2s ease;
+    transition: all .2s ease;
+}
+.jcarousel-prev-horizontal,
+.jcarousel-prev-horizontal {
+	left: 0;
+	right: auto;
+	margin-left: 0 !important;
+}
+.jcarousel-next-horizontal,
+.jcarousel-next-horizontal {
+	right: 0;
+	margin-right: 0 !important;
+}
+
+}
+
+
+@media all and (min-width: 1025px) {
+
+/* carousel in left column */
+
+.side-2 .nop-jcarousel {
+    display: block;
+    margin: 80px 0 0;
+    border: 2px solid #eee;
+}  
+.side-2 .nop-jcarousel .carousel-title {
+    padding: 8px 0 60px;
+}
+.side-2 .products-carousel .item-holder:hover, 
+.side-2 .manufacturers-carousel .item-holder:hover, 
+.side-2 .categories-carousel .item-holder:hover {
+    box-shadow: none;
+}
+
+.side-2 .nop-jcarousel .jcarousel-prev-horizontal, 
+.side-2 .nop-jcarousel .jcarousel-next-horizontal {
+    position: absolute;
+    top: -54px;
+    width: 48px !important;
+    height: 48px;
+    border: 2px solid #eee;
+
+}
+.side-2 .nop-jcarousel .jcarousel-prev-horizontal {
+    background: url("images/prev-product-mobile.png") no-repeat center;
+    left: 68px;
+}
+.side-2 .nop-jcarousel .jcarousel-next-horizontal {
+    background: url("images/next-product-mobile.png") no-repeat center;
+    right: 68px;
+}
+.side-2 .block .nop-jcarousel {
+    border: none;
+}
+
+
+}
+
+@media all and (min-width: 1281px) {
+
+.nop-jcarousel .carousel-title {
+    
+}
+/*.nop-jcarousel .jcarousel-next-horizontal {
+    right: 0;
+    background: url('images/gradient-right.png');
+    background-position: right top;
+    background-repeat: repeat-y;
+}
+.nop-jcarousel .jcarousel-prev-horizontal:before {
+    content: "";
+    position: absolute;
+    top: 0;   
+    bottom: 0 !important;
+    left: 20px;
+    height: 53px;
+    width: 26px;
+    margin: auto;
+    background: url('images/prev-horizontal.png') no-repeat center;
+}
+.nop-jcarousel .jcarousel-next-horizontal:before {
+    content: "";
+    position: absolute;
+    top: 0;   
+    bottom: 0 !important;
+    right: 20px;
+    height: 53px;
+    width: 26px;
+    margin: auto;
+    background: url('images/next-horizontal.png') no-repeat center;
+}*/
+
+/*carousel with one clickable item in the center and odd number of items*/
+/*.transparent .nop-jcarousel .jcarousel-prev-horizontal,
+.transparent .nop-jcarousel .jcarousel-next-horizontal {
+     width: 480px !important;
+}
+.transparent .nop-jcarousel .jcarousel-item-horizontal:hover, 
+.transparent .nop-jcarousel .jcarousel-item-horizontal.middle-visible-item {
+    box-shadow: 0 1px 8px 2px rgba(0, 0, 0, 0.12);
+}*/
+
+
+}

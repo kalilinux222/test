@@ -1,0 +1,199 @@
+﻿@model CheckoutShippingAddressModel
+@using Nop.Web.Models.Checkout;
+
+@{
+    Html.AddScriptParts("~/Scripts/jquery.mask.min.js");
+
+    int shipping_address_id = 0;
+
+    if (Model.CustomProperties.ContainsKey("shipping_address_id"))
+    {
+        int.TryParse(Model.CustomProperties["shipping_address_id"].ToString(), out shipping_address_id);
+    }
+}
+<div class="back-link">
+    <a href="#" onclick="window.history.go(-1); return false;">Back</a>
+</div>
+<div class="checkout-data">
+    @if (Model.AllowPickUpInStore)
+        {
+            <div class="section pickup-in-store">
+                <p class="selector">
+                    @{
+                        var pickupInStoreName = T("Checkout.PickUpInStore").Text;
+                        if (!String.IsNullOrEmpty(Model.PickUpInStoreFee))
+                        {
+                            pickupInStoreName = T("Checkout.PickUpInStoreAndFee", Model.PickUpInStoreFee).Text;
+                        }
+                    }
+                    @Html.CheckBoxFor(x => x.PickUpInStore, new { @onclick = "Shipping.togglePickUpInStore(this)" })
+                    <label for="@Html.FieldIdFor(model => model.PickUpInStore)">@pickupInStoreName</label>
+                </p>
+                <p class="description"><i>@T("Checkout.PickUpInStore.Description")</i></p>
+            </div>
+        }
+    <div class="shipping-addresses" id="shipping-addresses-form">
+        @Html.Widget("op_checkout_shipping_address_top")
+        @if (Model.ExistingAddresses.Count > 0)
+        {
+            <script type="text/javascript">
+                $(document).ready(function() {
+
+                    var addresses = @Html.Raw(new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(Model.ExistingAddresses));
+
+                    var defaultAddress = @Html.Raw(new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(Model.NewAddress));
+
+                    $(document).on('change', '#shipping-address-select', processSelectedAddress);
+
+                    function processSelectedAddress() {
+
+                        var selectedAddress = parseInt($('#shipping-address-select').val());
+
+                        if (!selectedAddress) {
+
+                            // clear inputs
+                            fillSelectedAddress(defaultAddress);
+
+                            return;
+                        };
+
+                        var findAddress = $.grep(addresses, function(item) {
+
+                            return selectedAddress === item.Id;
+                        });
+
+                        if (findAddress.length > 0) {
+
+                            fillSelectedAddress(findAddress[0]);
+                        }
+                    }
+
+                    function fillSelectedAddress(address) {
+
+                        $('#ShippingNewAddress_FirstName').val(address.FirstName).blur();
+                        $('#ShippingNewAddress_LastName').val(address.LastName).blur();
+                        $('#ShippingNewAddress_Email').val(address.Email).blur();
+                        $('#ShippingNewAddress_Company').val(address.Company).blur();
+                        $('#ShippingNewAddress_CountryId').val(address.CountryId).blur().change();
+                        $('#ShippingNewAddress_City').val(address.City).blur();
+                        $('#ShippingNewAddress_Address1').val(address.Address1).blur();
+                        $('#ShippingNewAddress_Address2').val(address.Address2).blur();
+                        $('#ShippingNewAddress_ZipPostalCode').val(address.ZipPostalCode).blur();
+                        $('#ShippingNewAddress_PhoneNumber').val(address.PhoneNumber).blur();
+                        $('#ShippingNewAddress_FaxNumber').val(address.FaxNumber).blur();
+
+                        if (address.AvailableStates.length) {
+
+                            fillSelectedAddressStates(address.AvailableStates, address.StateProvinceId);
+                        } else {
+
+                            $.ajax({
+                                cache: false,
+                                type: "GET",
+                                url: "@(Url.RouteUrl("GetStatesByCountryId"))",
+                                data: { "countryId": address.CountryId, "addSelectStateItem": "true" },
+                                success: function (data) {
+
+                                    fillSelectedAddressStates(data, address.StateProvinceId);
+                                }
+                            });
+                        }
+                    }
+
+                    function fillSelectedAddressStates(data, selectedState) {
+
+                        var states = $('#ShippingNewAddress_StateProvinceId');
+
+                        states.empty();
+
+                        $.each(data, function (id, option) {
+
+                            states.append($('<option></option>').val(option.id || option.Value).html(option.name || option.Text));
+                        });
+
+                        if (selectedState) {
+
+                            states.val(selectedState).blur();
+                        }
+
+                        states.change();
+                    }
+                });
+            </script>
+        }
+        <script type="text/javascript">
+            $(document).ready(function() {
+
+                $("#ShippingNewAddress_PhoneNumber").mask('(000) 000-0000', { placeholder: "(   )    -    " });
+            });
+        </script>
+        <div class="section select-shipping-address">
+            <label for="shipping-address-select">@T("Checkout.SelectShippingAddressOrEnterNewOne")</label>
+            @*<p class="contact-info-hint">Please enter the information of the person that will be the main point of contact for this order.</p>*@
+            <div>
+                <select name="shipping_address_id" id="shipping-address-select" class="address-select" title="">
+                    <option value="">@T("Checkout.NewAddress")</option>
+                    @foreach (var address in Model.ExistingAddresses)
+                    {
+                        var selected = address.Id == shipping_address_id ? " selected='selected'" : string.Empty;
+
+                        var addressLine = "";
+                        addressLine += address.FirstName;
+                        addressLine += " " + address.LastName;
+                        if (address.StreetAddressEnabled && !String.IsNullOrEmpty(address.Address1))
+                        {
+                            addressLine += ", " + address.Address1;
+                        }
+                        if (address.CityEnabled && !String.IsNullOrEmpty(address.City))
+                        {
+                            addressLine += ", " + address.City;
+                        }
+                        if (address.StateProvinceEnabled && !String.IsNullOrEmpty(address.StateProvinceName))
+                        {
+                            addressLine += ", " + address.StateProvinceName;
+                        }
+                        if (address.ZipPostalCodeEnabled && !String.IsNullOrEmpty(address.ZipPostalCode))
+                        {
+                            addressLine += " " + address.ZipPostalCode;
+                        }
+                        if (address.CountryEnabled && !String.IsNullOrWhiteSpace(address.CountryName))
+                        {
+                            addressLine += ", " + address.CountryName;
+                        }
+                        //how should we render "FormattedCustomAddressAttributes" here?
+                        <option value="@(address.Id)" @selected>@(addressLine)</option>
+                    }
+                </select>
+            </div>
+        </div>
+        @Html.Widget("op_checkout_shipping_address_middle")
+        <div class="section new-shipping-address" id="shipping-new-address-form">
+            <div class="enter-address">
+                @{
+                    var validationSummary = Html.ValidationSummary(true);
+                }
+                @if (!MvcHtmlString.IsNullOrEmpty(validationSummary))
+                {
+                    <div class="message-error">@validationSummary</div>
+                }
+                <label for="shipping-address-select">@T("Checkout.ContactInformation")</label>
+                @{
+                    var dataDictAddress = new ViewDataDictionary();
+                    //Merge ModelState (required for validation)
+                    dataDictAddress.ModelState.Merge(ViewData.ModelState);
+                    dataDictAddress.TemplateInfo.HtmlFieldPrefix = "ShippingNewAddress";
+                    dataDictAddress.Add("IsShipping", true);
+                    @Html.Partial("_CreateOrUpdateAddress", Model.NewAddress, dataDictAddress)
+                }
+            </div>
+        </div>
+        @Html.Widget("op_checkout_shipping_address_bottom")
+    </div>
+</div>
+
+<div class="section order-summary">
+    <div class="title">
+        <strong>@T("Checkout.OrderSummary")</strong>
+    </div>
+    @Html.Action("OrderSummary", "ShoppingCart")
+</div>

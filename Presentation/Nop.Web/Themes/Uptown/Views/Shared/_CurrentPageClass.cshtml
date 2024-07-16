@@ -1,0 +1,159 @@
+﻿@{
+    var controllerName = System.Web.HttpContext.Current.Request.RequestContext.RouteData.GetRequiredString("controller");
+    var actionName = System.Web.HttpContext.Current.Request.RequestContext.RouteData.GetRequiredString("action");
+
+    var isHomePage = controllerName.Equals("home", StringComparison.InvariantCultureIgnoreCase) &&
+                        actionName.Equals("index", StringComparison.InvariantCultureIgnoreCase);
+
+    if (isHomePage)
+    {
+        <text>home-page-body</text>
+        return;
+    }
+
+    var isCategoryPage = controllerName.Equals("catalog", StringComparison.InvariantCultureIgnoreCase) &&
+                        actionName.Equals("category", StringComparison.InvariantCultureIgnoreCase);
+
+    if (isCategoryPage)
+    {
+        <text>category-page-body</text>
+        return;
+    }
+
+    var isProductPage = controllerName.Equals("product", StringComparison.InvariantCultureIgnoreCase) &&
+                        actionName.Equals("productdetails", StringComparison.InvariantCultureIgnoreCase);
+
+    if (isProductPage)
+    {
+        <text>product-details-page-body</text>
+        return;
+    }
+
+    var isShoppingCartPage = controllerName.Equals("shoppingcart", StringComparison.InvariantCultureIgnoreCase) &&
+                        actionName.Equals("cart", StringComparison.InvariantCultureIgnoreCase);
+
+    if (isShoppingCartPage)
+    {
+        <text>shopping-cart-page-body</text>
+        return;
+    }
+
+    var isCheckoutPage = controllerName.Equals("checkout", StringComparison.InvariantCultureIgnoreCase) ||
+                        controllerName.Equals("realonepagecheckout", StringComparison.InvariantCultureIgnoreCase);
+
+    if (isCheckoutPage)
+    {
+        <text>checkout-pages-body</text>
+        return;
+    }
+
+    var isAccountPage = controllerName.Equals("customer", StringComparison.InvariantCultureIgnoreCase);
+    var isOrderListPage = controllerName.Equals("order", StringComparison.InvariantCultureIgnoreCase) && actionName.Equals("customerorders", StringComparison.InvariantCultureIgnoreCase);
+    var isReturnRequest = controllerName.Equals("returnrequest", StringComparison.InvariantCultureIgnoreCase) && actionName.Equals("customerreturnrequests", StringComparison.InvariantCultureIgnoreCase);
+    var isBackInStockSubscriptions = controllerName.Equals("backinstocksubscription", StringComparison.InvariantCultureIgnoreCase) && actionName.Equals("customersubscriptions", StringComparison.InvariantCultureIgnoreCase);
+    var isRewardPoints = controllerName.Equals("order", StringComparison.InvariantCultureIgnoreCase) && actionName.Equals("customerrewardpoints", StringComparison.InvariantCultureIgnoreCase);
+    var isForumSubscriptions = controllerName.Equals("boards", StringComparison.InvariantCultureIgnoreCase) && actionName.Equals("customerforumsubscriptions", StringComparison.InvariantCultureIgnoreCase);
+    
+    if (isAccountPage || isOrderListPage || isReturnRequest || isBackInStockSubscriptions || isRewardPoints || isForumSubscriptions)
+    {
+        <text>customer-pages-body</text>
+        return;
+    }
+
+    var isTopicPage = controllerName.Equals("topic", StringComparison.InvariantCultureIgnoreCase) &&
+                        actionName.Equals("topicdetails", StringComparison.InvariantCultureIgnoreCase);
+
+    if (isTopicPage)
+    {
+        <text>topic-page-body</text>
+        return;
+    }
+
+    var isSearchPage = (controllerName.Equals("catalog", StringComparison.InvariantCultureIgnoreCase) && actionName.Equals("search", StringComparison.InvariantCultureIgnoreCase)
+                    || controllerName.Equals("catalog7spikes", StringComparison.InvariantCultureIgnoreCase) && actionName.Equals("ajaxfilterssearch", StringComparison.InvariantCultureIgnoreCase));
+
+    if (isSearchPage)
+    {
+        <text>search-page-body</text>
+        return;
+    }
+    
+    var isNewsPage = controllerName.Equals("news", StringComparison.InvariantCultureIgnoreCase);
+
+    if (isNewsPage)
+    {
+        if (actionName.Equals("newsitem", StringComparison.InvariantCultureIgnoreCase))
+        {
+            <text>news-pages-body news-item-body</text>
+            return;
+        }
+        else
+        { 
+            <text>news-pages-body</text>
+            return;
+        }
+        
+    }
+    
+    var isBlogPage = controllerName.Equals("blog", StringComparison.InvariantCultureIgnoreCase);
+    var isRichBlogSearch = controllerName.Equals("richblogsearch", StringComparison.InvariantCultureIgnoreCase) &&
+                        actionName.Equals("listresults", StringComparison.InvariantCultureIgnoreCase);
+    var isRichBlogCategory = controllerName.Equals("richblog", StringComparison.InvariantCultureIgnoreCase) &&
+                        actionName.Equals("category", StringComparison.InvariantCultureIgnoreCase);
+
+    if (isBlogPage || isRichBlogSearch || isRichBlogCategory)
+    {
+        if (actionName.Equals("blogpost", StringComparison.InvariantCultureIgnoreCase))
+        { 
+            <text>blog-pages-body blog-post-body</text>
+            return;
+        }
+        else
+        {
+            <text>blog-pages-body</text>
+            return; 
+        }
+    }
+
+    var isForumPage = controllerName.Equals("boards", StringComparison.InvariantCultureIgnoreCase);
+
+    if (isForumPage)
+    {
+        <text>forum-pages-body</text>
+        return; 
+    }
+    
+    var isProfilePage = controllerName.Equals("profile", StringComparison.InvariantCultureIgnoreCase);
+
+    if (isProfilePage)
+    {
+        <text>profile-pages-body</text>
+        return; 
+    }
+    
+    var isPrivateMessagePage = controllerName.Equals("privatemessages", StringComparison.InvariantCultureIgnoreCase);
+
+    if (isPrivateMessagePage)
+    {
+        <text>private-messages-pages-body</text>
+        return; 
+    }
+   
+    var isEmailAFriendWishlistPage = controllerName.Equals("shoppingcart", StringComparison.InvariantCultureIgnoreCase) &&
+                        actionName.Equals("emailwishlist", StringComparison.InvariantCultureIgnoreCase);
+
+    if (isEmailAFriendWishlistPage)
+    {
+        <text>email-wishlist-page-body</text>
+        return;
+    }
+
+    var isSocialFeedAllPage = controllerName.Equals("socialfeedpage", StringComparison.InvariantCultureIgnoreCase) &&
+                        actionName.Equals("socialfeedpage", StringComparison.InvariantCultureIgnoreCase);
+
+    if (isSocialFeedAllPage)
+    {
+        <text>social-feed-all-body</text>
+        return;
+    }
+}

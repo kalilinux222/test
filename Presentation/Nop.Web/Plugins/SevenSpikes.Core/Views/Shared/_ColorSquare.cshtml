@@ -1,0 +1,33 @@
+﻿@using Nop.Web.Models.Catalog;
+
+@model IList<ProductDetailsModel.ProductAttributeModel>
+
+@if (Model.Count > 0)
+{
+    foreach (ProductDetailsModel.ProductAttributeModel attribute in Model)
+    {
+        string controlId = string.Format("product_attribute_{0}", attribute.Id);
+
+        <ul class="option-list color-squares" id="color-squares-@(attribute.Id)" data-productid="@attribute.ProductId">
+            @foreach (ProductDetailsModel.ProductAttributeValueModel attributeValue in attribute.Values)
+            {
+                string attributeName = attributeValue.Name;
+
+                if (!string.IsNullOrEmpty(attributeValue.PriceAdjustment))
+                {
+                    attributeName = T("Products.ProductAttributes.PriceAdjustment", attributeValue.Name, attributeValue.PriceAdjustment).Text;
+                }
+
+                <li @(!string.IsNullOrEmpty(attributeValue.PictureModel.ImageUrl) ? Html.Raw(" data-picture-url='" + attributeValue.PictureModel.ImageUrl + "'") : null)>
+                    <label>
+                        <span class="color-container" title="@attributeName">
+                            <span class="color" style="background-color: @(attributeValue.ColorSquaresRgb);">&nbsp;</span>
+                        </span>
+
+                        <input class="product-box-color-square @if (attributeValue.IsPreSelected){<text>preselected</text>}" type="radio" name="@(controlId)" value="@attributeValue.Id" />
+                    </label>
+                </li>
+            }
+        </ul>
+    }
+}

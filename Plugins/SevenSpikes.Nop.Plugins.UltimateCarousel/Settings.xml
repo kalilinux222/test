@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Settings>
+  <Setting Name="UltimateCarouselSettings.Enabled">
+    <Value>true</Value>
+  </Setting>
+  <Setting Name="UltimateCarouselSettings.EnabledAsWidget">
+    <Value>true</Value>
+  </Setting>
+</Settings>

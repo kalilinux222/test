@@ -1,0 +1,185 @@
+﻿/*
+* Copyright 2014 Seven Spikes Ltd. All rights reserved. (http://www.nop-templates.com)
+* http://www.nop-templates.com/t/licensinginfo
+*/
+
+.back-button {
+    display: none !important;
+}
+.mega-menu-responsive, 
+.menu-title {
+    display: none;
+}
+
+@media all and (min-width: 981px) {
+    /* stops the opened mega-menu-responsive when resizing from narrow to wide */
+    .mega-menu-responsive {
+        display: none !important;
+    }
+}
+
+/* MAIN PANEL & DROPDOWN*/
+
+.mega-menu {
+	position: relative;
+	z-index: 1001;
+    display: table-row;
+}
+.mega-menu .dropdown {
+    display: none;
+    position: absolute;
+    top: 42px;
+    border-top: 1px solid #aaa;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.15), inset 0 0 0 1px #ddd;
+    overflow: hidden;
+    background: #fff;
+    padding: 10px;
+}
+.mega-menu .dropdown.fullWidth {
+	left: 0;
+	width: 940px;
+}
+    .mega-menu .dropdown.active {
+        display: block;
+    }
+
+/* ROWS AND BOXES */
+
+.mega-menu .row {
+	overflow: hidden;
+	width: 100%;
+	border-spacing: 10px 5px;
+}
+.mega-menu .box {
+	float: left;
+	padding: 0 5px 10px;
+	vertical-align: top;
+    width: 225px;
+}
+.mega-menu .title {
+    display: block;
+    margin-bottom: 12px;
+    border-bottom: 1px solid #999;
+    padding: 8px 8px 8px 4px;
+    font-size: 13px;
+    text-transform: uppercase;
+    color: #333;
+}
+.mega-menu .title strong {
+	/*font-weight: normal;*/
+}
+.mega-menu .title a {
+	color: #333;
+}
+.mega-menu .title a:hover {
+	color: #555;
+}
+.mega-menu .picture {
+	float: left;
+	width: 90px;
+	height: 90px;
+	overflow: hidden;
+	text-align: center;
+}
+.mega-menu .picture a {
+	display: block;
+}
+.mega-menu .subcategories {
+	margin-left: 100px;
+}
+.mega-menu .box ul {
+    padding: 0 0 0 8px;
+}
+.mega-menu .box li {
+	margin-top: 10px;
+}
+.mega-menu .box .subcategories li:first-child {
+	margin-top: -2px;
+}
+.mega-menu .box li a {
+	background: url('images/arrow.png') left center no-repeat;
+	padding-left: 12px;
+	color: #333;
+}
+.mega-menu .box li a:hover {
+	text-decoration: underline;
+}
+.mega-menu li a.view-all {
+	font-weight: bold;
+    background: none;
+}
+
+.manufacturers.fullWidth .box {
+    width: 16.66666666666667%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.manufacturers.fullWidth li * {
+	background: none !important;
+	padding-left: 0;
+}
+
+.mega-menu .topic-wrapper {
+	overflow: hidden;
+}
+.mega-menu .topic-wrapper p {
+	font-size: 11px;
+	line-height: 20px;
+}
+.mega-menu .topic-wrapper strong {
+	display: block;
+	border-bottom: 1px solid #999;
+	padding: 8px 0;
+	font-size: 14px;
+	text-transform: uppercase;
+	color: #333;
+}
+
+
+
+/*=====================================================
+    
+    TABLETS LANDSCAPE & NETBOOKS
+
+=====================================================*/
+
+@media all and (max-width: 990px) and (min-width: 769px) {
+
+    .mega-menu {
+        display: none !important;
+    }
+
+}
+
+
+
+/*=====================================================
+    
+    TABLETS PORTRAIT & SMARTPHONES LANDSCAPE
+
+=====================================================*/
+
+@media all and (max-width: 768px) and (min-width: 481px) {
+
+    .mega-menu {
+        display: none;
+    }
+
+}
+
+
+
+/*=====================================================
+    
+    SMALLER MOBILE DEVICES
+
+=====================================================*/
+
+@media all and (max-width: 480px) {
+
+    .mega-menu {
+        display: none;
+    }
+
+}

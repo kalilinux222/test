@@ -1,0 +1,29 @@
+﻿@using Nop.Web.Framework;
+@using Nop.Core.Infrastructure;
+@using Nop.Web.Framework.UI;
+@using Nop.Core;
+@{
+    var supportRtl = EngineContext.Current.Resolve<IWorkContext>().WorkingLanguage.Rtl;
+
+    Html.AppendCssFileParts("~/Plugins/SevenSpikes.Core/Styles/perfect-scrollbar.min.css");
+    Html.AppendCssFileParts("~/Plugins/SevenSpikes.Core/Styles/simplebar.css");
+
+    Html.AppendCssFileParts("~/Themes/ParkTables/Content/CSS/1280.css");
+    Html.AppendCssFileParts("~/Themes/ParkTables/Content/CSS/980.css");
+    Html.AppendCssFileParts("~/Themes/ParkTables/Content/CSS/768.css");
+    Html.AppendCssFileParts("~/Themes/ParkTables/Content/CSS/480.css");
+    Html.AppendCssFileParts("~/Themes/ParkTables/Content/CSS/mobile-only.css");
+    Html.AppendCssFileParts("~/Themes/ParkTables/Content/CSS/tables.css");
+    Html.AppendCssFileParts("~/Themes/ParkTables/Content/CSS/styles.css");
+    Html.AppendCssFileParts("~/Themes/ParkTables/Content/CSS/FLI_styles.css");
+    Html.AppendCssFileParts("~/Themes/ParkTables/Content/CSS/FLI_mobile-only.css");
+
+    Html.AddScriptParts("~/Plugins/SevenSpikes.Core/Scripts/footable.js");
+    Html.AddScriptParts("~/Plugins/SevenSpikes.Core/Scripts/perfect-scrollbar.min.js");
+    Html.AddScriptParts("~/Plugins/SevenSpikes.Core/Scripts/simplebar.js");
+    Html.AddScriptParts("~/Plugins/SevenSpikes.Core/Scripts/SevenSpikesExtensions.min.js");
+    Html.AddScriptParts("~/Plugins/SevenSpikes.Core/Scripts/jquery.styleSelect.min.js");
+    Html.AddScriptParts("~/Plugins/SevenSpikes.Core/Scripts/jquery.jscrollpane.min.js");
+
+    Html.AddScriptParts("~/Themes/ParkTables/Content/scripts/parktables.js");
+}

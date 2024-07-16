@@ -1,0 +1,75 @@
+.nop-jcarousel .carousel-title {
+    padding: 10px 10px 10px 80px;
+    background: #eee url('images/rtl-bullet.png') left center no-repeat;
+}
+.nop-jcarousel .carousel-title span {
+    padding-right: 0;
+    padding-left: 30px;
+}
+.nop-jcarousel .jcarousel-next-horizontal {
+    right: auto;
+    left: 30px;
+    background: #999 url('images/prev-horizontal.png') center no-repeat;
+}
+.nop-jcarousel .jcarousel-prev-horizontal {
+    right: auto;
+    left: 63px;
+    background: #999 url('images/next-horizontal.png') center no-repeat;
+}
+
+
+/*=====================================================
+    
+    TABLETS LANDSCAPE & NETBOOKS
+
+=====================================================*/
+
+@media all and (max-width: 980px) and (min-width: 769px) {
+
+    .nop-jcarousel .carousel-title {
+        padding: 16px 50px 16px 105px;
+    }
+    .nop-jcarousel .jcarousel-prev-horizontal {
+        left: 76px;
+    }
+
+}
+
+
+/*=====================================================
+    
+    TABLETS PORTRAIT & SMARTPHONES LANDSCAPE
+
+=====================================================*/
+
+@media all and (max-width: 768px) and (min-width: 481px) {
+
+    .nop-jcarousel .carousel-title {
+        padding: 16px 50px 16px 105px;
+    }
+    .nop-jcarousel .jcarousel-prev-horizontal {
+        left: 76px;
+    }
+
+}
+
+
+/*=====================================================
+    
+    SMALLER MOBILE DEVICES
+
+=====================================================*/
+
+@media all and (max-width: 480px) {
+
+    .nop-jcarousel .jcarousel-next-horizontal {
+        right: 51%;
+        left: auto;
+        margin: 0;
+    }
+    .nop-jcarousel .jcarousel-prev-horizontal {
+        right: auto;
+        left: 51%;
+        margin: 0;
+    }
+}

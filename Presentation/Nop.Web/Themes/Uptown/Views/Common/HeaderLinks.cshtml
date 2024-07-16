@@ -1,0 +1,75 @@
+﻿@using Nop.Web.Models.Common
+
+@model HeaderLinksModel
+
+<div class="header-links">
+    @Html.Widget("header_links_before")
+    <div class="my-account-dropdown-wrapper">
+        @if (Model.IsAuthenticated)
+        {
+            <a href="@Url.RouteUrl("CustomerInfo")" class="my-account-opener my-account-link">@T("Account.MyAccount")@*@Model.CustomerEmailUsername*@</a>
+        }
+        else
+        {
+            <a href="@Url.RouteUrl("Login")" class="my-account-opener login-link">@T("Account.MyAccount")</a>
+        }
+        <div class="my-account-dropdown">
+            @if (Model.IsAuthenticated)
+            {
+                @Html.Action("CustomerNavigation", "Customer")
+                <a href="@Url.RouteUrl("Logout")" class="ico-logout">@T("Account.Logout")</a>
+            }
+            else
+            {
+                <ul>
+                    <li><a href="@Url.RouteUrl("Login")" class="ico-login">@T("Account.Login")</a></li>
+                    <li><a href="@Url.RouteUrl("Register")" class="ico-register">@T("Account.Register")</a></li>
+                </ul>
+                @Html.Action("ExternalMethods", "ExternalAuthentication")
+            }
+        </div>
+    </div>
+    @if (Model.AllowPrivateMessages)
+    {
+        <a href="@Url.RouteUrl("PrivateMessages", new { tab = "" })" class="ico-inbox">
+            <span class="inbox-label">@T("PrivateMessages.Inbox")</span>
+            <span class="inbox-unread">@Model.UnreadPrivateMessages</span>
+        </a>
+    }
+    @Html.Widget("header_links_after")
+    @if (Model.WishlistEnabled)
+    {
+        <a href="@Url.RouteUrl("Wishlist")" class="ico-wishlist">
+            <span class="wishlist-label">@T("Wishlist")</span>
+            <span class="wishlist-qty">@T("Wishlist.HeaderQuantity", Model.WishlistItems)</span>
+        </a>
+    }
+    
+    @if (!Model.IsAuthenticated) 
+    {
+        @Html.Action("ExternalMethods", "ExternalAuthentication")
+    }
+
+    @if (Model.AllowPrivateMessages && !string.IsNullOrEmpty(Model.AlertMessage))
+    {
+        //new private message notification
+        <script type="text/javascript">
+            $(document).ready(function () {
+                displayPopupNotification('@Html.Raw(HttpUtility.JavaScriptStringEncode(Model.AlertMessage))', 'success', false);
+            });
+        </script>
+    }
+
+    @if (Model.ShoppingCartEnabled)
+    {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('.header').on('mouseenter', '#flyout-cart', function () {
+                    $(this).addClass('active');
+                }).on('mouseleave', '#flyout-cart', function () {
+                    $(this).removeClass('active');
+                });
+            });
+        </script>
+    }
+</div>

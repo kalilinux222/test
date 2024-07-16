@@ -1,0 +1,68 @@
+﻿@model FoxNetSoft.Plugin.Misc.PriceImportExport.Models.PriceImportExportSettingsModel
+@using System.Web.Mvc.Html
+@using FoxNetSoft.Plugin.Misc.PriceImportExport.Models
+@using Nop.Web.Framework
+@if (!Model.IsRunning)
+{
+    <div>
+    @using (Html.BeginForm("SimpleImportPriceFromFile", "PriceImportExportSettings", FormMethod.Post, new { id = "import-form",enctype = "multipart/form-data" }))
+    {
+    @Html.AntiForgeryToken()
+    <table class="adminContent">
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.SimpleImportProductKey):
+            </td>
+            <td class="adminData">
+                @Html.DropDownListFor(model => model.SimpleImportProductKey, Model.AvailableSimpleImportProductKeys)
+                @Html.ValidationMessageFor(model => model.SimpleImportProductKey)
+            </td>
+        </tr>   
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.SimpleImportPriceKey):
+            </td>
+            <td class="adminData">
+                @Html.DropDownList("SimpleImportPriceKey", Model.AvailableSimpleImportPriceKeys)
+                @Html.ValidationMessageFor(model => model.SimpleImportPriceKey)
+            </td>
+        </tr>
+        <tr class="adminSeparator">
+            <td colspan="2">
+                <hr />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <table style="text-align: left;">
+                    <tr>
+                        <td>
+                            @T("Admin.FoxNetSoft.Plugin.Misc.PriceImportExport.SimpleImport.CSVFile"):
+                        </td>
+                        <td>
+                            <input type="file" id="simpleimportcsvfile" name="simpleimportcsvfile" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <strong>@T("Admin.Configuration.Languages.XmlFile.Note1")</strong>
+                            <br />
+                            <strong>@T("Admin.Configuration.Languages.XmlFile.Note2")</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <input name="simapleimportpricelist" id="simapleimportpricelist" type="submit" class="k-button" value="@T("Admin.FoxNetSoft.Plugin.Misc.PriceImportExport.SimpleImport.Button")" />
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    }
+    </div>
+}
+else
+{
+    @Model.MessageThead
+}

@@ -1,0 +1,340 @@
+﻿@model FoxNetSoft.Plugin.Misc.PriceImportExport.Models.PriceImportExportSettingsModel
+@using System.Web.Mvc.Html
+@using FoxNetSoft.Plugin.Misc.PriceImportExport.Models
+@using Nop.Web.Framework
+@if (!Model.IsRunning)
+{
+    <div>
+    @using (Html.BeginForm("MassUpdate", "PriceImportExportSettings", FormMethod.Post, new { id = "massupdate-form" }))
+    {
+    @Html.AntiForgeryToken()
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#@Html.FieldIdFor(model => model.UsePercentage)").click(toggleUsePercentage);
+            $("#@Html.FieldIdFor(model => model.AnotherSourcePricing)").click(toggleAnotherSourcePricing);
+
+            $("#@Html.FieldIdFor(m => m.MassUpdateToPriceKey)").change(function () {
+                var selectedItem = $(this).val();
+                $('#pnlAnotherSourcePricing').show();
+                if (selectedItem == "@(FoxNetSoft.Plugin.Misc.PriceImportExport.Core.PriceKey.TiersPrice)") {
+                    $('#pnlMassUpdateToTierQuantity').show();
+                    $('#pnlMassUpdateToTierStore').show();
+                    $('#pnlMassUpdateToTierCustomerRole').show();
+                    $('#pnlMassUpdateTierCreateIfNoExists').show();
+                    return;
+                }
+                else {
+                    $('#pnlMassUpdateToTierQuantity').hide();
+                    $('#pnlMassUpdateToTierStore').hide();
+                    $('#pnlMassUpdateToTierCustomerRole').hide();
+                    $('#pnlMassUpdateTierCreateIfNoExists').hide();
+                }
+                if (selectedItem == "@(FoxNetSoft.Plugin.Misc.PriceImportExport.Core.PriceKey.AttributeCombination)") {
+                    $('#@Html.FieldIdFor(model => model.AnotherSourcePricing)').prop('checked', false);
+                    toggleAnotherSourcePricing();
+                    $('#pnlAnotherSourcePricing').hide();
+                }
+            }).change();
+            $("#@Html.FieldIdFor(m => m.MassUpdateFromPriceKey)").change(function () {
+                var selectedItem = $(this).val();
+                if (selectedItem == "@(FoxNetSoft.Plugin.Misc.PriceImportExport.Core.PriceKey.TiersPrice)") {
+                    $('#pnlMassUpdateFromTierQuantity').show();
+                    $('#pnlMassUpdateFromTierStore').show();
+                    $('#pnlMassUpdateFromTierCustomerRole').show();
+                }
+                else {
+                    $('#pnlMassUpdateFromTierQuantity').hide();
+                    $('#pnlMassUpdateFromTierStore').hide();
+                    $('#pnlMassUpdateFromTierCustomerRole').hide();
+                }
+            }).change();
+
+            toggleUsePercentage();
+            toggleAnotherSourcePricing();
+        });
+
+        function toggleUsePercentage() {
+            if ($('#@Html.FieldIdFor(model => model.UsePercentage)').is(':checked')) {
+                $('#pnlPricePercentage').show();
+                $('#pnlPriceAmount').hide();
+                $('#pnlRoundingXNumberOfDigits').show();
+                $('#pnlAddInThe99Cents').show();
+            } else {
+                $('#pnlPricePercentage').hide();
+                if ($('#@Html.FieldIdFor(model => model.AnotherSourcePricing)').is(':checked')) {
+                    $('#pnlPriceAmount').hide();
+                } else {
+                    $('#pnlPriceAmount').show();
+                }
+                $('#pnlRoundingXNumberOfDigits').hide();
+                $('#pnlAddInThe99Cents').hide();
+            }
+        }
+
+        function toggleAnotherSourcePricing() {
+            if ($('#@Html.FieldIdFor(model => model.AnotherSourcePricing)').is(':checked')) {
+                $('#pnlMassUpdateFromPriceKey').show();
+                $("#@Html.FieldIdFor(m => m.MassUpdateFromPriceKey)").change();
+                toggleUsePercentage();
+
+            } else {
+                $('#pnlMassUpdateFromPriceKey').hide();
+                $('#pnlMassUpdateFromTierQuantity').hide();
+                $('#pnlMassUpdateFromTierStore').hide();
+                $('#pnlMassUpdateFromTierCustomerRole').hide();
+                toggleUsePercentage();
+            }
+        }
+    </script>
+    <table class="adminContent">
+        <tr>
+            <td colspan="2">
+                <b>@T("Admin.FoxNetSoft.Plugin.Misc.PriceImportExport.Export.Message")</b>
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.SearchProductName):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => Model.SearchProductName)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.SearchCategoryId):
+            </td>
+            <td class="adminData">
+                @Html.DropDownList("SearchCategoryId", Model.AvailableCategories)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.SearchIncludeSubCategories):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.SearchIncludeSubCategories)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.SearchManufacturerId):
+            </td>
+            <td class="adminData">
+                @Html.DropDownList("SearchManufacturerId", Model.AvailableManufacturers)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.SearchStoreId):
+            </td>
+            <td class="adminData">
+                @Html.DropDownList("SearchStoreId", Model.AvailableStores)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.SearchVendorId):
+            </td>
+            <td class="adminData">
+                @Html.DropDownList("SearchVendorId", Model.AvailableVendors)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.SearchProductTypeId):
+            </td>
+            <td class="adminData">
+                @Html.DropDownList("SearchProductTypeId", Model.AvailableProductTypes)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.SearchPublishedId):
+            </td>
+            <td class="adminData">
+                @Html.DropDownList("SearchPublishedId", Model.AvailablePublishedOptions)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.AvailableForSale):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => Model.AvailableForSale)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.MassUpdateCreatedOnFrom):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => Model.MassUpdateCreatedOnFrom)
+                @Html.ValidationMessageFor(model => model.MassUpdateCreatedOnFrom)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.MassUpdateCreatedOnTo):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => Model.MassUpdateCreatedOnTo)
+                @Html.ValidationMessageFor(model => model.MassUpdateCreatedOnTo)
+            </td>
+        </tr>
+        <tr class="adminSeparator">
+                <td colspan="2">
+                    <hr />
+                </td>
+        </tr>
+                    <tr>
+                        <td class="adminTitle">
+                            @Html.NopLabelFor(model => model.MassUpdateToPriceKey):
+                        </td>
+                        <td class="adminData">
+                            @Html.DropDownList("MassUpdateToPriceKey", Model.AvailableMassUpdateToPriceKeys)
+                        </td>
+                    </tr>
+                   <tr id="pnlMassUpdateToTierQuantity">
+                        <td class="adminTitle">
+                            @Html.NopLabelFor(model => model.MassUpdateToTierQuantity):
+                        </td>
+                        <td class="adminData">
+                            @Html.EditorFor(model => model.MassUpdateToTierQuantity)
+                            @Html.ValidationMessageFor(model => model.MassUpdateToTierQuantity)
+                        </td>
+                    </tr>
+                   <tr id="pnlMassUpdateToTierStore">
+                        <td class="adminTitle">
+                            @Html.NopLabelFor(model => model.MassUpdateToTierStoreId):
+                        </td>
+                        <td class="adminData">
+                            @Html.DropDownList("MassUpdateToTierStoreId", Model.AvailableStoresTierMU)
+                            @Html.ValidationMessageFor(model => model.MassUpdateToTierStoreId)
+                        </td>
+                    </tr>
+                   <tr id="pnlMassUpdateToTierCustomerRole">
+                        <td class="adminTitle">
+                            @Html.NopLabelFor(model => model.MassUpdateToTierCustomerRoleId):
+                        </td>
+                        <td class="adminData">
+                            @Html.DropDownList("MassUpdateToTierCustomerRoleId", Model.AvailableMUToTierCustomerRoles)
+                            @Html.ValidationMessageFor(model => model.MassUpdateToTierCustomerRoleId)
+                        </td>
+                    </tr>
+                   <tr id="pnlMassUpdateTierCreateIfNoExists">
+                        <td class="adminTitle">
+                            @Html.NopLabelFor(model => model.MassUpdateTierCreateIfNoExists):
+                        </td>
+                        <td class="adminData">
+                            @Html.EditorFor(model => model.MassUpdateTierCreateIfNoExists)
+                            @Html.ValidationMessageFor(model => model.MassUpdateTierCreateIfNoExists)
+                        </td>
+                    </tr>
+                   <tr id="pnlAnotherSourcePricing">
+                        <td class="adminTitle">
+                            @Html.NopLabelFor(model => model.AnotherSourcePricing):
+                        </td>
+                        <td class="adminData">
+                            @Html.EditorFor(model => model.AnotherSourcePricing)
+                            @Html.ValidationMessageFor(model => model.AnotherSourcePricing)
+                        </td>
+                    </tr>
+                    <tr id="pnlMassUpdateFromPriceKey">
+                        <td class="adminTitle">
+                            @Html.NopLabelFor(model => model.MassUpdateFromPriceKey):
+                        </td>
+                        <td class="adminData">
+                            @Html.DropDownList("MassUpdateFromPriceKey", Model.AvailableMassUpdateFromPriceKeys)
+                        </td>
+                    </tr>
+                   <tr id="pnlMassUpdateFromTierQuantity">
+                        <td class="adminTitle">
+                            @Html.NopLabelFor(model => model.MassUpdateFromTierQuantity):
+                        </td>
+                        <td class="adminData">
+                            @Html.EditorFor(model => model.MassUpdateFromTierQuantity)
+                            @Html.ValidationMessageFor(model => model.MassUpdateFromTierQuantity)
+                        </td>
+                    </tr>
+                   <tr id="pnlMassUpdateFromTierStore">
+                        <td class="adminTitle">
+                            @Html.NopLabelFor(model => model.MassUpdateFromTierStoreId):
+                        </td>
+                        <td class="adminData">
+                            @Html.DropDownList("MassUpdateFromTierStoreId", Model.AvailableStoresTierMUFrom)
+                            @Html.ValidationMessageFor(model => model.MassUpdateFromTierStoreId)
+                        </td>
+                    </tr>
+                   <tr id="pnlMassUpdateFromTierCustomerRole">
+                        <td class="adminTitle">
+                            @Html.NopLabelFor(model => model.MassUpdateFromTierCustomerRoleId):
+                        </td>
+                        <td class="adminData">
+                            @Html.DropDownList("MassUpdateFromTierCustomerRoleId", Model.AvailableMUFromTierCustomerRoles)
+                            @Html.ValidationMessageFor(model => model.MassUpdateFromTierCustomerRoleId)
+                        </td>
+                    </tr>
+        <tr class="adminSeparator">
+            <td colspan="2">
+                <hr />
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.UsePercentage):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.UsePercentage)
+                @Html.ValidationMessageFor(model => model.UsePercentage)
+            </td>
+        </tr>
+        <tr id="pnlPriceAmount">
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.PriceAmount):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.PriceAmount) [@Model.PrimaryStoreCurrencyCode]
+                @Html.ValidationMessageFor(model => model.PriceAmount)
+            </td>
+        </tr>
+        <tr id="pnlPricePercentage">
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.PricePercentage):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.PricePercentage)
+                @Html.ValidationMessageFor(model => model.PricePercentage)
+            </td>
+        </tr>
+        <tr id="pnlRoundingXNumberOfDigits">
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.RoundingXNumberOfDigits):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.RoundingXNumberOfDigits)
+                @Html.ValidationMessageFor(model => model.RoundingXNumberOfDigits)
+            </td>
+        </tr>
+        <tr id="pnlAddInThe99Cents">
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.AddInThe99Cents):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.AddInThe99Cents)
+                @Html.ValidationMessageFor(model => model.AddInThe99Cents)
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="submit" name="massupdate" class="k-button" value="@T("Admin.FoxNetSoft.Plugin.Misc.PriceImportExport.MassUpdate.Button")" />
+            </td>
+        </tr>
+    </table>
+    }
+    </div>
+}
+else
+{
+    @Model.MessageThead
+}

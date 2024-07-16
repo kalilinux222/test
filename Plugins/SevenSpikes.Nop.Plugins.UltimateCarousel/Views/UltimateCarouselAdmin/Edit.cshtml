@@ -1,0 +1,46 @@
+﻿@{
+    Layout = AdminViewLocations.AdminLayoutViewPath;
+}
+
+@using SevenSpikes.Nop.Framework.MVCExtensions
+@using SevenSpikes.Nop.Framework
+@using SevenSpikes.Nop.Plugins.UltimateCarousel
+@using SevenSpikes.Nop.Plugins.UltimateCarousel.Models
+
+@model CarouselModel
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="section-header">
+        <div class="title">
+            <img src="@Url.Content("~/Administration/Content/images/ico-catalog.png")" alt="Catalog Icon"/>
+            @T("Admin.Common.Edit") - @GetStrippedTruncatedTitle(Model.PublicTitle) @Html.ActionLink("(" + T("SevenSpikes.UltimateCarousel.Admin.Carousel.BackToList") + ")", "List")
+        </div>
+        <div class="options">
+            <input type="submit" name="save" class="k-button" value="@T("Admin.Common.Save")" />
+            <input type="submit" name="save-continue" class="k-button" value="@T("Admin.Common.SaveContinue")" />
+            <span id="carousel-delete" class="k-button">@T("Admin.Common.Delete")</span>
+        </div>
+    </div>
+    @Html.TrialMessage(Model.UltimateCarouselSettings.IsTrialVersion, Constants.PluginName, Constants.PluginUrlInStore)
+    @Html.Partial(Constants.ViewAdminCarouselCreateOrUpdate, Model)
+}
+@Html.DeleteConfirmation("carousel-delete")
+
+@helper GetStrippedTruncatedTitle(string title)
+{
+    const int maxLength = 40;
+
+    title = System.Text.RegularExpressions.Regex.Replace(title, "<.*?>", string.Empty);
+
+    if (title.Length > maxLength)
+    {
+        <span title="@title">@string.Format("{0}...", title.Substring(0, maxLength))</span>
+    }
+    else
+    {
+        <span>@title</span>
+    }
+}

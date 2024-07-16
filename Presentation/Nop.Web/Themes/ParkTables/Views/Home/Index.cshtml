@@ -1,0 +1,40 @@
+﻿@{
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+}
+
+<div class="page home-page">
+
+    <div class="page-body">
+        @Html.Widget("home_page_top")
+        @Html.Widget("home_page_before_categories")
+        @Html.Action("HomepageCategories", "Catalog")
+
+        @*<div class="product-grid home-page-filtered-grid">
+            <div class="title">
+                <strong>@T("HomePage.Products")</strong>
+            </div>
+            <div class="item-grid">
+                @foreach (var item in Model)
+                {
+                    <div class="item-box">
+                        @Html.Partial("_ProductBox", item)
+                    </div>
+                }
+            </div>
+        </div>*@
+
+        @Html.Widget("home_page_before_best_sellers")  @*Shop Under $800*@
+        @Html.Action("ShopUnder", "ShopUnder")
+        @Html.Action("HomepageBestSellers", "Product")
+        <div class="home-page-banner-wrapper home-page-gray-wrapper">
+            @Html.Widget("home_page_custom_widget")
+        </div>
+        @Html.Widget("home_page_before_news")  @* what customers are sayng *@
+        @Html.Widget("home_page_before_products")
+        @*@Html.Action("HomepageProducts", "Product")*@ @* Featured products to remove *@
+        @Html.Action("HomePageNews", "News")
+        @Html.Widget("home_page_before_poll") @* Featured products and Recently Viewed Items *@
+        @Html.Action("HomePagePolls", "Poll")
+        @Html.Widget("home_page_bottom")
+    </div>
+</div>

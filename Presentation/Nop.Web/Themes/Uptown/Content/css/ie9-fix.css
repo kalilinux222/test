@@ -1,0 +1,35 @@
+﻿.loader-overlay {
+    display: none;
+}
+#topcartlink {
+    overflow: hidden;
+}
+.cart-wrapper .ico-cart-total {
+    display: none;
+}
+.flyout-cart {
+    padding-top: 26px;
+}
+.mini-shopping-cart .product .name {
+    text-align: left !important;
+}
+.mega-menu .dropdown {
+    padding-top: 31px !important;
+}
+.social-sharing a,
+.share-post a {
+    overflow: hidden;
+}
+.store-search-box input.search-box-text:focus {
+    border-bottom: 1px solid #8c8c8c;
+}
+.instant-search-item .img-block img{
+    position: static !important;
+}
+.previous-product, .next-product {
+    left: 50% !important;
+    overflow: hidden;
+}
+.write-review .button-1{
+    text-shadow: none !important;
+}

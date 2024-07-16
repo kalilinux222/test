@@ -1,0 +1,162 @@
+﻿@model CheckoutPaymentMethodModel
+@using Nop.Web.Models.Checkout;
+<div class="checkout-data">
+    @Html.Widget("op_checkout_payment_method_top")
+    <div class="section payment-method">
+        @if (Model.DisplayRewardPoints && Model.PaymentMethods.Count > 0)
+        {
+            <div class="use-reward-points">
+                @Html.EditorFor(model => model.UseRewardPoints)
+                @string.Format(T("Checkout.UseRewardPoints").Text, Model.RewardPointsBalance, Model.RewardPointsAmount)
+            </div>
+        }
+        @if (Model.PaymentMethods.Count > 0)
+        {
+            <script type="text/javascript">
+
+                $(document).ready(function () {
+                    
+                    // Save the current onclick functions.
+                    var backButtonOnClick = $('#co-payment-method-form div.back-link > a').attr('onclick') || "Checkout.back(); return false;";
+                    var nextButtonOnClick = $('.payment-method-next-step-button').attr('onclick') || "PaymentMethod.save()";
+
+                    $('.payment-method-next-step-button').removeAttr('onclick').hide();
+                    $('.payment-info').hide();
+
+                    $(document).off('change.paymentmethod.o').on('change.paymentmethod.o', 'input[name=paymentmethod]', togglePaymentInfos);
+
+                    $(document).off('click.paymentmethod.back').on('click.paymentmethod.back', '#co-payment-method-form div.back-link > a', function (e) {
+
+                        e.preventDefault();
+                        e.stopPropagation();
+
+                        var attribute = $('#co-payment-method-form div.back-link > a').attr('onclick');
+
+                        if (typeof attribute !== typeof undefined && attribute !== false) {
+
+                            $('.progress-step.third').removeClass('active');
+                            $('.progress-step.third').prev('.separator').find('span').css('width', '0');
+                        }
+
+                        if ($('.payment-info:visible').length && !window.oneMoreBackButtonLevel) {
+
+                            //show all payment methods
+                            $('ul.method-list').show();
+
+                            //hide all payment infos
+                            $('.payment-info').hide();
+
+                            $('.payment-method-hint.select-payment-type').show();
+
+                            //reset all inputs
+                            $('input[name=paymentmethod]:checked').prop('checked', false);
+
+                            //re-attach billing address form to the default place
+                            $('#checkout-billing-load').detach().appendTo('#co-billing-form');
+
+                            //return the default onclick function on the back button
+                            $('#co-payment-method-form div.back-link > a').attr('onclick', backButtonOnClick);
+
+                            //hide continue button
+                            $('.payment-method-next-step-button').hide();
+
+                            $('.progress-step.fourth').prev('.separator').find('span').css('width', '0');
+                        }
+                    });
+
+                    $(document).off('click.paymentmethod.next').on('click.paymentmethod.next', '.payment-method-next-step-button', function (e) {
+
+                        e.preventDefault();
+                        e.stopPropagation();
+
+                        $('.payment-method-next-step-button').attr('onclick', nextButtonOnClick).click();
+                    });
+
+                    function togglePaymentInfos() {
+
+                        var selectedPaymentInfo = '#paymentMethodInfo_' + $('input[name=paymentmethod]:checked').attr('id').replace(/paymentmethod_/, '');
+
+                        //hide all payment methods
+                        $('ul.method-list').hide();
+
+                        //hide all payment infos
+                        $('.payment-info').hide();
+
+                        $('.payment-method-hint.select-payment-type').hide();
+
+                        //show selected payment info
+                        $(selectedPaymentInfo).show();
+
+                        //remove the default onclick function on the back button
+                        $('#co-payment-method-form div.back-link > a').removeAttr('onclick');
+
+                        $('.progress-step.fourth').prev('.separator').find('span').css('width', '66%');
+
+                        if (!window.oneMoreBackButtonLevel) {
+
+                            //show continue button
+                            $('.payment-method-next-step-button').show();
+
+                            //re-attach billing address form
+                            $('#checkout-billing-load').detach().appendTo(selectedPaymentInfo);
+                        }
+                    }
+
+                    $('.progress-step.third').addClass('active');
+                    $('.progress-step.third').prev('.separator').find('span').css('width', '100%');
+                });
+            </script>
+            <strong class="payment-method-hint select-payment-type">@T("Checkout.PaymentMethods.Hint")</strong>
+            <ul class="method-list">
+                @for (int i = 0; i < Model.PaymentMethods.Count; i++)
+                {
+                    var paymentMethod = Model.PaymentMethods[i];
+                    var paymentMethodName = paymentMethod.Name;
+                    if (!String.IsNullOrEmpty(paymentMethod.Fee))
+                    {
+                        paymentMethodName = T("Checkout.SelectPaymentMethod.MethodAndFee", paymentMethodName, paymentMethod.Fee).Text;
+                    }
+                    <li>
+                        <div class="method-name">
+                            @if (!String.IsNullOrEmpty(paymentMethod.LogoUrl))
+                            {
+                                <div class="payment-logo">
+                                    <label for="paymentmethod_@(i)">
+                                        <img src="@paymentMethod.LogoUrl" alt="@paymentMethodName" />
+                                    </label>
+                                </div>
+                            }
+                            <div class="payment-details">
+                                <input id="paymentmethod_@(i)" type="radio" name="paymentmethod" value="@(paymentMethod.PaymentMethodSystemName)" />
+                                <label for="paymentmethod_@(i)">@paymentMethodName</label>
+                            </div>
+                        </div>
+                    </li>
+                }
+            </ul>
+
+            for (int i = 0; i < Model.PaymentMethods.Count; i++)
+            {
+                var paymentMethod = Model.PaymentMethods[i];
+
+                <div id="paymentMethodInfo_@(i)" class="payment-info">
+                    @Html.Raw(paymentMethod.CustomProperties["PaymentInfo"])
+                </div>
+            }
+        }
+        else
+        {
+            <div class="message-error">
+                @T("Checkout.NoPaymentMethods")
+            </div>
+        }
+    </div>
+    @Html.Widget("op_checkout_payment_method_bottom")
+</div>
+
+<div class="section order-summary">
+    <div class="title">
+        <strong>@T("Checkout.OrderSummary")</strong>
+    </div>
+    @Html.Action("OrderSummary", "ShoppingCart")
+</div>

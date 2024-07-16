@@ -1,0 +1,236 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Language Name="English">
+  <LocaleResource Name="SevenSpikes.UltimateCarousel">
+    <Value>Nop Ultimate Carousel</Value>
+  </LocaleResource>
+  <LocaleResource Name="Sevenspikes.UltimateCarousel.Admin.Settings.Common">
+    <Value>Nop Ultimate Carousel Settings</Value>
+  </LocaleResource>
+  <LocaleResource Name="sevenspikes.UltimateCarousel.admin.submenus.settings">
+    <Value>Settings</Value>
+  </LocaleResource>
+  <LocaleResource Name="sevenspikes.UltimateCarousel.admin.submenus.managecarousels">
+    <Value>Manage Carousels</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.Settings.Enabled">
+    <Value>Enabled</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.Settings.Enabled.Hint">
+    <Value>If checked the Ultimate Carousel plugin will be enabled.</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.Settings.EnabledAsWidget">
+    <Value>Enable as Widget</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.Settings.EnabledAsWidget.Hint">
+    <Value>If checked the Ultimate Carousel will be enabled as widget.</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.Settings.Common.GeneralSettings">
+    <Value>General Settings</Value>
+  </LocaleResource>
+  <LocaleResource Name="sevenspikes.ultimatecarousel.admin.carousel.addnew">
+    <Value>Add New</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.Carousel.CarouselIsVisible">
+    <Value>Visible</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.Carousel.BackToList">
+    <Value>back to list</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.Carousel.SaveBeforeEdit">
+    <Value>You must save the Carousel before editing its properties.</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.Carousel.Settings.TabTitle.CommonSettings">
+    <Value>Common Settings</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.Carousel.Settings.TabTitle.SpecificSettings">
+    <Value>Carousel Specific Settings</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.Carousel.Settings.TabTitle.AdvancedSettings">
+    <Value>Carousel Advanced Settings</Value>
+  </LocaleResource>
+
+  <LocaleResource Name="sevenspikes.ultimatecarousel.admin.carousel.IsEnabled">
+    <Value>Visible</Value>
+  </LocaleResource>
+  <LocaleResource Name="sevenspikes.ultimatecarousel.admin.carousel.IsEnabled.Hint">
+    <Value>Sets if the carousel is visible</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.Carousel.PublicTitle">
+    <Value>Title</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.Carousel.PublicTitle.Hint">
+    <Value>The title of the carousel that will be visible to the customers.</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.Carousel.CarouselCssClass">
+    <Value>Carousel Css Class</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.Carousel.CarouselCssClass.Hint">
+    <Value>The custom class that will be added to the wrapper of the carousel.</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.Carousel.CarouselItemsTemplate">
+    <Value>Carousel Items Template</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.Carousel.CarouselItemsTemplate.Hint">
+    <Value>The template file for showing the carousel items. You can add new templates in the plugin folder \Templates\</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.Carousel.PictureSize">
+    <Value>Picture Size (in pixels)</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.Carousel.PictureSize.Hint">
+    <Value>Set the max picture size in pixels (leave 0 if you do not want maximum size restriction)</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.Carousel.DisplayOrder">
+    <Value>Display Order</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.Carousel.DisplayOrder.Hint">
+    <Value>The Display Order of the carousel</Value>
+  </LocaleResource>
+
+  <!-- Owl Carousel Settings -->
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.Carousel.SettingCenter">
+    <Value>Center the carousel</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.Carousel.SettingCenter.Hint">
+    <Value>Set the current item to show in the center of the carousel</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.Carousel.SettingLoop">
+    <Value>Infinite loop</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.Carousel.SettingLoop.Hint">
+    <Value>When the carousel reaches the last item, it appends the first</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.Carousel.SettingMargin">
+    <Value>Space between items (in px)</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.Carousel.SettingMargin.Hint">
+    <Value>Set the space between two carousel items in pixels</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.Carousel.SettingNav">
+    <Value>Navigation</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.Carousel.SettingNav.Hint">
+    <Value>Show navigation arrows</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.Carousel.SettingResponsive">
+    <Value>Number of items</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.Carousel.SettingResponsive.Hint">
+    <Value>Set the number of items, according to the width of the carousel. The structure should be like: width:count, comma separated(e.g. 0:1, 500:2, 1000:3)</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.Carousel.SettingAutoPlay">
+    <Value>AutoPlay</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.Carousel.SettingAutoPlay.Hint">
+    <Value>Make the carousel to start automatically</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.Carousel.SettingAutoplayTimeout">
+    <Value>Auto-play timeout</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.Carousel.SettingAutoplayTimeout.Hint">
+    <Value>Set the interval of changing carousel items in milliseconds</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.Carousel.SettingAutoPlayHoverOnPause">
+    <Value>Hover On Pause</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.Carousel.SettingAutoPlayHoverOnPause.Hint">
+    <Value>Stop animation when hovered</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.Carousel.SettingAdvancedSettings">
+    <Value>Advanced Settings</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.Carousel.SettingAdvancedSettings.Hint">
+    <Value>Add more Owl Carousel Settings ( for full list of settings see this link: http://www.owlcarousel.owlgraphic.com/docs/api-options.html ) (e.g. merge: false, startPosition: 0)</Value>
+  </LocaleResource>
+
+
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.CarouselItem.Visible">
+    <Value>Visible</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.CarouselItem.Visible.Hint">
+    <Value>Sets the carousel item to be visible</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.CarouselItem.Title">
+    <Value>Title</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.CarouselItem.Title.Hint">
+    <Value>The title of the carousel item. It will be visible by the customers</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.CarouselItem.Description">
+    <Value>Description</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.CarouselItem.Description.Hint">
+    <Value>The description of the carousel item. It will be visible by the customers</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.CarouselItem.Url">
+    <Value>Url</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.CarouselItem.Url.Hint">
+    <Value>An Url where the carousel item will lead to if clicked</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.CarouselItem.OpenInNewWindow">
+    <Value>Open url in a new window</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.CarouselItem.OpenInNewWindow.Hint">
+    <Value>When checked the url for the item will be opened in a new window.</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.CarouselItem.IsPictureVisible">
+    <Value>Show Picture</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.CarouselItem.IsPictureVisible.Hint">
+    <Value>Sets whether to show image or not</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.CarouselItem.Picture">
+    <Value>Picture</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.CarouselItem.Picture.Hint">
+    <Value>The picture for the carousel item</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.CarouselItem.DisplayOrder">
+    <Value>Display Order</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.CarouselItem.DisplayOrder.Hint">
+    <Value>The display order of the carousel item</Value>
+  </LocaleResource>
+  
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.Carousel.TabTitle.Settings">
+    <Value>Settings</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.Carousel.TabTitle.Items">
+    <Value>Items</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.Carousel.TabTitle.Conditions">
+    <Value>Conditions</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.Carousel.TabTitle.ProductOverrides">
+    <Value>Override Product Conditions</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.Carousel.TabTitle.Widgets">
+    <Value>Widget zones</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.Carousel.TabTitle.Stores">
+    <Value>Stores</Value>
+  </LocaleResource>
+
+  <LocaleResource Name="SevenSpikes.UltimateCarousel.Admin.Carousel.Error">
+    <Value>An error has occured. Please try again.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Sevenspikes.Plugins.Ultimatecarousel.Admin.Carouselitem.Addnew">
+    <Value>Add New Item</Value>
+  </LocaleResource>
+  <LocaleResource Name="sevenspikes.ultimatecarousel.admin.carousel.updated">
+    <Value>Carousel Updated Successfully</Value>
+  </LocaleResource>
+
+  <LocaleResource Name="SevenSpikes.Plugins.UltimateCarousel.Fields.Title.IsRequired">
+    <Value>You must enter carousel item title</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.Plugins.UltimateCarousel.Fields.CarouselName.IsRequired">
+    <Value>You must enter carousel name</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.Plugins.UltimateCarousel.Fields.CarouselItemsTemplate.IsRequired">
+    <Value>You must choose items template</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.Plugins.UltimateCarousel.Fields.CarouselItemsTemplatesList.Missing">
+    <Value>First you must create a template file. (possible problem is if the Template folder does not have access)</Value>
+  </LocaleResource>
+</Language>

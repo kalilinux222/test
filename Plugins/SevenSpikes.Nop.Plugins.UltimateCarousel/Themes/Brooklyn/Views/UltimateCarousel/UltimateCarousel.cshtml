@@ -1,0 +1,76 @@
+﻿@using Nop.Core
+@using Nop.Core.Domain.Seo
+@using Nop.Core.Infrastructure
+@using Nop.Services.Localization
+@using Nop.Web.Models.Catalog
+@using SevenSpikes.Nop.Plugins.UltimateCarousel
+
+@model SevenSpikes.Nop.Plugins.UltimateCarousel.Models.CarouselModel
+
+@{
+    if (@Model.CarouselItems.Count == 0)
+    {
+        return;
+    }
+
+    var supportRtl = this.ShouldUseRtlTheme();
+    
+    Html.AddCssFileParts("~/Plugins/SevenSpikes.Nop.Plugins.UltimateCarousel/Themes/" + Model.Theme + "/Content/UltimateCarousel.css");
+    if (supportRtl)
+    {
+        Html.AddCssFileParts("~/Plugins/SevenSpikes.Nop.Plugins.UltimateCarousel/Themes/" + Model.Theme + "/Content/UltimateCarousel.rtl.css");
+    }
+    Html.AddCssFileParts("~/Plugins/SevenSpikes.Nop.Plugins.UltimateCarousel/Styles/owl.carousel.css");
+    Html.AddCssFileParts("~/Plugins/SevenSpikes.Nop.Plugins.UltimateCarousel/Styles/owl.theme.css");
+
+    Html.AddScriptParts("~/Plugins/SevenSpikes.Core/Scripts/SevenSpikesExtensions.js");
+    Html.AddScriptParts("~/Plugins/SevenSpikes.Nop.Plugins.UltimateCarousel/Scripts/owl.carousel.min.js");
+}
+
+<div class="ultimate-carousel @Model.CarouselCssClass">
+    @if (!string.IsNullOrWhiteSpace(@Model.PublicTitle))
+    {
+        <h2 class="carousel-title">
+            <span class="ct-text">@Model.PublicTitle</span>
+        </h2>
+    }
+    <div class="carousel-body">
+        <div class="head-banner">
+            <a class="banner" href="https://search.google.com/local/reviews?placeid=ChIJpTnqKmbr5ogROIhnyLtsXgs" target="_blank">
+                <span class="txt">@T("UltimateCarousel.ItemNumber")</span>
+            </a>
+        </div>
+        <div id="owl-carousel-@Model.Id" class="owl-carousel">
+            @foreach (var item in Model.CarouselItems)
+            {
+                <div class="carousel-item">
+                    @Html.Partial(string.Format("Templates/{0}", Model.CarouselItemsTemplate), item)
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        $("#owl-carousel-@Model.Id").owlCarousel({
+            center: @Model.SettingCenter.ToString().ToLower(),
+            items: 1,
+            loop: @Model.SettingLoop.ToString().ToLower(),
+            margin: @Model.SettingMargin,
+            nav: @Model.SettingNav.ToString().ToLower(),
+            responsiveBaseElement: $('#owl-carousel-@Model.Id'),
+            responsive: @Model.SettingResponsive,
+            autoplay: @Model.SettingAutoPlay.ToString().ToLower(),
+            autoplayTimeout: @Model.SettingAutoplayTimeout,
+            autoplayHoverPause: @Model.SettingAutoPlayHoverOnPause.ToString().ToLower()
+            @if (!string.IsNullOrWhiteSpace(Model.SettingAdvancedSettings))
+            {
+                <text>,</text>
+                @Model.SettingAdvancedSettings
+            }
+        });
+
+    });
+</script>

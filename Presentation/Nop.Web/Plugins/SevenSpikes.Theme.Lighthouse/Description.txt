@@ -1,0 +1,8 @@
+﻿Group: 7Spikes
+FriendlyName: Nop Lighthouse Theme
+SystemName: SevenSpikes.Theme.Lighthouse
+Version: 3.70
+SupportedVersions: 3.70
+Author: Seven Spikes
+DisplayOrder: 2
+FileName: SevenSpikes.Theme.Lighthouse.dll

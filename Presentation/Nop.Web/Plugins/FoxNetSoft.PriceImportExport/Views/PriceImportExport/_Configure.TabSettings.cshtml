@@ -1,0 +1,115 @@
+﻿@model FoxNetSoft.Plugin.Misc.PriceImportExport.Models.PriceImportExportSettingsModel
+@using System.Web.Mvc.Html
+@using FoxNetSoft.Plugin.Misc.PriceImportExport.Models
+@using Nop.Web.Framework
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "configure-form" }))
+{
+    @Html.AntiForgeryToken()
+    <script type="text/javascript">
+            $(document).ready(function () {
+                $("#@Html.FieldIdFor(model => model.showDebugInfo)").click(toggleshowDebugInfo);
+                toggleshowDebugInfo();
+            });
+
+            function toggleshowDebugInfo() {
+                if ($('#@Html.FieldIdFor(model => model.showDebugInfo)').is(':checked')) {
+                    $('#pnlclearlogfile').show();
+                    $('#pnlgetlogfile').show();
+                }
+                else {
+                    $('#pnlclearlogfile').hide();
+                    $('#pnlgetlogfile').hide();
+                }
+            }
+    </script>            
+    <table class="adminContent">
+            <tr>
+                <td colspan="2" width="100%">
+                    @if (Model.IsRegisted == true)
+                    {
+                        @T("Admin.FoxNetSoft.Plugin.Misc.PriceImportExport.Settings.IsRegisted")
+                    }
+                    else
+                    {
+                        @T("Admin.FoxNetSoft.Plugin.Misc.PriceImportExport.Settings.IsNoRegisted")
+                        <br />
+                        <a href="http://foxnetsoft.com/noppriceimportexport" target="blank" >Buy It Now</a>
+                    }
+                </td>
+            </tr>
+            <tr class="adminSeparator">
+                <td colspan="2">
+                    <hr />
+                </td>
+            </tr>
+            <tr>
+                <td class="adminTitle">
+                    @Html.NopLabelFor(model => model.showDebugInfo):
+                </td>
+                <td class="adminData">
+                    @Html.EditorFor(model => model.showDebugInfo)
+                    @Html.ValidationMessageFor(model => model.showDebugInfo)
+                    <div id="pnlclearlogfile">
+                        <a href="@Url.Action("ClearLogFile")" class="k-button">@T("Admin.FoxNetSoft.Plugin.Misc.PriceImportExport.Settings.ClearLogFile")</a>
+                    </div>
+                    <div id="pnlgetlogfile">
+                        <a href="@Url.Action("GetLogFile")" class="k-button">@T("Admin.FoxNetSoft.Plugin.Misc.PriceImportExport.Settings.GetLogFile")</a>
+                    </div>
+                </td>
+            </tr>
+            <tr class="adminSeparator">
+                <td colspan="2">
+                    <hr />
+                </td>
+            </tr>            
+            <tr>
+                <td class="adminTitle">
+                    @Html.NopLabelFor(model => model.StoreUrl):
+                </td>
+                <td class="adminData">
+                    <b>@Model.StoreUrl</b>
+                </td>
+            </tr>
+            <tr>
+                <td class="adminTitle">
+                    @Html.NopLabelFor(m => m.SerialNumber):
+                </td>
+                <td class="adminData">
+                    @Html.EditorFor(m => m.SerialNumber)
+                    @Html.ValidationMessageFor(m => m.SerialNumber)
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" width="100%">
+                    <button type="submit" name="save" value="save" class="k-button">
+                        @T("Admin.Common.Save")</button>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" width="100%">
+                    Installation and configuring plug-in at Youtube <a href="http://www.youtube.com/foxnetsoft" target="blank" >www.youtube.com/foxnetsoft</a>
+                     <br />
+                    Installation and configuring plug-in at our site <a href="http://www.foxnetsoft.com/documentationnoppriceimportexport" target="blank" >http://www.foxnetsoft.com/documentationnoppriceimportexport</a>
+                     <br />
+                     <a href="http://www.foxnetsoft.com" target="blank" >www.foxnetsoft.com</a>
+                </td>
+            </tr>
+            <tr class="adminSeparator">
+                <td colspan="2">
+                    <hr />
+                </td>
+            </tr>   
+            <tr>
+                <td colspan="2" width="100%">
+                    <button type="submit" name="updatehastierprices" value="updatehastierprices" class="k-button">
+                        @T("Admin.FoxNetSoft.Plugin.Misc.PriceImportExport.Settings.UpdateHasTierPrices")</button>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" width="100%">
+                    <button type="submit" name="removeduplicatetierprices" value="removeduplicatetierprices" class="k-button">
+                        @T("Admin.FoxNetSoft.Plugin.Misc.PriceImportExport.Settings.RemoveDuplicateTierPrices")</button>
+                </td>
+            </tr>
+    </table>
+}

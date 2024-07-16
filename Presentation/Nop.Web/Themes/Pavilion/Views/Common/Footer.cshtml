@@ -1,0 +1,184 @@
+﻿@using Nop.Core
+@using Nop.Core.Domain.Tax
+@using Nop.Core.Infrastructure
+@using Nop.Services.Configuration
+@using Nop.Web.Models.Common
+@using Nop.Web.Framework.Themes
+@model FooterModel
+
+@{
+    var storeId = EngineContext.Current.Resolve<IStoreContext>().CurrentStore.Id;
+    var settingService = EngineContext.Current.Resolve<ISettingService>();
+    var instagramUrl = settingService.GetSettingByKey("pavilionthemesettings.instagramurl", String.Empty, storeId, true);
+    var pinterestUrl = settingService.GetSettingByKey("pavilionthemesettings.pinteresturl", String.Empty, storeId, true);
+    var vimeoUrl = settingService.GetSettingByKey("pavilionthemesettings.vimeourl", String.Empty, storeId, true);
+    var removeCopyright = settingService.GetSettingByKey("pavilionthemesettings.removecopyright", false, storeId, true);
+    var removeDesignedBy = settingService.GetSettingByKey("pavilionthemesettings.removedesignedby", false, storeId, true);
+    var currentThemeName = EngineContext.Current.Resolve<IThemeContext>().WorkingThemeName;
+    var bbbPath = "~/Themes/" + currentThemeName + "/Content/img/footer_bbb.jpg";
+    var gsaPath = "~/Themes/" + currentThemeName + "/Content/img/footer_GSALogo.png";
+    var nrpaPath = "~/Themes/" + currentThemeName + "/Content/img/footer_nrpa.jpg";
+}
+
+<div class="footer">
+    <div class="footer-upper">
+        <div class="center">
+            @Html.Action("NewsletterBox", "Newsletter")
+            <ul class="social-sharing">
+                @if (!String.IsNullOrEmpty(Model.TwitterLink))
+                {
+                    <li class="twitter"><a target="_blank" href="@Model.TwitterLink"></a></li>
+                }
+                @if (!String.IsNullOrEmpty(Model.FacebookLink))
+                {
+                    <li class="facebook"><a target="_blank" href="@Model.FacebookLink"></a></li>
+                }
+                @if (!String.IsNullOrEmpty(instagramUrl))
+                {
+                    <li class="instagram"><a target="_blank" href="@instagramUrl"></a></li>
+                }
+                @if (!String.IsNullOrEmpty(pinterestUrl))
+                {
+                    <li class="pinterest"><a target="_blank" href="@pinterestUrl"></a></li>
+                }
+                @if (!String.IsNullOrEmpty(Model.YoutubeLink))
+                {
+                    <li class="youtube"><a target="_blank" href="@Model.YoutubeLink"></a></li>
+                }
+                @if (!String.IsNullOrEmpty(Model.GooglePlusLink))
+                {
+                    <li class="google"><a target="_blank" href="@Model.GooglePlusLink"></a></li>
+                }
+                @if (!String.IsNullOrEmpty(vimeoUrl))
+                {
+                    <li class="vimeo"><a target="_blank" href="@vimeoUrl"></a></li>
+                }
+                @if (Model.NewsEnabled)
+                {
+                    <li class="rss"><a target="_blank" href="@Url.RouteUrl("NewsRSS", new {languageId = Model.WorkingLanguageId})"></a></li>
+                }
+            </ul>
+        </div>
+    </div>
+    <div class="footer-middle">
+        <div class="center">
+            <div class="footer-block">
+                <div class="title">
+                    <strong>@T("Footer.Information")</strong>
+                </div>
+                <ul class="list">
+                    @foreach (var topic in Model.Topics.Where(x => x.IncludeInFooterColumn1).ToList())
+                    {
+                        <li><a href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })">@topic.Name</a></li>
+                    }
+                </ul>
+            </div>
+            @*<div class="footer-block">
+                <div class="title">
+                    <strong>@T("Footer.CustomerService")</strong>
+                </div>
+                <ul class="list">
+                    @foreach (var topic in Model.Topics.Where(x => x.IncludeInFooterColumn2).ToList())
+                    {
+                        <li><a href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })">@topic.Name</a></li>
+                    }
+                </ul>
+            </div>*@
+            <div class="footer-block">
+                <div class="title">
+                    <strong>@T("Footer.MyAccount")</strong>
+                </div>
+                <ul class="list">
+                    <li><a href="@Url.RouteUrl("CustomerInfo")">@T("Account.CustomerInfo")</a></li>
+                    <li><a href="@Url.RouteUrl("CustomerAddresses")">@T("Account.CustomerAddresses")</a></li>
+                    <li><a href="@Url.RouteUrl("CustomerOrders")">@T("Account.CustomerOrders")</a></li>
+                    
+                    @if (Model.ShoppingCartEnabled)
+                    {
+                        <li><a href="@Url.RouteUrl("ShoppingCart")">@T("ShoppingCart")</a></li>
+                    }
+                    @if (Model.WishlistEnabled)
+                    {
+                        <li><a href="@Url.RouteUrl("Wishlist")">@T("Wishlist")</a></li>
+                    }
+                    @foreach (var topic in Model.Topics.Where(x => x.IncludeInFooterColumn3).ToList())
+                    {
+                        <li><a href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })">@topic.Name</a></li>
+                    }
+                </ul>
+            </div>
+            <div class="footer-block quick-contact">
+                <div class="title">
+                    <strong>@T("SevenSpikes.Themes.Pavilion.Footer.ContactUs")</strong>
+                </div>
+                <ul class="list">
+                    <li class="address"><span>@T("SevenSpikes.Themes.Pavilion.Footer.Address")</span></li>
+                    <li class="email"><span>@T("SevenSpikes.Themes.Pavilion.Footer.Email")</span></li>
+                    <li class="phone"><span>@T("SevenSpikes.Themes.Pavilion.Footer.Phone")</span></li>
+                </ul>
+            </div>
+            <div class="footer-block">
+                <ul class="list">
+                    <li><a target="_blank" href="http://www.bbb.org/north-east-florida/business-reviews/furniture-outdoor/furniture-leisure-inc-in-bunnell-fl-182616223/#bbbonlineclick">
+                            <img id="Footer_Image1" alt="Verify BBB accreditation and see a BBB report." title="Verify BBB accreditation and see a BBB report." class="imgfooter" src="@Url.Content(bbbPath)" style="border-width:0px;" />
+                        </a>
+                    </li>
+                    <li><a target="_blank" href="http://www.gsa.gov/">
+                            <img id="Footer_Image2" alt="General Services Administration logo for Parktables.com - a division of Furniture Leisure Inc. #GS-03F-0166V #GS-03F-0167V" title="General Services Administration logo for Parktables.com - a division of Furniture Leisure Inc. #GS-03F-0166V #GS-03F-0167V" class="imgfooter" src="@Url.Content(gsaPath)" style="border-width:0px;" />
+                        </a>
+                    </li>
+                    <li><a target="_blank" href="http://www.nrpa.org/">
+                            <img id="Footer_Image3" alt="National Recreation and Park Association" title="National Recreation and Park Association" class="imgfooter" src="@Url.Content(nrpaPath)" style="border-width:0px;" />
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="footer-lower">
+        <div class="center">
+            <ul class="accepted-payments">
+                <li class="method2"></li>
+                <li class="method3"></li>
+                <li class="method4"></li>
+                <li class="method5"></li>
+                <li class="method6"></li>
+            </ul>
+            <div class="footer-disclaimer">
+                @T("Content.CopyrightNotice", DateTime.Now.Year, Model.StoreName)
+                <!-- (c) 2005, 2016. Authorize.Net is a registered trademark of CyberSource Corporation --> 
+                <div class="AuthorizeNetSeal">
+                <script type="text/javascript" language="javascript">var ANS_customer_id = "e5ef297d-34fd-466e-b5a3-8ee6004cd6c5";</script>
+                <script type="text/javascript" language="javascript" src="//verify.authorize.net/anetseal/seal.js"></script> <a href="http://www.authorize.net/" id="AuthorizeNetText" target="_blank">Accept Credit Cards</a> 
+                </div> 
+            </div>
+            @if (!removeCopyright)
+            {
+                <div class="footer-powered-by">
+                    Powered by <a href="http://www.nopcommerce.com/">nopCommerce</a>
+                    @*Would you like to remove the "Powered by nopCommerce" link in the bottom of the footer?
+                        Find more info here http://www.nopcommerce.com/copyrightremoval.aspx*@
+                </div>
+
+            }
+            @if (!removeDesignedBy)
+            {
+                <div class="footer-designed-by">
+                    Designed by <a href="http://www.nop-templates.com/" title="nopCommerce themes and plugins by Nop-Templates" target="_blank">Nop-Templates.com</a>
+                </div>
+            }
+
+            @if (Model.DisplayTaxShippingInfoFooter)
+            {
+                var inclTax = EngineContext.Current.Resolve<IWorkContext>().TaxDisplayType == TaxDisplayType.IncludingTax;
+                <div class="footer-tax-shipping">
+                    @T(inclTax ? "Footer.TaxShipping.InclTax" : "Footer.TaxShipping.ExclTax", Url.RouteUrl("Topic", new { SeName = Html.GetTopicSeName("shippinginfo") }))
+                </div>
+            }
+            <div class="footer-store-theme">
+                @Html.Action("StoreThemeSelector", "Common")
+            </div>
+        </div>
+    </div>
+    @Html.Widget("footer")
+</div>

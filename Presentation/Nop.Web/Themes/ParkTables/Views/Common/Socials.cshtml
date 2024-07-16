@@ -1,0 +1,46 @@
+﻿@model FooterModel
+@using Nop.Web.Models.Common;
+@using Nop.Core.Domain.Tax;
+@using Nop.Core.Infrastructure;
+@using Nop.Services.Configuration
+@using Nop.Core;
+
+@{
+    var storeId = EngineContext.Current.Resolve<IStoreContext>().CurrentStore.Id;
+    var pinterestUrl = EngineContext.Current.Resolve<ISettingService>().GetSettingByKey("brooklynthemesettings.pinteresturl", String.Empty, storeId, true);
+    var vimeoUrl = EngineContext.Current.Resolve<ISettingService>().GetSettingByKey("brooklynthemesettings.vimeourl", String.Empty, storeId, true);
+    var instagramUrl = EngineContext.Current.Resolve<ISettingService>().GetSettingByKey("brooklynthemesettings.instagramurl", String.Empty, storeId, true);
+}
+
+
+
+<ul class="social-sharing">
+    @if (Model.NewsEnabled)
+    {
+        <li><a target="_blank" class="rss" href="@Url.RouteUrl("NewsRSS", new {languageId = Model.WorkingLanguageId})"></a></li>
+    }
+    @if (!String.IsNullOrEmpty(Model.FacebookLink))
+    {
+        <li><a target="_blank" class="facebook" href="@Model.FacebookLink"></a></li>
+    }
+    @if (!String.IsNullOrEmpty(Model.TwitterLink))
+    {
+        <li><a target="_blank" class="twitter" href="@Model.TwitterLink"></a></li>
+    }
+    @if (!String.IsNullOrEmpty(pinterestUrl))
+    {
+        <li><a target="_blank" class="pinterest" href="@pinterestUrl"></a></li>
+    }
+    @if (!String.IsNullOrEmpty(Model.YoutubeLink))
+    {
+        <li><a target="_blank" class="youtube" href="@Model.YoutubeLink"></a></li>
+    }
+    @if (!String.IsNullOrEmpty(vimeoUrl))
+    {
+        <li><a target="_blank" class="vimeo" href="@vimeoUrl"></a></li>
+    }
+    @if (!String.IsNullOrEmpty(instagramUrl))
+    {
+        <li><a target="_blank" class="instagram" href="@instagramUrl"></a></li>
+    }
+</ul>

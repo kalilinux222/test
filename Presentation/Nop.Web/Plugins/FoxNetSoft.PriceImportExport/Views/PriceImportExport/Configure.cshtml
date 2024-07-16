@@ -1,0 +1,80 @@
+﻿@{
+    Layout = null;
+}
+@model FoxNetSoft.Plugin.Misc.PriceImportExport.Models.PriceImportExportSettingsModel
+@using System.Web.Mvc.Html
+@using FoxNetSoft.Plugin.Misc.PriceImportExport.Models
+@using Nop.Web.Framework
+        <div id="priceimportexport-tab">
+            <ul>
+                <li @Html.RenderSelectedTabIndex(0, GetSelectedTabIndex())>
+                    @T("Admin.FoxNetSoft.PriceImportExport.Tab.Import")
+                </li>
+                <li @Html.RenderSelectedTabIndex(1, GetSelectedTabIndex())>
+                    @T("Admin.FoxNetSoft.PriceImportExport.Tab.SimpleImport")
+                </li>
+                <li @Html.RenderSelectedTabIndex(2, GetSelectedTabIndex())>
+                    @T("Admin.FoxNetSoft.PriceImportExport.Tab.Export")
+                </li>
+                <li @Html.RenderSelectedTabIndex(3, GetSelectedTabIndex())>
+                    @T("Admin.FoxNetSoft.PriceImportExport.Tab.MassUpdate")
+                </li>
+                <li @Html.RenderSelectedTabIndex(4, GetSelectedTabIndex())>
+                    @T("Admin.FoxNetSoft.PriceImportExport.Tab.Settings")
+                </li>
+            </ul>
+            <div>
+                @TabImport()
+            </div>
+            <div>
+                @TabSimpleImport()
+            </div>
+            <div>
+                @TabExport()
+            </div>
+            <div>
+                @TabCopyUpdate()
+            </div>
+            <div>
+                @TabSettings()
+            </div>
+        </div>
+
+    <script>
+            $(document).ready(function () {
+                $("#priceimportexport-tab").kendoTabStrip({
+                    animation: {
+                        open: {
+                            effects: "fadeIn"
+                        }
+                    },
+                    select: tabstrip_on_tab_select
+                });
+            });
+    </script>
+
+    @*save selected tab index*@
+    <input type="hidden" id="selected-tab-index" name="selected-tab-index" value="@(GetSelectedTabIndex())">
+
+@helper TabImport()
+{
+    @Html.Partial("~/Plugins/FoxNetSoft.PriceImportExport/Views/PriceImportExport/_Configure.TabImport.cshtml", Model)  
+}
+@helper TabSimpleImport()
+{
+    @Html.Partial("~/Plugins/FoxNetSoft.PriceImportExport/Views/PriceImportExport/_Configure.TabSimpleImport.cshtml", Model)  
+}
+@helper TabExport()
+{
+    @Html.Partial("~/Plugins/FoxNetSoft.PriceImportExport/Views/PriceImportExport/_Configure.TabExport.cshtml", Model)  
+}
+
+@helper TabCopyUpdate()
+{
+    @Html.Partial("~/Plugins/FoxNetSoft.PriceImportExport/Views/PriceImportExport/_Configure.TabCopyUpdate.cshtml", Model)  
+}
+
+@helper TabSettings()
+{
+    @Html.Partial("~/Plugins/FoxNetSoft.PriceImportExport/Views/PriceImportExport/_Configure.TabSettings.cshtml", Model)  
+}

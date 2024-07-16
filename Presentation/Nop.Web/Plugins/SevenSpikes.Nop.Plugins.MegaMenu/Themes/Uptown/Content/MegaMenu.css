@@ -1,0 +1,215 @@
+﻿/*
+* Copyright 2016 Seven Spikes Ltd. All rights reserved. (http://www.nop-templates.com)
+* http://www.nop-templates.com/t/licensinginfo
+*/
+
+.menu-title {
+	text-align: center;
+}
+.mega-menu,
+.header-menu .menu-title,
+.mega-menu .dropdown {
+	display: none;
+}	
+.mega-menu .topic-wrapper,
+.mega-menu-topic-item .dropdown {
+	display: none !important;
+}
+
+
+@media all and (min-width: 1201px) {
+
+.menu-title,
+.close-menu {
+	display: none;
+}
+
+.header-menu {
+	position: static;
+}
+
+.mega-menu {
+	display: block;
+}
+
+.mega-menu-responsive {
+	display: none !important;
+}
+
+.mega-menu > li {
+	position: static !important;
+}
+.mega-menu li.vendor-menu-item,
+.mega-menu li.mega-menu-topic-item,
+.mega-menu li.infinite-categories-menu-item,
+.mega-menu li.infinite-categories-menu-item .sublist li {
+	position: relative !important;
+}
+.mega-menu > li > a {
+	position: relative;
+}
+.mega-menu > li > a:before {
+	content: "";
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 3px;
+	background: #0686f1;
+	opacity: 0;
+	transition: opacity 0.2s ease;
+}
+.mega-menu > li:hover > a:before {
+	opacity: 1;
+}
+
+.mega-menu .dropdown {
+	display: none;
+	position: absolute;
+	overflow: hidden;
+	background: #fff;
+	border: 2px solid #0686f1;
+	box-shadow: 0 0 10px rgba(46,46,46,0.3);
+	z-index: 3; /*necessary if there is a :before or :after with another z-index*/
+}
+.mega-menu .dropdown.active {
+	display: block;
+}
+
+.mega-menu .dropdown.fullWidth {
+	left: 17px;
+	width: calc(100% - 34px);
+	margin: auto;
+}
+
+/* ROWS AND BOXES */
+
+.dropdown .row {
+	padding: 15px 20px;
+	min-width: 200px;
+}
+.dropdown.fullWidth .row {
+	padding: 30px 10px 20px;
+	box-shadow: none;
+	overflow: hidden;
+}
+.dropdown.fullWidth .row + .row {
+	margin-top: -30px;
+}
+.dropdown.fullWidth .box {
+	float: left;
+	width: calc(20% - 20px);
+	margin: 0 10px;
+}
+.mega-menu .picture a {
+	display: block;
+	position: relative;
+	overflow: hidden;
+}
+.mega-menu .picture a:before {
+	content: "";
+	display: block;
+	padding-top: 82%;
+}
+.mega-menu .picture img {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	max-width: 100%;
+	margin: auto;
+	z-index: 1;
+}
+.mega-menu .box li {
+	text-align: left;
+}
+.mega-menu .box a:hover {
+	color: #0686f1;
+}
+.mega-menu .box li a {
+	display: inline-block;
+	font-size: 14px;
+	color: #909090;
+	padding: 7px 0;
+}
+
+.categories .picture-title-wrapper {
+	box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+.categories .title {
+	display: table;
+	width: 100%;
+	font-size: 14px;
+	color: #5a5a5a;
+}
+.categories .title a {
+    display: table-cell;
+	height: 60px;
+	padding: 0 10px;
+	vertical-align: middle;
+	text-align: center;
+}
+.subcategories {
+	display: none;
+	padding: 10px 0 0;
+}
+.subcategories li {
+	padding: 0 5px;
+	text-align: left;
+}
+.subcategories a {
+	font-size: 14px;
+	color: #909090;
+}
+
+}
+
+@media all and (max-width: 1200px) {
+
+.mega-menu-responsive li {
+	overflow: hidden;
+	background: #fff;
+}
+.mega-menu-responsive li > a,
+.mega-menu-responsive li > span {
+	display: block;
+	padding: 16px 16px 16px 30px;
+	line-height: 17px;
+	color: #4d4d4d;
+	font-size: 14px;
+	text-transform: uppercase;
+	position: relative;
+}
+.mega-menu-responsive li > .with-subcategories {
+	width: 270px;
+	float: left;
+}
+.mega-menu-responsive .back-button span{
+	display: block;
+	padding: 16px 16px 16px 30px;
+	line-height: 17px;
+	color: #fff;
+	font-size: 14px;
+	text-transform: uppercase;
+	position: relative;
+}
+
+}
+
+@media all and (min-width: 1347px) {
+
+	.mega-menu .dropdown.fullWidth {
+		left: 22px;
+		width: calc(100% - 44px);
+	}
+}
+
+@media all and (min-width: 1601px) {
+
+	.mega-menu .dropdown.fullWidth {
+		left: 0;
+		right: 0;
+		width: 1200px;
+	}
+}

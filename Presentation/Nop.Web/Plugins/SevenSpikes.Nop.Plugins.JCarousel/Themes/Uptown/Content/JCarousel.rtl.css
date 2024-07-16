@@ -1,0 +1,77 @@
+.products-carousel .item-info .jcarousel-product-title,
+.products-carousel .item-info .prices {
+	text-align: right;
+}
+.home-page-body .nop-jcarousel{
+	margin-right: auto;
+	margin-left: auto;
+}
+.nop-jcarousel .carousel-title.vertical{
+	padding: 7px 0px 7px 76px;
+	text-align: right;
+}
+.nop-jcarousel .jcarousel-prev-horizontal{
+	right: 50%;
+	left: auto;
+	margin-right: -33.5px;
+	margin-left: 0;
+    background-image: url('images/next-horizontal.png');
+}
+.nop-jcarousel .jcarousel-next-horizontal{
+	left: 50%;
+	right: auto;
+	margin-left: -33.5px;
+	margin-right: 0;
+    box-shadow: -6px 0px 0px -2px #fff;
+    background-image: url('images/prev-horizontal.png');
+}
+.nop-jcarousel .jcarousel-prev-horizontal:hover {
+    background-image: url('images/next-horizontal-hover.png');
+}
+.nop-jcarousel .jcarousel-next-horizontal:hover {
+    background-image: url('images/prev-horizontal-hover.png');
+}
+.nop-jcarousel .jcarousel-prev-vertical{
+	left: 37px;
+	right: auto;
+    box-shadow: 0px 0px 0px 5px #fff;
+}
+.nop-jcarousel .jcarousel-next-vertical{
+	left: 0;
+	right: auto;
+    box-shadow: 0px 0px 0px 5px #fff;
+}
+.nop-jcarousel .jcarousel-next-disabled-horizontal:before,
+.nop-jcarousel .jcarousel-prev-disabled-horizontal:before,
+.nop-jcarousel .jcarousel-prev-disabled-vertical:before,
+.nop-jcarousel .jcarousel-next-disabled-vertical:before{
+	right: -3px;
+	left: -3px;
+}
+.products-carousel .item-picture .thumb-img img{
+	left: 0;
+	right: 0;
+}
+.products-carousel .item-info .actual-price{
+	margin: 0 0 0 8px;
+}
+.products-carousel .item-picture .carousel-details-button{
+	right: 0;
+	left: 0;
+}
+.manufacturers-carousel .item-picture a img{
+	left: 0;
+	right: 0;
+}
+.manufacturers-carousel .item-info{
+	right: 0;
+	left: 0;
+}
+.categories-carousel .item-holder .item-info{
+	right: 0;
+	left: 0;
+}
+.categories-carousel .item-holder .item-picture img{
+	left: 0;
+	right: 0;
+}

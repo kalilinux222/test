@@ -1,0 +1,714 @@
+﻿@{
+    Layout = "";
+    //Html.SetActiveMenuItemSystemName("FoxNetSoft.PagespeedTools.Configure");
+}
+@model FoxNetSoft.Plugin.Misc.Pagespeed.Models.PagespeedSettingsModel
+@using System.Web.Mvc.Html
+@using Nop.Web.Framework
+@using Nop.Web.Framework.UI
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#@Html.FieldIdFor(model => model.EnableMinifyPicture)").click(toggleMinifyPicture);
+            $("#@Html.FieldIdFor(model => model.EnableMinifyHtml)").click(toggleMinifyHtml);
+            $("#@Html.FieldIdFor(model => model.EnableOptimizationCSS)").click(toggleOptimizationCSS);
+            $("#@Html.FieldIdFor(model => model.EnableInlineCSSStyleInHtmlBody)").click(toggleInlineCSSStyleInHtmlBody);
+            $("#@Html.FieldIdFor(model => model.EnableLoadAsyncCSSStyle)").click(toggleLoadAsyncCSSStyle);
+            $("#@Html.FieldIdFor(model => model.EnableOptimizationJS)").click(toggleOptimizationJS);
+            $("#@Html.FieldIdFor(model => model.EnableInlineJSInHtmlBody)").click(toggleInlineJSInHtmlBody);
+            $("#@Html.FieldIdFor(model => model.EnableOptimizationFonts)").click(toggleOptimizationFonts);
+            $("#@Html.FieldIdFor(model => model.showDebugInfo)").click(toggleshowDebugInfo);
+
+            $("#@Html.FieldIdFor(m => m.EnableMoveCSSStyle)").change(function () {
+                var selectedItem = $(this).val();
+                if (selectedItem == "@(FoxNetSoft.Plugin.Misc.Pagespeed.ScriptPosition.Footer)"
+                    && $('#@Html.FieldIdFor(model => model.EnableOptimizationCSS)').is(':checked')) {
+                    $('#pnlMoveExternalCSSStyle').show();
+                }
+                else {
+                    $('#pnlMoveExternalCSSStyle').hide();
+                }
+            }).change();
+
+
+            toggleMinifyHtml();
+            toggleOptimizationCSS();
+            toggleLoadAsyncCSSStyle();
+            toggleOptimizationJS();
+            toggleOptimizationFonts();
+            toggleMinifyPicture();
+            toggleshowDebugInfo();
+        });
+
+        function toggleMinifyHtml() {
+            if ($('#@Html.FieldIdFor(model => model.EnableMinifyHtml)').is(':checked')) {
+                $('#pnlRemoveHtmlComments, #pnlRemoveHtmlCommentsFromScriptsAndStyles, #pnlRemoveCdataSectionsFromScriptsAndStyles, #pnlUseShortDoctype, #pnlRemoveOptionalEndTags, #pncIgnoredUrls, #pnlDisableMinifyHtmlPageSize').show();
+            }
+            else {
+                $('#pnlRemoveHtmlComments, #pnlRemoveHtmlCommentsFromScriptsAndStyles, #pnlRemoveCdataSectionsFromScriptsAndStyles, #pnlUseShortDoctype, #pnlRemoveOptionalEndTags, #pncIgnoredUrls, #pnlDisableMinifyHtmlPageSize').hide();
+            }
+        }
+        function toggleOptimizationCSS() {
+            if ($('#@Html.FieldIdFor(model => model.EnableOptimizationCSS)').is(':checked')) {
+                $('#pnlEnableInlineCSSStyleInHtmlBody, #pnlEnableLoadAsyncCSSStyle, #pnlEnableMoveCSSStyle, #pncCriticalPathCSS').show();
+                $("#@Html.FieldIdFor(m => m.EnableMoveCSSStyle)").change();
+            }
+            else {
+                $('#pnlEnableInlineCSSStyleInHtmlBody, #pnlEnableLoadAsyncCSSStyle, #pnlEnableMoveCSSStyle, #pncCriticalPathCSS').hide();
+                $('#pnlMoveExternalCSSStyle').hide();
+            }
+            toggleLoadAsyncCSSStyle();
+            toggleInlineCSSStyleInHtmlBody();
+        }
+        function toggleLoadAsyncCSSStyle() {
+            if ($('#@Html.FieldIdFor(model => model.EnableOptimizationCSS)').is(':checked')
+                && $('#@Html.FieldIdFor(model => model.EnableLoadAsyncCSSStyle)').is(':checked')) {
+                $('#pncNotLoadedAsyncCSSStyles').show();
+            }
+            else {
+                $('#pncNotLoadedAsyncCSSStyles').hide();
+            }
+        }
+        function toggleInlineCSSStyleInHtmlBody() {
+            if ($('#@Html.FieldIdFor(model => model.EnableOptimizationCSS)').is(':checked')
+                && $('#@Html.FieldIdFor(model => model.EnableInlineCSSStyleInHtmlBody)').is(':checked')) {
+                $('#pncNotInlineCSSStyles, #pnnCssInlineMaxBytes').show();
+            }
+            else {
+                $('#pncNotInlineCSSStyles, #pnnCssInlineMaxBytes').hide();
+            }
+        }
+
+        function toggleOptimizationJS() {
+            if ($('#@Html.FieldIdFor(model => model.EnableOptimizationJS)').is(':checked')) {
+                $('#pnlEnableInlineJSInHtmlBody, #pnlEnableMoveJS').show();
+            }
+            else {
+                $('#pnlEnableInlineJSInHtmlBody, #pnlEnableMoveJS').hide();
+            }
+            toggleInlineJSInHtmlBody();
+        }
+
+        function toggleOptimizationFonts() {
+            if ($('#@Html.FieldIdFor(model => model.EnableOptimizationFonts)').is(':checked')) {
+                $('#pnlEnableLoadAsyncFonts, #pnlEnableMoveFonts').show();
+            }
+            else {
+                $('#pnlEnableLoadAsyncFonts, #pnlEnableMoveFonts').hide();
+            }
+        }
+
+        function toggleInlineJSInHtmlBody() {
+            if ($('#@Html.FieldIdFor(model => model.EnableOptimizationJS)').is(':checked')
+                && $('#@Html.FieldIdFor(model => model.EnableInlineJSInHtmlBody)').is(':checked')) {
+                $('#pncNotInlineJSs, #pnnJSInlineMaxBytes').show();
+            }
+            else {
+                $('#pncNotInlineJSs, #pnnJSInlineMaxBytes').hide();
+            }
+        }
+
+        function toggleMinifyPicture() {
+            if ($('#@Html.FieldIdFor(model => model.EnableMinifyPicture)').is(':checked')) {
+                $('#pndLastPictureOptimizationDateTimeUtc, #pncPictureFolders').show();
+            }
+            else {
+                $('#pndLastPictureOptimizationDateTimeUtc, #pncPictureFolders').hide();
+            }
+        }
+        function toggleshowDebugInfo() {
+            if ($('#@Html.FieldIdFor(model => model.showDebugInfo)').is(':checked')) {
+                $('#pnlclearlogfile, #pnlgetlogfile').show();
+            }
+            else {
+                $('#pnlclearlogfile, #pnlgetlogfile').hide();
+            }
+        }
+    </script>
+    @Html.Action("StoreScopeConfiguration", "Setting", new { area = "Admin" })
+    @Html.ValidationSummary(false)
+    <table class="adminContent">
+        <tr>
+            <td colspan="2">
+                <p>
+                    @if (Model.IsRegisted == true)
+                    {
+                        @T("Admin.FoxNetSoft.Plugin.Misc.Pagespeed.IsRegisted")
+                    }
+                    else
+                    {
+                        @T("Admin.FoxNetSoft.Plugin.Misc.Pagespeed.IsNoRegisted")
+                        <br />
+                            <a href="http://www.foxnetsoft.com/noppagespeedtools" target="blank">Buy It Now</a>
+                    }
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(m => m.Enable):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(m => m.Enable)
+                @Html.ValidationMessageFor(m => m.Enable)
+            </td>
+        </tr>
+        <tr class="adminSeparator">
+            <td colspan="2">
+                <hr />
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(m => m.EnableMinifyPicture):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(m => m.EnableMinifyPicture)
+                @Html.ValidationMessageFor(m => m.EnableMinifyPicture)
+            </td>
+        </tr>
+        <tr id="pndLastPictureOptimizationDateTimeUtc">
+            <td class="adminTitle">
+                @Html.NopLabelFor(m => m.LastPictureOptimizationDateTimeUtc):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(m => m.LastPictureOptimizationDateTimeUtc)
+                @Html.ValidationMessageFor(m => m.LastPictureOptimizationDateTimeUtc)
+            </td>
+        </tr>
+        <tr id="pncPictureFolders">
+            <td class="adminTitle">
+                @Html.NopLabelFor(m => m.PictureFolders):
+            </td>
+            <td class="adminData">
+                @Html.TextAreaFor(m => m.PictureFolders, new { style = "Width: 250px; Height: 150px;" })
+                @Html.ValidationMessageFor(m => m.PictureFolders)
+            </td>
+        </tr>
+        <tr class="adminSeparator">
+            <td colspan="2">
+                <hr />
+                <p>Optimization of HTML</p>
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(m => m.EnableMinifyHtml):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(m => m.EnableMinifyHtml)
+                @Html.ValidationMessageFor(m => m.EnableMinifyHtml)
+            </td>
+        </tr>
+        <tr id="pnlDisableMinifyHtmlPageSize">
+            <td class="adminTitle">
+                @Html.NopLabelFor(m => m.DisableMinifyHtmlPageSize):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(m => m.DisableMinifyHtmlPageSize)
+                @Html.ValidationMessageFor(m => m.DisableMinifyHtmlPageSize)
+            </td>
+        </tr>
+        <tr id="pnlRemoveHtmlComments">
+            <td class="adminTitle">
+                @Html.NopLabelFor(m => m.RemoveHtmlComments):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(m => m.RemoveHtmlComments)
+                @Html.ValidationMessageFor(m => m.RemoveHtmlComments)
+            </td>
+        </tr>
+        <tr id="pnlRemoveHtmlCommentsFromScriptsAndStyles">
+            <td class="adminTitle">
+                @Html.NopLabelFor(m => m.RemoveHtmlCommentsFromScriptsAndStyles):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(m => m.RemoveHtmlCommentsFromScriptsAndStyles)
+                @Html.ValidationMessageFor(m => m.RemoveHtmlCommentsFromScriptsAndStyles)
+            </td>
+        </tr>
+        <tr id="pnlRemoveCdataSectionsFromScriptsAndStyles">
+            <td class="adminTitle">
+                @Html.NopLabelFor(m => m.RemoveCdataSectionsFromScriptsAndStyles):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(m => m.RemoveCdataSectionsFromScriptsAndStyles)
+                @Html.ValidationMessageFor(m => m.RemoveCdataSectionsFromScriptsAndStyles)
+            </td>
+        </tr>
+        <tr id="pnlUseShortDoctype">
+            <td class="adminTitle">
+                @Html.NopLabelFor(m => m.UseShortDoctype):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(m => m.UseShortDoctype)
+                @Html.ValidationMessageFor(m => m.UseShortDoctype)
+            </td>
+        </tr>
+        <tr id="pnlRemoveOptionalEndTags">
+            <td class="adminTitle">
+                @Html.NopLabelFor(m => m.RemoveOptionalEndTags):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(m => m.RemoveOptionalEndTags)
+                @Html.ValidationMessageFor(m => m.RemoveOptionalEndTags)
+            </td>
+        </tr>
+        <tr id="pncIgnoredUrls">
+            <td class="adminTitle">
+                @Html.NopLabelFor(m => m.IgnoredUrls):
+            </td>
+            <td class="adminData">
+                @Html.TextAreaFor(m => m.IgnoredUrls, new { style = "Width: 250px; Height: 150px;" })
+                @Html.ValidationMessageFor(m => m.IgnoredUrls)
+            </td>
+        </tr>
+        <tr class="adminSeparator">
+            <td colspan="2">
+                <hr />
+                <p>Optimization of CSS styles</p>
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(m => m.EnableOptimizationCSS):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(m => m.EnableOptimizationCSS)
+                @Html.ValidationMessageFor(m => m.EnableOptimizationCSS)
+            </td>
+        </tr>
+        <tr id="pncCriticalPathCSS">
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.CriticalPathCSS_OverrideForStore, model => model.CriticalPathCSS, Model.ActiveStoreScopeConfiguration):
+                @Html.NopLabelFor(m => m.CriticalPathCSS)
+            </td>
+            <td class="adminData">
+                <p>If you want to use 'Critical Path CSS' we advise you to use this service <a href="https://jonassebastianohlsson.com/criticalpathcssgenerator/" target="blank">https://jonassebastianohlsson.com/criticalpathcssgenerator/</a>.</p>
+                @Html.TextAreaFor(m => m.CriticalPathCSS, new { style = "Width: 250px; Height: 150px;" })
+                @Html.ValidationMessageFor(m => m.CriticalPathCSS)
+            </td>
+        </tr>
+        <tr id="pnlEnableMoveCSSStyle">
+            <td class="adminTitle">
+                @Html.NopLabelFor(m => m.EnableMoveCSSStyle):
+            </td>
+            <td class="adminData">
+                @Html.DropDownListFor(m => m.EnableMoveCSSStyle, Model.EnableMoveCSSStyleValues)
+                @Html.ValidationMessageFor(m => m.EnableMoveCSSStyle)
+            </td>
+        </tr>
+        <tr id="pnlMoveExternalCSSStyle">
+            <td class="adminTitle">
+                @Html.NopLabelFor(m => m.MoveExternalCSSStyle):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(m => m.MoveExternalCSSStyle)
+                @Html.ValidationMessageFor(m => m.MoveExternalCSSStyle)
+            </td>
+        </tr>
+        <tr id="pnlEnableInlineCSSStyleInHtmlBody">
+            <td class="adminTitle">
+                @Html.NopLabelFor(m => m.EnableInlineCSSStyleInHtmlBody):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(m => m.EnableInlineCSSStyleInHtmlBody)
+                @Html.ValidationMessageFor(m => m.EnableInlineCSSStyleInHtmlBody)
+            </td>
+        </tr>
+        <tr id="pnnCssInlineMaxBytes">
+            <td class="adminTitle">
+                @Html.NopLabelFor(m => m.CssInlineMaxBytes):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(m => m.CssInlineMaxBytes)
+                @Html.ValidationMessageFor(m => m.CssInlineMaxBytes)
+            </td>
+        </tr>
+        <tr id="pncNotInlineCSSStyles">
+            <td class="adminTitle">
+                @Html.NopLabelFor(m => m.NotInlineCSSStyles):
+            </td>
+            <td class="adminData">
+                @Html.TextAreaFor(m => m.NotInlineCSSStyles, new { style = "Width: 250px; Height: 150px;" })
+                @Html.ValidationMessageFor(m => m.NotInlineCSSStyles)
+            </td>
+        </tr>
+        <tr id="pnlEnableLoadAsyncCSSStyle">
+            <td class="adminTitle">
+                @Html.NopLabelFor(m => m.EnableLoadAsyncCSSStyle):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(m => m.EnableLoadAsyncCSSStyle)
+                @Html.ValidationMessageFor(m => m.EnableLoadAsyncCSSStyle)
+            </td>
+        </tr>
+        <tr id="pncNotLoadedAsyncCSSStyles">
+            <td class="adminTitle">
+                @Html.NopLabelFor(m => m.NotLoadedAsyncCSSStyles):
+            </td>
+            <td class="adminData">
+                @Html.TextAreaFor(m => m.NotLoadedAsyncCSSStyles, new { style = "Width: 250px; Height: 150px;" })
+                @Html.ValidationMessageFor(m => m.NotLoadedAsyncCSSStyles)
+            </td>
+        </tr>
+        <tr class="adminSeparator">
+            <td colspan="2">
+                <hr />
+                <p>Optimization of JavaScript</p>
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(m => m.EnableOptimizationJS):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(m => m.EnableOptimizationJS)
+                @Html.ValidationMessageFor(m => m.EnableOptimizationJS)
+            </td>
+        </tr>
+        <tr id="pnlEnableMoveJS">
+            <td class="adminTitle">
+                @Html.NopLabelFor(m => m.EnableMoveJS):
+            </td>
+            <td class="adminData">
+                @Html.DropDownListFor(m => m.EnableMoveJS, Model.EnableMoveJSValues)
+                @Html.ValidationMessageFor(m => m.EnableMoveJS)
+            </td>
+        </tr>
+        <tr id="pnlEnableInlineJSInHtmlBody">
+            <td class="adminTitle">
+                @Html.NopLabelFor(m => m.EnableInlineJSInHtmlBody):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(m => m.EnableInlineJSInHtmlBody)
+                @Html.ValidationMessageFor(m => m.EnableInlineJSInHtmlBody)
+            </td>
+        </tr>
+        <tr id="pnnJSInlineMaxBytes">
+            <td class="adminTitle">
+                @Html.NopLabelFor(m => m.JSInlineMaxBytes):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(m => m.JSInlineMaxBytes)
+                @Html.ValidationMessageFor(m => m.JSInlineMaxBytes)
+            </td>
+        </tr>
+        <tr id="pncNotInlineJSs">
+            <td class="adminTitle">
+                @Html.NopLabelFor(m => m.NotInlineJSs):
+            </td>
+            <td class="adminData">
+                @Html.TextAreaFor(m => m.NotInlineJSs, new { style = "Width: 250px; Height: 150px;" })
+                @Html.ValidationMessageFor(m => m.NotInlineJSs)
+            </td>
+        </tr>
+        <tr class="adminSeparator">
+            <td colspan="2">
+                <hr />
+                <p>Optimization of Fonts</p>
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(m => m.EnableOptimizationFonts):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(m => m.EnableOptimizationFonts)
+                @Html.ValidationMessageFor(m => m.EnableOptimizationFonts)
+            </td>
+        </tr>
+        <tr id="pnlEnableMoveFonts">
+            <td class="adminTitle">
+                @Html.NopLabelFor(m => m.EnableMoveFonts):
+            </td>
+            <td class="adminData">
+                @Html.DropDownListFor(m => m.EnableMoveFonts, Model.EnableMoveFontsValues)
+                @Html.ValidationMessageFor(m => m.EnableMoveFonts)
+            </td>
+        </tr>
+        <tr id="pnlEnableLoadAsyncFonts">
+            <td class="adminTitle">
+                @Html.NopLabelFor(m => m.EnableLoadAsyncFonts):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(m => m.EnableLoadAsyncFonts)
+                @Html.ValidationMessageFor(m => m.EnableLoadAsyncFonts)
+            </td>
+        </tr>
+        <tr class="adminSeparator">
+            <td colspan="2">
+                <hr />
+                <p>
+                    How to enable GZIp for SVG (old IIS).
+                    <br />
+                    If you don't have any problem with SVG you needn't do anything.
+                    <br />
+                    Read additional information about it <a href="http://stackoverflow.com/questions/14410331/cant-get-iis7-to-gzip-font-face-font-files/23940235#23940235" target="blank">http://stackoverflow.com/questions/14410331/cant-get-iis7-to-gzip-font-face-font-files/23940235#23940235</a>.
+                </p>
+            </td>
+        </tr>
+
+        <tr class="adminSeparator">
+            <td colspan="2">
+                <hr />
+                <p>NopCommerce settings</p>
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.EnableCssBundling_OverrideForStore, model => model.EnableCssBundling, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(m => m.EnableCssBundling):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(m => m.EnableCssBundling)
+                @Html.ValidationMessageFor(m => m.EnableCssBundling)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.EnableJsBundling_OverrideForStore, model => model.EnableJsBundling, Model.ActiveStoreScopeConfiguration)
+                @Html.NopLabelFor(m => m.EnableJsBundling):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(m => m.EnableJsBundling)
+                @Html.ValidationMessageFor(m => m.EnableJsBundling)
+            </td>
+        </tr>
+        <tr class="adminSeparator">
+            <td colspan="2">
+                <hr />
+                <p>
+                    If you need you can add the tag <b>hreflang</b> for each page. <br />
+                    It's important for SEO.<br />
+                    Read additional information about it <a href="https://support.google.com/webmasters/answer/6059209" target="blank">https://support.google.com/webmasters/answer/6059209</a>.
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(m => m.EnableTaghreflang):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(m => m.EnableTaghreflang)
+                @Html.ValidationMessageFor(m => m.EnableTaghreflang)
+            </td>
+        </tr>
+        <tr class="adminSeparator">
+            <td colspan="2">
+                <hr />
+                <p>
+                    GZip Compression for IIS.<br />
+                    We recommend to enable it for all IIS.<br />
+                    Read additional information about it <a href="http://stackoverflow.com/questions/25580078/how-to-enable-gzip-compression-in-iis-7-5" target="blank">http://stackoverflow.com/questions/25580078/how-to-enable-gzip-compression-in-iis-7-5</a>.<br />
+                    <b>Important.</b><br />
+                    Some of hosting providers (ex. www.smarterasp.net) use internal GZip Compression. You must enable this parameter, because hosting providers compressed page before minification.
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(m => m.EnableGZip):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(m => m.EnableGZip)
+                @Html.ValidationMessageFor(m => m.EnableGZip)
+            </td>
+        </tr>
+        <tr class="adminSeparator">
+            <td colspan="2">
+                <hr />
+                <p>
+                    You can disable minification for Admins.<br />
+                    This feature will help you to debug your store online, but another customers and Google bots will see minified version of your site.
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(m => m.PassMinificationForAdmin):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(m => m.PassMinificationForAdmin)
+                @Html.ValidationMessageFor(m => m.PassMinificationForAdmin)
+            </td>
+        </tr>
+        <tr class="adminSeparator">
+            <td colspan="2">
+                <hr />
+                <p>
+                    Advanced tools (pictures)
+                </p>
+            </td>
+        </tr>
+        <tr class="adminSeparator">
+            <td colspan="2">
+                <b>@T("Admin.FoxNetSoft.Plugin.Misc.Pagespeed.PictureUrl.Hint")</b>
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(m => m.PictureUrl):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(m => m.PictureUrl)
+                @Html.ValidationMessageFor(m => m.PictureUrl)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle"></td>
+            <td class="adminData">
+                <button type="submit" name="minifypicture" id="minifypicture" class="k-button">
+                    @T("Admin.FoxNetSoft.Plugin.Misc.Pagespeed.PictureUrl.Button")
+                </button>
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle"></td>
+            <td class="adminData">
+                <b>@T("Admin.FoxNetSoft.Plugin.Misc.Pagespeed.TaskPicture.Hint")</b>
+                <br />
+                <button type="submit" name="startpicturetask" id="startpicturetask" class="k-button">
+                    @T("Admin.FoxNetSoft.Plugin.Misc.Pagespeed.TaskPicture.Button")
+                </button>
+            </td>
+        </tr>
+        <tr class="adminSeparator">
+            <td colspan="2">
+                <hr />
+                <p>
+                    Advanced tools (css style)
+                </p>
+            </td>
+        </tr>
+        <tr class="adminSeparator">
+            <td colspan="2">
+                <b>@T("Admin.FoxNetSoft.Plugin.Misc.Pagespeed.CssStyleUrl.Hint")</b>
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(m => m.CssStyleUrl):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(m => m.CssStyleUrl)
+                @Html.ValidationMessageFor(m => m.CssStyleUrl)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle"></td>
+            <td class="adminData">
+                <button type="submit" name="minifycssstyle" id="minifycssstyle" class="k-button">
+                    @T("Admin.FoxNetSoft.Plugin.Misc.Pagespeed.CssStyleUrl.Button")
+                </button>
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle"></td>
+            <td class="adminData">
+                <b>@T("Admin.FoxNetSoft.Plugin.Misc.Pagespeed.TaskCssStyle.Hint")</b>
+                <br />
+                <button type="submit" name="startcssminifytask" id="startcssminifytask" class="k-button">
+                    @T("Admin.FoxNetSoft.Plugin.Misc.Pagespeed.TaskCssStyle.Button")
+                </button>
+            </td>
+        </tr>
+        <tr class="adminSeparator">
+            <td colspan="2">
+                <hr />
+                <p>
+                    Advanced tools (JavaScript)
+                </p>
+            </td>
+        </tr>
+        <tr class="adminSeparator">
+            <td colspan="2">
+                <b>@T("Admin.FoxNetSoft.Plugin.Misc.Pagespeed.JavaScriptUrl.Hint")</b>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(m => m.JavaScriptUrl):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(m => m.JavaScriptUrl)
+                @Html.ValidationMessageFor(m => m.JavaScriptUrl)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle"></td>
+            <td class="adminData">
+                <button type="submit" name="minifyjavascript" id="minifyjavascript" class="k-button">
+                    @T("Admin.FoxNetSoft.Plugin.Misc.Pagespeed.JavaScriptUrl.Button")
+                </button>
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle"></td>
+            <td class="adminData">
+                <b>@T("Admin.FoxNetSoft.Plugin.Misc.Pagespeed.TaskJavaScript.Hint")</b>
+                <br />
+                <button type="submit" name="startjsminifytask" id="startjsminifytask" class="k-button">
+                    @T("Admin.FoxNetSoft.Plugin.Misc.Pagespeed.TaskJavaScript.Button")
+                </button>
+            </td>
+        </tr>
+        <tr class="adminSeparator">
+            <td colspan="2">
+                <hr />
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.showDebugInfo):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.showDebugInfo)
+                @Html.ValidationMessageFor(model => model.showDebugInfo)
+                <div id="pnlclearlogfile">
+                    <a href="@Url.Action("ClearLogFile")" class="k-button">@T("Admin.FoxNetSoft.Plugin.Misc.Pagespeed.ClearLogFile")</a>
+                </div>
+                <div id="pnlgetlogfile">
+                    <a href="@Url.Action("GetLogFile")" class="k-button">@T("Admin.FoxNetSoft.Plugin.Misc.Pagespeed.GetLogFile")</a>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.StoreUrl):
+            </td>
+            <td class="adminData">
+                <b>@Model.StoreUrl</b>
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.SerialNumber):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.SerialNumber)
+                @Html.ValidationMessageFor(model => model.SerialNumber)
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" width="100%">
+                <button type="submit" name="save" value="save" class="k-button">
+                    @T("Admin.Common.Save")
+                </button>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                Installation and configuring plug-in at Youtube <a href="http://www.youtube.com/foxnetsoft" target="blank">www.youtube.com/foxnetsoft</a>
+                <br />
+                Installation and configuring plug-in at our site <a href="http://www.foxnetsoft.com/documentation-noppagespeedtools" target="blank">http://www.foxnetsoft.com/documentation-noppagespeedtools</a>
+                <br />
+                <a href="http://www.foxnetsoft.com" target="blank">www.foxnetsoft.com</a>
+            </td>
+        </tr>
+    </table>
+}
+

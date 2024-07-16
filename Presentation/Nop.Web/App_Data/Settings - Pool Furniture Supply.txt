@@ -1,0 +1,2 @@
+DataProvider: sqlserver
+DataConnectionString: Data Source=37.61.212.70,50230\SQL2016;Initial Catalog=PFS_3.7;Integrated Security=false;Persist Security Info=False;User ID=sa;Password=N0pTemplates7

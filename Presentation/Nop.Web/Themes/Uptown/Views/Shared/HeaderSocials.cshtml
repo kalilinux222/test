@@ -1,0 +1,62 @@
+﻿@using Nop.Core
+@using Nop.Core.Infrastructure
+@using Nop.Services.Configuration
+
+@{
+    var storeId = EngineContext.Current.Resolve<IStoreContext>().CurrentStore.Id;
+
+    var twitterUrl = EngineContext.Current.Resolve<ISettingService>().GetSettingByKey("storeinformationsettings.twitterlink", String.Empty, storeId, true);
+    var instagramUrl = EngineContext.Current.Resolve<ISettingService>().GetSettingByKey("uptownthemesettings.instagramurl", String.Empty, storeId, true);
+    var facebookUrl = EngineContext.Current.Resolve<ISettingService>().GetSettingByKey("storeinformationsettings.facebooklink", String.Empty, storeId, true);
+    var googlePlusUrl = EngineContext.Current.Resolve<ISettingService>().GetSettingByKey("storeinformationsettings.googlepluslink", String.Empty, storeId, true);
+    var pinterestUrl = EngineContext.Current.Resolve<ISettingService>().GetSettingByKey("uptownthemesettings.pinteresturl", String.Empty, storeId, true);
+    var vimeoUrl = EngineContext.Current.Resolve<ISettingService>().GetSettingByKey("uptownthemesettings.vimeourl", String.Empty, storeId, true);
+    var youtubeUrl = EngineContext.Current.Resolve<ISettingService>().GetSettingByKey("storeinformationsettings.youtubelink", String.Empty, storeId, true);
+
+    var newsEnabled = EngineContext.Current.Resolve<ISettingService>().GetSettingByKey("newssettings.enabled", false, storeId, true);
+    var workingLanguageId = EngineContext.Current.Resolve<IWorkContext>().WorkingLanguage.Id;   
+}
+
+
+<ul class="header-social-icons">
+    @if (!String.IsNullOrEmpty(twitterUrl))
+    { 
+        <li><a target="_blank" class="twitter" href="@twitterUrl"></a></li>
+    }
+    
+    @if (!String.IsNullOrEmpty(instagramUrl))
+    {
+        <li><a target="_blank" class="instagram" href="@instagramUrl"></a></li>
+    }
+    
+    @if (!String.IsNullOrEmpty(facebookUrl))
+    {
+        <li><a target="_blank" class="facebook" href="@facebookUrl"></a></li>
+    }
+    
+    @if (!String.IsNullOrEmpty(googlePlusUrl))
+    {
+        <li><a target="_blank" class="google" href="@googlePlusUrl"></a></li> 
+    }
+    
+    @if (!String.IsNullOrEmpty(pinterestUrl))
+    {
+        <li><a target="_blank" class="pinterest" href="@pinterestUrl"></a></li>
+    }
+    
+    @if (!String.IsNullOrEmpty(vimeoUrl))
+    {
+        <li><a target="_blank" class="vimeo" href="@vimeoUrl"></a></li>
+    }
+    
+    @if (!String.IsNullOrEmpty(youtubeUrl))
+    {
+        <li><a target="_blank" class="youtube" href="@youtubeUrl"></a></li>
+    }
+    
+    @if (newsEnabled)
+    {
+        <li><a class="rss" target="_blank" href="@Url.RouteUrl("NewsRSS", new { languageId = workingLanguageId })"></a></li>
+    }
+    
+</ul>

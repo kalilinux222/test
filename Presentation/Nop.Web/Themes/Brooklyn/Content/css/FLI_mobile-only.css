@@ -1,0 +1,130 @@
+@media all and (max-width: 1024px) {
+
+#headerTop {
+	display:none;
+}
+
+.responsive-nav-wrapper {
+	background-color: #2b2b2b !Important;
+}
+
+.header-2 .header-lower .header-actions-wrapper .header-actions {
+	display: none;
+}
+
+#headerLower {
+    background-color: #fff /*url('../img/FL_BGwithPalmFrond_1200x114-2.jpg') no-repeat*/;
+	padding: 0 5px;
+	overflow: hidden;
+}
+
+.header-logo {
+	display: block !Important;
+}
+.header-logo-mobile {
+	display: none !Important;	
+}
+.logo-mobile {
+	width:50%;
+}
+.phone-mobile {
+	width:35%;
+}
+.header-phone {
+	position: sticky;
+	top: 0;
+	z-index: 1;
+	font-weight: 700;
+	font-size: 15.5px;
+	white-space: nowrap;
+	padding: 5px 0 10px;
+	margin-top: -10px;
+	text-align: center;
+	/*background-color: #fff;*/
+}
+.header-phone a {
+	color: #e73f39;
+}
+.header-upper .header-phone {
+	display: none;
+}
+
+	.product-share-button{
+		margin-left: 5px !Important;
+	}
+
+	/*.ajax-cart-button-wrapper {
+		width: 200px;
+	}
+	.overview .add-to-cart-button{
+		font-size:13px !important;
+		min-width: 90px !Important;
+	}*/
+	
+	.productQuantityTextBox {
+		display: none !important;
+	}
+	.product-box-add-to-cart-button {
+		width: 100% !important;
+	}
+	
+}
+
+
+@media all and (max-width: 400px) {
+
+	.bar-notification.success{
+		top: 50%;
+		height: 65px;
+		width:80%;
+		margin-left:10%;
+		background-color: #e73f39 !Important;
+	}
+
+	.bar-notification.error{
+		top: 50%;
+		height: 65px;
+		width:80%;
+		margin-left:10%;
+	}
+
+	.product-share-button {
+		float:none !Important;
+	}
+
+	.overview .qty-input {
+		/*float:right;*/
+		margin-right:8px;
+	}
+
+	.add-to-cart-qty{
+		/*float:right !Important;*/
+		margin-bottom: 7px;
+	}
+
+    /*.gallery .picture-thumbs ul li.jcarousel-item a {
+        width: 60px !Important;  
+    } */    
+}
+
+@media all and (max-width: 480px) {
+
+.item-box {
+    float: left;
+	width: 48% !Important; /*two per row*/
+    max-width: none !Important;
+	margin-left: 2% !Important;
+}
+.item-box:nth-child(2n+1) {
+	clear: both;
+	margin-left: 0;
+}
+
+}
+
+@media all and (min-width: 500px) {
+	.min-qty-notification {
+		text-align: right;
+		margin-top: -10px;
+	}
+}

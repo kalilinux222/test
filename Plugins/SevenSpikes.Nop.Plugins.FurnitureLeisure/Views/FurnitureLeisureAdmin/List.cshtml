@@ -1,0 +1,188 @@
+﻿@using SevenSpikes.Nop.Plugins.FurnitureLeisure.Models;
+@using Nop.Core.Domain.Common;
+@using Nop.Core.Infrastructure;
+@using SevenSpikes.Nop.Framework;
+
+@model CarouselImageModel
+
+@{
+	Layout = AdminViewLocations.AdminLayoutViewPath;
+
+	var defaultGridPageSize = EngineContext.Current.Resolve<AdminAreaSettings>().DefaultGridPageSize;
+	var gridPageSizes = EngineContext.Current.Resolve<AdminAreaSettings>().GridPageSizes;
+}
+
+@Html.AntiForgeryToken()
+
+<div class="section-header">
+	<div class="title">
+		<img src="@Url.Content("~/Administration/Content/images/ico-catalog.png")" alt="Catalog Icon" />
+		@T("SevenSpikes.FurnitureLeisure.Admin.CarouselImages")
+	</div>
+</div>
+
+<table class="adminContent">
+	<tr>
+		<td>
+			<div id="carousel-images-grid"></div>
+
+			<script>
+                $(document).ready(function () {
+                    $("#carousel-images-grid").kendoGrid({
+                        dataSource: {
+                            type: "json",
+                            transport: {
+                                read: {
+                                    url: "@Html.Raw(Url.Action("List", "FurnitureLeisureAdmin"))",
+                                    type: "POST",
+                                    dataType: "json",
+                                    data: addAntiForgeryToken
+                                },
+                                update: {
+                                    url:"@Html.Raw(Url.Action("Update", "FurnitureLeisureAdmin"))",
+                                    type: "POST",
+                                    dataType: "json",
+                                    data: addAntiForgeryToken
+                                },
+                                destroy: {
+                                    url: "@Html.Raw(Url.Action("Delete", "FurnitureLeisureAdmin"))",
+                                    type: "POST",
+                                    dataType: "json",
+                                    data: addAntiForgeryToken
+                                }
+                            },
+                            schema: {
+                                data: "Data",
+                                total: "Total",
+                                errors: "Errors",
+                                model: {
+                                    id: "PictureId",
+                                    fields: {
+                                        PictureUrl: {editable: false, type: "string" },
+                                        DisplayOrder: {editable: true, type: "number" }
+                                    }
+                                }
+                            },
+                            requestEnd: function (e) {
+                                if (e.type === 'create' || e.type === 'update') {
+                                    this.read();
+                                }
+                            },
+                            error: function (e) {
+                                display_kendoui_grid_error(e);
+
+                                this.cancelChanges();
+                            },
+                            pageSize: "@(defaultGridPageSize)",
+                            serverPaging: true,
+                            serverFiltering: true,
+                            serverSorting: true
+                        },
+                        pageable: {
+                            refresh: true,
+                            pageSizes: [@(gridPageSizes)]
+                        },
+                        editable: {
+                            confirmation: true,
+                            mode: "inline"
+                        },
+                        filterable: {
+                            extra: false
+                        },
+                        sortable: true,
+                        scrollable: false,
+                        columns: [{
+                            field: "PictureUrl",
+                            title: "@T("Admin.Catalog.Products.Pictures.Fields.Picture")",
+                            template: '<a href="#=PictureUrl#" target="_blank"><img alt="#=PictureId#" src="#=PictureUrl#" width="150" /></a>',
+                            width: 200
+                        }, {
+                            field: "DisplayOrder",
+                            title: "@T("Admin.Catalog.Products.Pictures.Fields.DisplayOrder")",
+                            //integer format
+                            format: "{0:0}",
+                            width: 150
+                        }, {
+                            command: [{
+                                name: "edit",
+                                text: {
+                                    edit: "@T("Admin.Common.Edit")",
+                                    update: "@T("Admin.Common.Update")",
+                                    cancel: "@T("Admin.Common.Cancel")"
+                                }
+                            }, {
+                                name: "destroy",
+                                text: "@T("Admin.Common.Delete")"
+                            }],
+                            width: 200
+                        }]
+                    });
+                });
+			</script>
+		</td>
+	</tr>
+</table>
+
+<table class="adminContent">
+	<tr>
+		<td class="adminTitle">
+			@Html.NopLabelFor(model => model.PictureId):
+		</td>
+		<td class="adminData">
+			@Html.EditorFor(model => model.PictureId)
+			@Html.ValidationMessageFor(model => model.PictureId)
+		</td>
+	</tr>
+	<tr>
+		<td class="adminTitle">
+			@Html.NopLabelFor(model => model.DisplayOrder):
+		</td>
+		<td class="adminData">
+			@Html.EditorFor(model => model.DisplayOrder)
+			@Html.ValidationMessageFor(model => model.DisplayOrder)
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2" align="left">
+			<input type="button" id="addImage" class="k-button" value="@T("SevenSpikes.FurnitureLeisure.Admin.CarouselImages.AddPicture")" />
+		</td>
+	</tr>
+</table>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('#addImage').click(function () {
+            var pictureId = $("#@Html.FieldIdFor(model => model.PictureId)").val();
+            var displayOrder = $("#@Html.FieldIdFor(model => model.DisplayOrder)").val();
+
+            if (pictureId == 0) {
+                alert('Upload picture first');
+                return;
+            }
+
+            $('#addImage').attr('disabled', true);
+
+            var postData = {
+                pictureId: pictureId,
+                displayOrder: displayOrder
+            };
+            addAntiForgeryToken(postData);
+
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: "@(Url.Action("AddImage", "FurnitureLeisureAdmin"))",
+                data: postData,
+                success: function(data) {
+                    $("#carousel-images-grid").data('kendoGrid').dataSource.read();
+                    $('#addImage').attr('disabled', false);
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    alert('Failed to add picture.');
+                    $('#addImage').attr('disabled', false);
+                }
+            });
+        });
+    });
+</script>   

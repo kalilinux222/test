@@ -1,0 +1,50 @@
+﻿@media all and (min-width: 1025px) {
+
+.cart-wrapper:hover #topcartlink {
+    transform: none;
+}
+#topcartlink {
+    position: relative;
+}
+.cart-wrapper .ico-cart-total {
+    transform: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    -webkit-transition: all .20s ease-in-out;
+    -moz-transition: all .20s ease-in-out;
+    transition: all .20s ease-in-out;
+}
+.cart-wrapper:hover .ico-cart-total {
+    opacity: 1;
+}
+
+.social-sharing a {
+    position: relative;
+}
+.social-sharing a:hover {
+    transform: none;
+}
+.social-sharing a .flip,
+.social-sharing a .flop {
+    transform: none;
+}
+.social-sharing a .flop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    -webkit-transition: all .20s ease-in-out;
+    -moz-transition: all .20s ease-in-out;
+    transition: all .20s ease-in-out;
+}
+.social-sharing a:hover .flop {
+    opacity: 1;
+}
+
+}

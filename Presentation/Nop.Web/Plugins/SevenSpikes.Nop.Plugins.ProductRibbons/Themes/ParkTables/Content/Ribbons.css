@@ -1,0 +1,67 @@
+﻿/*
+* Copyright 2014 Seven Spikes Ltd. All rights reserved. (http://www.nop-templates.com)
+* http://www.nop-templates.com/t/licensinginfo
+*/
+
+.ribbon-position,
+.ribbon-position img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.ribbon-wrapper {
+    display: inline-block;
+}
+
+
+
+@media all and (max-width: 768px) {
+
+    .product-list .item-box .ribbon-wrapper {
+        float: none;
+    }
+
+}
+@media all and (max-width: 1025px) {
+    .ribbon-wrapper {
+        margin: 0 15px 0 0 !important;
+    }
+    .product-grid .item-box .ribbon-wrapper .picture {
+        margin: 0 !important;
+    }
+}
+@media all and (min-width: 769px) {
+
+    .product-list .item-box .ribbon-wrapper {
+        width: 200px; /*set width according to theme design and layout*/
+    }
+    .product-list .item-box .ribbon-wrapper .picture {
+        float: none;
+        width: auto;
+    }
+	.product-list .item-box .ribbon-wrapper + .details {
+		margin: 0 0 0 220px;
+	}
+
+}
+
+@media all and (min-width: 1025px) {
+
+    .gallery .ribbon-wrapper {
+        float: left;
+    }
+    .jcarousel-item .ribbon-position {
+        z-index: 0;
+    }
+    .ribbon-wrapper {
+        display: block;
+    }
+}
+
+@media all and (min-width: 1281px) {
+	
+	.product-list .item-box .ribbon-wrapper + .details {
+		margin: 0 0 0 230px;
+	}
+	
+}

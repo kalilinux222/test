@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Language Name="English">
+  <LocaleResource Name="SevenSpikes.JsonLd">
+    <Value>JSON-LD</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.Plugins.AjaxCart.Admin.Menu.MenuName">
+    <Value>JSON-LD</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.JsonLd.Admin.Submenus.Settings">
+    <Value>Settings</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.JsonLd.Admin.Settings">
+    <Value>Settings</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.JsonLd.Admin.Settings.GeneralSettingsTitle">
+    <Value>General Settings</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.JsonLd.Admin.Settings.AddressSettingsTitle">
+    <Value>Address Settings</Value>
+  </LocaleResource>
+
+  <!-- Settings -->
+  <LocaleResource Name="SevenSpikes.JsonLd.Admin.Settings.Enable">
+    <Value>Enable</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.JsonLd.Admin.Settings.Enable.Hint">
+    <Value>Specifies whether the plugin is enabled.</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.JsonLd.Admin.Settings.Name">
+    <Value>Seller Name</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.JsonLd.Admin.Settings.Name.Hint">
+    <Value>Specifies the seller name in the JSON-LD structured data.</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.JsonLd.Admin.Settings.Description">
+    <Value>Description</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.JsonLd.Admin.Settings.Description.Hint">
+    <Value>Specifies the default page description in the JSON-LD structured data.</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.JsonLd.Admin.Settings.PictureId">
+    <Value>Image</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.JsonLd.Admin.Settings.PictureId.Hint">
+    <Value>Specifies the image in the JSON-LD structured data.</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.JsonLd.Admin.Settings.AdditionalPages">
+    <Value>Additional Pages</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.JsonLd.Admin.Settings.AdditionalPages.Hint">
+    <Value>Specifies the additional pages that are linked to your store in the JSON-LD structured data. This is the "sameAs" field. You can enter multiple URLs separated by "," here.</Value>
+  </LocaleResource>  
+  <LocaleResource Name="SevenSpikes.JsonLd.Admin.Settings.StreetAddress">
+    <Value>Street Address</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.JsonLd.Admin.Settings.StreetAddress.Hint">
+    <Value>Specifies the street address in the JSON-LD structured data. Leave blank if there is no address.</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.JsonLd.Admin.Settings.AddressLocality">
+    <Value>Address Locality</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.JsonLd.Admin.Settings.AddressLocality.Hint">
+    <Value>Specifies the address locality in the JSON-LD structured data. Leave blank if there is no address locality.</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.JsonLd.Admin.Settings.PostalCode">
+    <Value>Postal Code</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.JsonLd.Admin.Settings.PostalCode.Hint">
+    <Value>Specifies the postal code in the JSON-LD structured data. Leave blank if there is no postal code.</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.JsonLd.Admin.Settings.Country">
+    <Value>Address Country</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.JsonLd.Admin.Settings.Country.Hint">
+    <Value>Specifies the address country in the JSON-LD structured data. Leave blank if there is no address country.</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.JsonLd.Admin.Settings.Phone">
+    <Value>Telephone</Value>
+  </LocaleResource>
+  <LocaleResource Name="SevenSpikes.JsonLd.Admin.Settings.Phone.Hint">
+    <Value>Specifies the address telephone in the JSON-LD structured data. Leave blank if there is no address telephone.</Value>
+  </LocaleResource>
+  
+</Language>

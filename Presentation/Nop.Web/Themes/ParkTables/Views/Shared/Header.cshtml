@@ -1,0 +1,185 @@
+﻿@using Nop.Core
+@using Nop.Core.Domain.Orders
+@using Nop.Core.Infrastructure
+@using Nop.Services.Localization
+@using Nop.Services.Configuration
+@using Nop.Services.Orders
+@using Nop.Web.Framework.Themes
+@using Nop.Services.Security;
+
+
+
+@{
+    var storeId = EngineContext.Current.Resolve<IStoreContext>().CurrentStore.Id;
+    var headerLayout = EngineContext.Current.Resolve<ISettingService>().GetSettingByKey("brooklynthemesettings.headerlayout", "header-1", storeId, true);
+    var isHeader1 = String.Compare(headerLayout, "header-1", true) == 0;
+    var currentThemeName = EngineContext.Current.Resolve<IThemeContext>().WorkingThemeName;
+    var headerPhonePath = "~/Themes/" + currentThemeName + "/Content/img/FL_PhoneNumber_Header.png";
+
+    var megaMenuWithPicturesLayout = EngineContext.Current.Resolve<ISettingService>().GetSettingByKey("brooklynthemesettings.megamenuwithpictureslayout", "pictures-per-row-four", storeId, true);
+
+    var permissionService = EngineContext.Current.Resolve<IPermissionService>();
+    var shoppingCartEnabled = permissionService.Authorize(StandardPermissionProvider.EnableShoppingCart);
+    var wishlistEnabled = permissionService.Authorize(StandardPermissionProvider.EnableWishlist);
+
+    ISettingService settingService = EngineContext.Current.ContainerManager.Resolve<ISettingService>();
+    IStoreContext storeContext = EngineContext.Current.ContainerManager.Resolve<IStoreContext>();
+
+    var customer = EngineContext.Current.Resolve<IWorkContext>().CurrentCustomer;
+    var wishlistItems = customer.ShoppingCartItems
+        .Where(sci => sci.ShoppingCartType == ShoppingCartType.Wishlist)
+        .LimitPerStore(storeId)
+        .ToList()
+        .GetTotalProducts();
+}
+
+@{
+    var warningText = Html.Action("TopicBlock", "Topic", new { systemName = "WarningMessage" });
+    var warningTextParentClass = string.Empty;
+}
+@if (!MvcHtmlString.IsNullOrEmpty(warningText))
+{
+    warningTextParentClass = "warning-text-on";
+}
+
+<div class="header @headerLayout @warningTextParentClass">
+
+    @if (!MvcHtmlString.IsNullOrEmpty(warningText))
+    {
+        <div class="warning-text">
+            @Html.Action("TopicBlock", "Topic", new { systemName = "WarningMessage" })
+        </div>
+    }
+
+    @Html.Widget("header")
+    <div id="headerTop" class="header-top">
+        <div class="header-options-top-wrapper">
+            <div class="header-top-message-wrap">
+                <span class="label">@T("sevenspikes.themes.brooklyn.header.hint")</span>
+                <a class="phone" href="tel:@T("sevenspikes.themes.brooklyn.header.phone")">@T("sevenspikes.themes.brooklyn.header.phone")</a>
+            </div>
+            <div class="header-options">
+                @*<div class="header-links-wrapper">
+                    @Html.Action("HeaderLinks", "Common")
+                </div>*@
+                <div class="header-selectors-wrapper">
+                    @Html.Action("TaxTypeSelector", "Common")
+                    @Html.Action("CurrencySelector", "Common")
+                    @Html.Action("LanguageSelector", "Common")
+                    @Html.Widget("header_selectors")
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-upper">
+        <div class="header-options-wrapper">
+            <div class="menu-title menu-title-before">
+                <span>@T("SevenSpikes.Themes.Brooklyn.Menu.Button")</span>
+            </div>
+
+            @Html.Partial("Logo")
+
+            @{ var menuHtml = Html.Widget("theme_header_menu"); }
+
+            @if (MvcHtmlString.IsNullOrEmpty(menuHtml)) // if no mega menu, no need for additional class
+            {
+                megaMenuWithPicturesLayout = String.Empty;
+            }
+            <div class="header-menu @megaMenuWithPicturesLayout">
+                <div class="top-header-menu">
+
+                    <div class="close-menu">
+                        <span>@T("SevenSpikes.Themes.Common.CloseMenu")</span>
+                    </div>
+
+                    @Html.Partial("Logo")
+
+                    <span class="search-opener">Search</span>
+
+                </div>
+                @if (!MvcHtmlString.IsNullOrEmpty(menuHtml))
+                {
+                    @menuHtml
+                }
+                else
+                {
+                    @Html.Action("TopMenu", "Catalog")
+                }
+                <div class="header-options">
+                    @if (shoppingCartEnabled)
+                    {
+                        <a href="@Url.RouteUrl("ShoppingCart")" class="ico-cart">
+                            <div class="cart-trigger">        
+                                <span class="cart-label">@T("Sevenspikes.Themes.Brooklyn.PT.FlyoutCartText")</span>
+                            </div>
+                        </a>
+                    }
+                    @if (wishlistEnabled)
+                    {
+                        <a href="@Url.RouteUrl("Wishlist")" class="ico-wishlist" title="@T("wishlist")">
+                            <div class="cart-trigger">
+                                <span class="cart-label">@T("wishlist")</span>
+                            </div>
+                        </a>
+                    }
+                    <div class="header-links-wrapper">
+                        @Html.Action("HeaderLinks", "Common")
+                    </div>
+                    <div class="header-selectors-wrapper">
+                        @Html.Action("TaxTypeSelector", "Common")
+                        @Html.Action("CurrencySelector", "Common")
+                        @Html.Action("LanguageSelector", "Common")
+                        @Html.Widget("header_selectors")
+                    </div>
+                    <a href="@Url.RouteUrl("ContactUs")" class="ico-wishlist" title="@T("ContactUs")">
+                        @T("ContactUs")
+                    </a>
+                </div>
+            </div>
+            <div class="search-box store-search-box">
+                <div class="search-box-move">
+                    <span class="search-opener">Search</span>
+                    @Html.Action("SearchBox", "Catalog")
+                </div>
+            </div>
+            <div class="header-actions">
+                <div class="header-links-lower">
+                    <div class="my-account-button">Account</div>
+                    @Html.Action("HeaderLinks", "Common")
+                </div>
+                @if (wishlistEnabled)
+                {  
+                    <div class="wishlist">
+                        <a href="@Url.RouteUrl("Wishlist")" class="ico-wishlist" title="@T("wishlist")">
+                            @if (@wishlistItems > 0)
+                            {
+                                <span class="wishlist-qty">@wishlistItems</span>
+                            }
+                            <span class="cart-label">@T("wishlist.pt")</span>
+                        </a>
+                    </div>                   
+                }
+                @if (shoppingCartEnabled)
+                {
+                    @Html.Action("FlyoutShoppingCart", "ShoppingCart")
+                }
+            </div>
+        </div>
+    </div>
+    <div id="headerLower" class="header-lower">
+        <div class="header-actions-wrapper">
+            <div class="header-logo-mobile">
+                <a href="@Url.RouteUrl("HomePage")">
+                    @{var storeNameMob = EngineContext.Current.Resolve<IStoreContext>().CurrentStore.GetLocalized(x => x.Name);
+                        var logoPathMobile = "~/Themes/" + currentThemeName + "/Content/img/FL_Logo_MobileTransparent.png";}
+                    <img class="logo-mobile" title="" alt="@storeNameMob" src="@Url.Content(logoPathMobile)">
+                </a>
+                <a href="tel:+1-800-213-2401">
+                    @{var logoPathMobilePhone = "~/Themes/" + currentThemeName + "/Content/img/PhoneNumber_Mobile.png";}
+                    <img class="phone-mobile" title="Call an expert: 1-800-213-2401" alt="Questions? Call an expert: 1-800-213-2401" src="@Url.Content(logoPathMobilePhone)">
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

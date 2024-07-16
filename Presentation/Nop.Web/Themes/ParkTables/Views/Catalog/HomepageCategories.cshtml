@@ -1,0 +1,72 @@
+﻿@model IList<CategoryModel>
+
+@using Nop.Web.Models.Catalog;
+@using Nop.Core
+@using Nop.Core.Infrastructure;
+@using Nop.Services.Configuration;
+@{
+    var storeId = EngineContext.Current.Resolve<IStoreContext>().CurrentStore.Id;
+    var categoriesHoverEffect = EngineContext.Current.Resolve<ISettingService>().GetSettingByKey("brooklynthemesettings.categorieshovereffect", "hover-effect-1", storeId, true);
+
+    var settingService = EngineContext.Current.Resolve<ISettingService>();
+    var lazyLoadImages = settingService.GetSettingByKey("BrooklynThemeSettings.LazyLoadImages", false, storeId, true);
+}
+@if (Model.Count > 0)
+{
+    <div class="category-grid home-page-category-grid home-page-gray-wrapper @categoriesHoverEffect">
+        @*y.chan - hide Featured Categories text*@
+        @*<div class="title">
+                <strong>@T("SevenSpikes.Themes.Brooklyn.Common.FeaturedCategories")</strong>
+            </div>*@
+        <div class="item-grid">
+            @foreach (var item in Model)
+            {
+                <div class="item-box">
+                    <div class="category-item">
+                        <h2 class="category-title">
+                            <a href="@Url.RouteUrl("Category", new { SeName = item.SeName })" title="@item.PictureModel.Title">
+                                @*y.chan - custom*@
+                                <span>@item.Name</span>
+                                @*<span>@item.Header1</span>*@
+                                @*y.chan - custom end*@
+
+                            </a>
+                        </h2>
+                        <div class="picture">
+                            <a href="@Url.RouteUrl("Category", new {SeName = item.SeName})" title="@item.PictureModel.Title">
+                                @if (lazyLoadImages)
+                                {
+                                    <img data-lazyloadsrc="@item.PictureModel.ImageUrl"
+                                         src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                                         alt="@item.PictureModel.AlternateText"
+                                         title="@item.PictureModel.Title" />
+                                }
+                                else
+                                {
+                                    <img alt="@item.PictureModel.AlternateText" src="@item.PictureModel.ImageUrl" title="@item.PictureModel.Title" />
+                                }
+                            </a>
+                        </div>
+                        <div class="home-category-description">
+                            @if (item.CustomProperties.ContainsKey("CustomDescription"))
+                            {
+                                <p>@item.CustomProperties["CustomDescription"]</p>
+                            }
+                            else
+                            {
+                                <p></p>
+                            }
+                        </div>
+                        <a href="@Url.RouteUrl("Category", new { SeName = item.SeName })" class="homepage-categories-button">
+                            @T("sevenspikes.themes.parktables.common.featuredcategories.button") @item.Name
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="category-view-all-button">
+            @T("sevenspikes.themes.parktables.common.featuredcategories.viewAll")
+        </div>
+
+    </div>
+}

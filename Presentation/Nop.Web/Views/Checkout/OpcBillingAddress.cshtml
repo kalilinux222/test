@@ -1,0 +1,160 @@
+﻿@model CheckoutBillingAddressModel
+@using Nop.Web.Models.Checkout;
+
+@{
+    Html.AddScriptParts("~/Scripts/jquery.mask.min.js");
+}
+
+<div class="checkout-data">
+    @Html.Widget("op_checkout_billing_address_top")
+    @Html.Widget("op_checkout_billing_address_middle")
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            var defaultAddress = @Html.Raw(new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(Model.NewAddress));
+
+            $(document).on('change', '#useShippingAddress', function () {
+
+                if ($(this).is(':checked')) {
+                    var shippingAddress = {
+
+                        Address1: $('#ShippingNewAddress_Address1').val(),
+                        Address2: $('#ShippingNewAddress_Address2').val(),
+                        City: $('#ShippingNewAddress_City').val(),
+                        ZipPostalCode: $('#ShippingNewAddress_ZipPostalCode').val(),
+                        CountryId: $('#ShippingNewAddress_CountryId').val(),
+                        StateProvinceId: $('#ShippingNewAddress_StateProvinceId').val(),
+                        AvailableStates: []
+                    };
+
+                    fillSelectedAddress(shippingAddress);
+                } else {
+
+                    fillSelectedAddress(defaultAddress);
+                }
+            });
+
+            $(document).on('updateShippingAddressFields', function(data) {
+
+                if (!data.isNewAddress) {
+                    var shippingAddressSelect = $('#shipping-address-select');
+                    shippingAddressSelect.val(data.address.Id).blur();
+                    shippingAddressSelect.change();
+
+                } else {
+                    fillValidatedShippingAddress(data.address);
+                }
+            });
+
+            function fillValidatedShippingAddress(address) {
+
+                $('#ShippingNewAddress_Address1').val(address.Address1).blur();
+                $('#ShippingNewAddress_Address2').val(address.Address2).blur();
+                $('#ShippingNewAddress_City').val(address.City).blur();
+                $('#ShippingNewAddress_ZipPostalCode').val(address.ZipPostalCode).blur();
+                $('#ShippingNewAddress_CountryId').val(address.CountryId).blur().change();
+
+                if (address.AvailableStates.length) {
+
+                    fillShippingAddressStates(address.AvailableStates, address.StateProvinceId);
+                } else {
+
+                    $.ajax({
+                        cache: false,
+                        type: "GET",
+                        url: "@(Url.RouteUrl("GetStatesByCountryId"))",
+                        data: { "countryId": address.CountryId, "addSelectStateItem": "true" },
+                        success: function (data) {
+
+                            fillShippingAddressStates(data, address.StateProvinceId);
+                        }
+                    });
+                }
+            }
+
+            function fillShippingAddressStates(data, selectedState) {
+
+                var states = $('#ShippingNewAddress_StateProvinceId');
+
+                states.empty();
+
+                $.each(data, function (id, option) {
+
+                    states.append($('<option></option>').val(option.id || option.Value).html(option.name || option.Text));
+                });
+
+                if (selectedState) {
+
+                    states.val(selectedState).blur();
+                }
+
+                states.change();
+            }
+            
+            function fillSelectedAddress(address) {
+
+                $('#BillingNewAddress_Address1').val(address.Address1).blur();
+                $('#BillingNewAddress_Address2').val(address.Address2).blur();
+                $('#BillingNewAddress_City').val(address.City).blur();
+                $('#BillingNewAddress_ZipPostalCode').val(address.ZipPostalCode).blur();
+                $('#BillingNewAddress_CountryId').val(address.CountryId).blur().change();
+
+                if (address.AvailableStates.length) {
+
+                    fillSelectedAddressStates(address.AvailableStates, address.StateProvinceId);
+                } else {
+
+                    $.ajax({
+                        cache: false,
+                        type: "GET",
+                        url: "@(Url.RouteUrl("GetStatesByCountryId"))",
+                        data: { "countryId": address.CountryId, "addSelectStateItem": "true" },
+                        success: function (data) {
+
+                            fillSelectedAddressStates(data, address.StateProvinceId);
+                        }
+                    });
+                }
+            }
+
+            function fillSelectedAddressStates(data, selectedState) {
+
+                var states = $('#BillingNewAddress_StateProvinceId');
+
+                states.empty();
+
+                $.each(data, function (id, option) {
+
+                    states.append($('<option></option>').val(option.id || option.Value).html(option.name || option.Text));
+                });
+
+                if (selectedState) {
+
+                    states.val(selectedState).blur();
+                }
+
+                states.change();
+            }
+        });
+    </script>
+    <div class="section new-billing-address" id="billing-new-address-form">
+        <div class="enter-address">
+            @{
+                var validationSummary = Html.ValidationSummary(true);
+            }
+            @if (!MvcHtmlString.IsNullOrEmpty(validationSummary))
+            {
+                <div class="message-error">@validationSummary</div>
+            }
+            @{
+                var dataDictAddress = new ViewDataDictionary();
+                //Merge ModelState (required for validation)
+                dataDictAddress.ModelState.Merge(ViewData.ModelState);
+                dataDictAddress.TemplateInfo.HtmlFieldPrefix = "BillingNewAddress";
+                dataDictAddress.Add("IsBilling", true);
+                @Html.Partial("_CreateOrUpdateAddress", Model.NewAddress, dataDictAddress)
+            }
+        </div>
+    </div>
+    @Html.Widget("op_checkout_billing_address_bottom")
+</div>

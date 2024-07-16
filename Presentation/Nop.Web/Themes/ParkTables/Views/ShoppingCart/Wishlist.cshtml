@@ -1,0 +1,546 @@
+﻿@model WishlistModel
+@using Nop.Core
+@using Nop.Core.Domain.Tax
+@using Nop.Core.Infrastructure
+@using Nop.Services.Directory
+@using Nop.Services.Localization
+@using Nop.Web.Models.ShoppingCart
+@{
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+
+    //title
+    Html.AddTitleParts(T("PageTitle.Wishlist").Text);
+    Html.AddScriptParts("~/Scripts/kendo/2014.1.318/kendo.core.min.js");
+    Html.AddScriptParts("~/Scripts/kendo/2014.1.318/kendo.userevents.min.js");
+    Html.AddScriptParts("~/Scripts/kendo/2014.1.318/kendo.draganddrop.min.js");
+    Html.AddScriptParts("~/Scripts/kendo/2014.1.318/kendo.window.min.js");
+
+    var _countryService = EngineContext.Current.Resolve<ICountryService>();
+    var _stateProvinceService = EngineContext.Current.Resolve<IStateProvinceService>();
+    var _localizationService = EngineContext.Current.Resolve<ILocalizationService>();
+
+    var usaCountry = _countryService.GetCountryByThreeLetterIsoCode("USA");
+    var usaCountryId = usaCountry != null ? usaCountry.Id : 1;
+
+    var stateProvinces = new List<SelectListItem>();
+    stateProvinces.Add(new SelectListItem { Text = _localizationService.GetResource("Address.SelectState"), Value = "0" });
+
+    var states = _stateProvinceService.GetStateProvincesByCountryId(usaCountryId);
+    foreach (var state in states)
+    {
+        stateProvinces.Add(new SelectListItem { Text = state.Name, Value = state.Name });
+    }
+}
+<div class="page wishlist-page">
+    <div class="page-title">
+        <h1>
+            @if (Model.IsEditable)
+            {
+                @T("Wishlist")
+            }
+            else
+            {
+                @String.Format(T("Wishlist.WishlistOf").Text, Model.CustomerFullname)
+            }
+        </h1>
+        <p>@T("Wishlist.subTitle")</p>
+    </div>
+    <div class="page-body">
+        @if (Model.Items.Count > 0)
+        {
+            <div class="wishlist-content">
+                @if (Model.Warnings.Count > 0)
+                {
+                    <div class="message-error">
+                        <ul>
+                            @foreach (var warning in Model.Warnings)
+                            {
+                                <li>@warning</li>
+                            }
+                        </ul>
+                    </div>
+                }
+                @using (Html.BeginRouteForm("Wishlist", FormMethod.Post))
+                {
+                    <script type="text/x-kendo-template" id="delete-items-confirmation" asp-location="Footer">
+                        @*<p class="message">Delete items?</p>*@
+                        <button class="confirm">Yes, delete item</button>
+                        <button class="cancel">No, return to wishlist</button>
+                    </script>
+                    <script type="text/javascript">
+
+                        function createKendoConfirm(templateId, okCallback, cancelCallback) {
+
+                            var kendoWindow = $("<div />").kendoWindow({
+                                title: "Delete Item?",
+                                resizable: false,
+                                draggable: false,
+                                modal: true,
+                                actions: []
+                            });
+
+                            kendoWindow.data("kendoWindow").wrapper.addClass("remove-from-cart confirmation-wrapper");
+
+                            kendoWindow.data("kendoWindow").content($("#" + templateId).html()).center().open();
+
+                            kendoWindow
+                                .find(".confirm, .cancel")
+                                .click(function (event) {
+                                    event.preventDefault();
+
+                                    if ($(this).hasClass("confirm")) {
+
+                                        if (typeof okCallback === "function") okCallback();
+                                    } else {
+
+                                        if (typeof cancelCallback === "function") cancelCallback();
+                                    }
+
+                                    kendoWindow.data("kendoWindow").destroy();
+                                });
+                        }
+
+                        $(document).ready(function () {
+
+                            $('.remove-item-from-wishlist').on('click', function (e) {
+
+                                var target = $(this);
+
+                                if (target.attr('isValid') == null) {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+
+                                    createKendoConfirm('delete-items-confirmation', function () {
+                                        target.attr('isValid', 'true');
+
+                                        target.next('input').prop('checked', true);
+
+                                        $('.update-wishlist-button').click();
+
+                                    }, function () {
+                                        target.removeAttr('isValid');
+                                    });
+                                } else {
+                                    window.location.href = target.attr('href');
+                                }
+                            });
+                        });
+                    </script>
+                    <div class="table-wrapper">
+                        <table class="cart">
+                            <colgroup>
+                                @*<col width="1" />*@
+                                @if (Model.IsEditable)
+                                {
+                                    <col width="1" />
+                                }
+                                @if (Model.DisplayAddToCart)
+                                {
+                                    <col width="1" />
+                                }
+                                @*@if (Model.ShowSku)
+                                {
+                                    <col width="1" />
+                                }*@
+                                @if (Model.ShowProductImages)
+                                {
+                                    <col width="1"/>
+                                }                                
+                                <col />
+                                @if (Model.IsEditable)
+                                {
+                                    <col width="1" />
+                                }
+                                @if (Model.DisplayAddToCart)
+                                {
+                                    <col width="1" />
+                                }
+                                @*@if (Model.ShowSku)
+                                {
+                                    <col width="1" />
+                                }*@
+                                @if (Model.ShowProductImages)
+                                {
+                                    <col width="1" />
+                                }
+                                <col width="1" />
+                                <col width="1" />
+                                <col width="1" />
+                            </colgroup>
+                            <thead>
+                                <tr class="cart-header-row">
+                                    @*<th>
+                                        <span class="item-count">#</span>
+                                    </th>*@
+                                    @if (Model.IsEditable)
+                                    {
+                                        <th class="remove-from-cart" data-hide="w410, w480, w580">
+                                            @T("ShoppingCart.Remove")
+                                        </th>
+                                    }
+                                    @if (Model.DisplayAddToCart)
+                                    {
+                                        <th class="add-to-cart" data-hide="w410">
+                                            @T("ShoppingCart.AddToCart")
+                                        </th>
+                                    }
+                                    @*@if (Model.ShowSku)
+                                    {
+                                        <th class="sku" data-hide="w410, w480, w580, w768, w980">
+                                            @T("ShoppingCart.SKU")
+                                        </th>
+                                    }*@
+                                    @if (Model.ShowProductImages)
+                                    {
+                                        <th class="product-picture">
+                                            @T("ShoppingCart.Image")
+                                        </th>
+                                    }
+                                    <th class="product" data-hide="w410, w480, w580, w768">
+                                        @T("ShoppingCart.Product(s)")
+                                    </th>
+                                    <th class="quantity" data-hide="w410">
+                                        @T("ShoppingCart.Quantity")
+                                    </th>
+                                    <th class="unit-price" data-hide="w410, w480, w580">
+                                        @T("ShoppingCart.UnitPrice")
+                                    </th>
+                                    <th class="subtotal">
+                                        @T("ShoppingCart.ItemTotal")
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{var counter = 0;}
+                                @foreach (var item in Model.Items)
+                                {
+                                    counter++;
+                                    <tr class="cart-item-row">
+                                        @*<td>
+                                            <span class="item-count">@counter</span>
+                                        </td>*@
+                                        @if (Model.IsEditable)
+                                        {
+                                            <td class="remove-from-cart">
+                                                <a href="#" class="remove-item-from-wishlist">[X]</a>
+                                                <input type="checkbox" name="removefromcart" value="@(item.Id)" style="display: none;" />
+                                            </td>
+                                        }
+                                        @if (Model.DisplayAddToCart)
+                                        {
+                                            <td class="add-to-cart">
+                                                <input type="checkbox" name="addtocart" value="@(item.Id)" />
+                                            </td>
+                                        }
+                                        @*@if (Model.ShowSku)
+                                        {
+                                            <td class="sku">
+                                                @item.Sku
+                                            </td>
+                                        }*@
+                                        @if (Model.ShowProductImages)
+                                        {
+                                            <td class="product-picture">
+                                                <a href="@Url.RouteUrl("Product", new { SeName = item.ProductSeName })"><img alt="@item.Picture.AlternateText" src="@item.Picture.ImageUrl" title="@item.Picture.Title" /></a>
+                                            </td>
+                                        }
+                                        <td class="product">
+                                            <a href="@Url.RouteUrl("Product", new { SeName = item.ProductSeName })" class="product-name">@item.ProductName</a>
+                                            @if (!String.IsNullOrEmpty(item.AttributeInfo))
+                                            {
+                                                <div class="attributes">
+                                                    @Html.Raw(item.AttributeInfo)
+                                                </div>
+                                            }
+                                            @if (!String.IsNullOrEmpty(item.RecurringInfo))
+                                            {
+                                                <div class="recurring-info">
+                                                    @Html.Raw(item.RecurringInfo)
+                                                </div>
+                                            }
+                                            @if (!String.IsNullOrEmpty(item.RentalInfo))
+                                            {
+                                                <div class="rental-info">
+                                                    @Html.Raw(item.RentalInfo)
+                                                </div>
+                                            }
+                                            @if (item.Warnings.Count > 0)
+                                            {
+                                                <div class="message-error">
+                                                    <ul>
+                                                        @foreach (var warning in item.Warnings)
+                                                        {
+                                                            <li>@warning</li>
+                                                        }
+                                                    </ul>
+                                                </div>
+                                            }
+                                        </td>
+                                        <td class="quantity">
+                                            @if (Model.IsEditable)
+                                            {
+                                                if (item.AllowedQuantities.Count > 0)
+                                                {
+                                                    <select name="itemquantity@(item.Id)" class="qty-dropdown">
+                                                        @foreach (var qty in item.AllowedQuantities)
+                                                        {
+                                                            <option selected="@qty.Selected" value="@qty.Value">@qty.Value</option>
+                                                        }
+                                                    </select>
+                                                }
+                                                else
+                                                {
+                                                    <input name="itemquantity@(item.Id)" type="text" value="@(item.Quantity)" class="qty-input" />
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <span>@item.Quantity</span>
+                                            }
+                                        </td>
+                                        <td class="unit-price">
+                                            <span class="product-unit-price">@item.UnitPrice</span>
+                                        </td>
+                                        <td class="subtotal">
+                                            <span class="product-subtotal">@item.SubTotal</span>
+                                            @if (!String.IsNullOrEmpty(item.Discount))
+                                            {
+                                                <div class="discount">
+                                                    @T("ShoppingCart.ItemYouSave"): @item.Discount
+                                                </div>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    if (Model.Items.Count > 0 && Model.DisplayTaxShippingInfo)
+                    {
+                        var inclTax = EngineContext.Current.Resolve<IWorkContext>().TaxDisplayType == TaxDisplayType.IncludingTax;
+                        //tax info is already included in the price (incl/excl tax). that's why we display only shipping info here
+                        //of course, you can modify appropriate locales to include VAT info there
+                        <div class="tax-shipping-info">
+                            @T(inclTax ? "Wishlist.TaxShipping.InclTax" : "Wishlist.TaxShipping.ExclTax", Url.RouteUrl("Topic", new { SeName = Html.GetTopicSeName("shippinginfo") }))
+                        </div>
+                    }
+                    <div class="buttons">
+                        @if (Model.IsEditable)
+                        {
+                            <input type="submit" name="updatecart" value="@T("Wishlist.UpdateCart")" class="button-2 update-wishlist-button" />
+                        }
+                        @if (Model.DisplayAddToCart)
+                        {
+                            <input type="submit" name="addtocartbutton" value="@T("ShoppingCart.AddToCart")" class="button-2 wishlist-add-to-cart-button" />
+                        }
+                        @if (Model.IsEditable && Model.EmailWishlistEnabled)
+                        {
+                            <input type="button" value="@T("Wishlist.EmailAFriend")" class="button-2 email-a-friend-wishlist-button" onclick="setLocation('@Url.RouteUrl("EmailWishlist")')" />
+                        }
+                    </div>
+                }
+            </div>
+            if (Model.IsEditable)
+            {
+                <div class="request-quote-form">
+
+
+                    @if (Model.RequestAQuote.Warnings.Count > 0)
+                    {
+                        <div class="message-error">
+                            <ul>
+                                @foreach (var warning in Model.RequestAQuote.Warnings)
+                                {
+                                    <li>@warning</li>
+                                }
+                            </ul>
+                        </div>
+                    }
+
+                    @using (Html.BeginRouteForm("Wishlist", FormMethod.Post))
+                    {
+                        <div class="fieldset">
+                            @*<div class="title">
+                                <strong>Custom Quote Request</strong>
+                            </div>*@
+                            <div class="form-info">
+                                <ul class="list">
+                                    <li><span>@T("RequestAQuote.SideInfo1")</span></li>
+                                    <li><span>@T("RequestAQuote.SideInfo2")</span></li>
+                                    <li class="phone"><span>@T("SevenSpikes.Themes.ParkTables.Footer.Phone")</span></li>
+                                    <li class="email"><span>@T("SevenSpikes.Themes.ParkTables.Footer.Email")</span></li>
+                                </ul>
+                            </div>
+                             <div class="form-fields">
+                                 <div class="inputs form-fields-name">
+                                     @Html.LabelFor(model => model.RequestAQuote.Name, new { }, ":")
+                                     @Html.RequiredHint()
+                                     @Html.TextBoxFor(model => model.RequestAQuote.Name, new { @required = "required" })
+                                     @Html.ValidationMessageFor(model => model.RequestAQuote.Name)
+                                 </div>
+                                 <div class="inputs form-fields-Company">
+                                     @Html.LabelFor(model => model.RequestAQuote.Company, new { }, ":")
+                                     @Html.TextBoxFor(model => model.RequestAQuote.Company)
+                                 </div>
+                                 <div class="inputs form-fields-Email">
+                                     @Html.LabelFor(model => model.RequestAQuote.Email, new { }, ":")
+                                     @Html.RequiredHint()
+                                     @Html.TextBoxFor(model => model.RequestAQuote.Email, new { @required = "required" })
+                                     @Html.ValidationMessageFor(model => model.RequestAQuote.Email)
+                                 </div>
+                                 <div class="inputs form-fields-PhoneNumber">
+                                     @Html.LabelFor(model => model.RequestAQuote.PhoneNumber, new { }, ":")
+                                     @Html.TextBoxFor(model => model.RequestAQuote.PhoneNumber)
+                                 </div>
+                                 <div class="inputs form-fields-DeliveryAddress">
+                                     @Html.LabelFor(model => model.RequestAQuote.DeliveryAddress, new { }, ":")
+                                     @Html.RequiredHint()
+                                     @Html.TextBoxFor(model => model.RequestAQuote.DeliveryAddress, new { @required = "required" })
+                                     @Html.ValidationMessageFor(model => model.RequestAQuote.DeliveryAddress)
+                                 </div>
+                                 <div class="inputs form-fields-City">
+                                     @Html.LabelFor(model => model.RequestAQuote.City, new { }, ":")
+                                     @Html.TextBoxFor(model => model.RequestAQuote.City)
+                                 </div>
+                                 <div class="inputs  form-fields-StateProvince">
+                                     @Html.LabelFor(model => model.RequestAQuote.StateProvince, new { }, ":")
+                                     @Html.DropDownList("RequestAQuote.StateProvince", stateProvinces)
+                                 </div>
+                                 <div class="inputs form-fields-DeliveryZip">
+                                     @Html.LabelFor(model => model.RequestAQuote.DeliveryZip, new { }, ":")
+                                     @Html.RequiredHint()
+                                     @Html.TextBoxFor(model => model.RequestAQuote.DeliveryZip, new { @required = "required" })
+                                     @Html.ValidationMessageFor(model => model.RequestAQuote.DeliveryZip)
+                                 </div>
+                                 
+                                 @if (Model.CustomProperties.ContainsKey("CheckoutAttributes"))
+                                 {
+                                     <p class="quote-form-info">@T("RequestAQuote.ShippingInfo")</p>
+
+                                     @Html.Partial("_CheckoutAttributes", Model.CustomProperties["CheckoutAttributes"], new ViewDataDictionary())
+                                 
+                                     <script type="text/javascript">
+                                         $(document).ready(function() {
+
+                                             var checkoutAttributes = $('.checkout-attributes');    
+
+                                             if (checkoutAttributes.find('textarea').length) {
+
+                                                 checkoutAttributes.find('dt:last').hide();
+                                                 checkoutAttributes.find('dd:last').hide();
+                                             }
+                                         });
+
+                                     </script>
+                                 }
+
+                                 <div class="buttons">
+                                     <input type="submit" name="requestaquote" value="@T("RequestAQuote.Button")" class="button-1 request-quote-button" />
+                                 </div>
+                             </div>
+                        </div>
+
+                        
+
+                        @Html.Hidden("WishlistURLForCustomer", Url.RouteUrl("Wishlist", new { customerGuid = Model.CustomerGuid }, "http"))
+                    }
+
+                    @if (Model.RequestAQuote.SuccessfullySent)
+                    {
+                        <div class="request-quote-result">@Model.RequestAQuote.Result</div>
+                    }
+                </div>
+            }
+        }
+        else
+        {
+            <div class="no-data">
+                <div class="request-quote-no-products">
+                    <h2>@T("Wishlist.CartIsEmpty")</h2>
+                    <p>@T("Wishlist.CartIsEmpty.subTitle")</p>
+                    <img alt='quote request info button' src='/Themes/parktables/Content/img/quote-request-info-button.jpg'>
+                </div>
+
+                @*  Disabled form - start  *@
+                <div class="request-quote-no-products-form request-quote-form">
+                    @*<img alt='quote request info form' src='/Themes/parktables/Content/img/quote-request-info-form.jpg'>*@
+                    @using (Html.BeginRouteForm("Wishlist", FormMethod.Post))
+                    {
+                        <div class="fieldset">
+                            @*<div class="title">
+                                <strong>Custom Quote Request</strong>
+                            </div>*@
+                            <div class="form-info">
+                                <ul class="list">
+                                    <li><span>@T("RequestAQuote.SideInfo1")</span></li>
+                                    <li><span>@T("RequestAQuote.SideInfo2")</span></li>
+                                    <li class="phone"><span>@T("SevenSpikes.Themes.ParkTables.Footer.Phone")</span></li>
+                                    <li class="email"><span>@T("SevenSpikes.Themes.ParkTables.Footer.Email")</span></li>
+                                </ul>
+                            </div>
+                             <div class="form-fields">
+                                 <div class="inputs form-fields-name">
+                                     @Html.LabelFor(model => model.RequestAQuote.Name, new { }, ":")
+                                     @Html.RequiredHint()
+                                     @Html.TextBoxFor(model => model.RequestAQuote.Name, new { @readonly = "readonly" })
+                                 </div>
+                                 <div class="inputs form-fields-Company">
+                                     @Html.LabelFor(model => model.RequestAQuote.Company, new { }, ":")
+                                     @Html.TextBoxFor(model => model.RequestAQuote.Company, new { @readonly = "readonly" })
+                                 </div>
+                                 <div class="inputs form-fields-Email">
+                                     @Html.LabelFor(model => model.RequestAQuote.Email, new { }, ":")
+                                     @Html.RequiredHint()
+                                     @Html.TextBoxFor(model => model.RequestAQuote.Email, new { @readonly = "readonly" })
+                                 </div>
+                                 <div class="inputs form-fields-PhoneNumber">
+                                     @Html.LabelFor(model => model.RequestAQuote.PhoneNumber, new { }, ":")
+                                     @Html.TextBoxFor(model => model.RequestAQuote.PhoneNumber, new { @readonly = "readonly" })
+                                 </div>
+                                 <div class="inputs form-fields-DeliveryAddress">
+                                     @Html.LabelFor(model => model.RequestAQuote.DeliveryAddress, new { }, ":")
+                                     @Html.RequiredHint()
+                                     @Html.TextBoxFor(model => model.RequestAQuote.DeliveryAddress, new { @readonly = "readonly" })
+                                 </div>
+                                 <div class="inputs form-fields-City">
+                                     @Html.LabelFor(model => model.RequestAQuote.City, new { }, ":")
+                                     @Html.TextBoxFor(model => model.RequestAQuote.City, new { @readonly = "readonly" })
+                                 </div>
+                                 <div class="inputs  form-fields-StateProvince">
+                                     @Html.LabelFor(model => model.RequestAQuote.StateProvince, new { }, ":")
+                                     @Html.DropDownList("RequestAQuote.StateProvince", stateProvinces, new { @readonly = "readonly" })
+                                 </div>
+                                 <div class="inputs form-fields-DeliveryZip">
+                                     @Html.LabelFor(model => model.RequestAQuote.DeliveryZip, new { }, ":")
+                                     @Html.RequiredHint()
+                                     @Html.TextBoxFor(model => model.RequestAQuote.DeliveryZip, new { @readonly = "readonly" })
+                                 </div>
+                                 <div class="buttons">
+                                     <input type="submit" name="requestaquote" value="@T("RequestAQuote.Button")" class="button-1 request-quote-button" disabled />
+                                 </div>
+                             </div>
+                        </div>
+
+                        
+
+                        @Html.Hidden("WishlistURLForCustomer", Url.RouteUrl("Wishlist", new { customerGuid = Model.CustomerGuid }, "http"))
+                    }
+                </div>
+                @*  Disabled form - end  *@
+            </div>
+        }
+
+        @if (Model.IsEditable && Model.Items.Count > 0)
+        {
+            <div class="share-info">
+                <span class="share-label">@T("Wishlist.YourWishlistURL"):</span>
+                <div>
+                    <p id="share-link">@Url.RouteUrl("Wishlist", new { customerGuid = Model.CustomerGuid }, "http")</p>
+                    <div class="copy-button">
+                        <span>@T("Wishlist.YourWishlistURL.copy")</span>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

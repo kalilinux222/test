@@ -1,0 +1,61 @@
+﻿@{
+    Layout = "";
+}
+
+@model Nop.Plugin.Payments.AuthorizeNet.Models.PaymentInfoModel
+
+@using Nop.Web.Framework;
+@using Nop.Web.Framework.UI
+
+@{
+    Html.AddScriptParts("~/Scripts/jquery.mask.min.js");
+}
+
+<strong class="payment-method-hint card">@T("Checkout.PaymentMethods.BankCardHint")</strong>
+<span class="icons card-icons"></span>
+<table width="100%" cellspacing="2" cellpadding="1" border="0">
+    <tr class="inputs holder">
+        <td colspan="2">
+            @Html.NopLabelFor(model => model.CardholderName, false)
+            @Html.RequiredHint()
+            @Html.TextBoxFor(model => model.CardholderName, new { style = "Width: 165px;", autocomplete = "off", required = "required" })
+            @Html.ValidationMessageFor(model => model.CardholderName)
+        </td>
+    </tr>
+    <tr class="inputs number">
+        <td colspan="2">
+            @Html.NopLabelFor(model => model.CardNumber, false)
+            @Html.RequiredHint()
+            @Html.TextBoxFor(model => model.CardNumber, new { style = "Width: 165px;", autocomplete = "off", maxlength = 22, inputmode = "decimal", required = "required" })
+            @Html.ValidationMessageFor(model => model.CardNumber)
+        </td>
+    </tr>
+    <tr class="inputs last">
+        <td>
+            @Html.NopLabelFor(model => model.ExpireMonth, false)
+            @Html.RequiredHint()
+            <div>
+                @Html.DropDownListFor(model => model.ExpireMonth, Model.ExpireMonths, new { required = "required" })
+                /
+                @Html.DropDownListFor(model => model.ExpireYear, Model.ExpireYears, new { required = "required" })
+            </div>
+            @Html.ValidationMessageFor(model => model.ExpireMonth)
+            @Html.ValidationMessageFor(model => model.ExpireYear)
+        </td>
+        <td class="cvv">
+            @Html.NopLabelFor(model => model.CardCode, false)
+            <span class="hint"><span class="text">@T("Checkout.PaymentMethods.CvvHint")</span></span>
+            @Html.RequiredHint()
+            <div>
+                @Html.TextBoxFor(model => model.CardCode, new { style = "Width: 60px;", autocomplete = "off", maxlength = 4, inputmode = "decimal", required = "required" })
+            </div>
+            @Html.ValidationMessageFor(model => model.CardCode)
+        </td>
+    </tr>
+</table>
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        $("#@Html.FieldIdFor(model => model.CardNumber)").mask('0000 0000 0000 0000', { placeholder: "XXXX XXXX XXXX XXXX" });
+    });
+</script>

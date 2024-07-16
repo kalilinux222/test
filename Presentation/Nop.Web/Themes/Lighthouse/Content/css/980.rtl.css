@@ -1,0 +1,156 @@
+/*=====================================================
+    
+    TABLETS LANDSCAPE & NETBOOKS
+
+=====================================================*/
+
+@media all and (max-width: 990px) and (min-width: 769px) {
+
+    .header-selectors-wrapper > div {
+        float: right;
+    }
+    .new_select > span {
+        padding: 0 5px 0 30px;
+        text-align: right;
+    }
+    .language-list {
+        text-align: left;
+    }
+
+    .menu-title span {
+        background: url(../img/responsive-nav-icon.png) no-repeat 20px center;
+        padding: 0 20px 0 0;
+    }
+    .header-menu > ul > li > a,
+    .header-menu > ul > li > span {
+	    text-shadow: -1px 1px #fff !important; 
+	    text-align: right;
+    }
+    .header-menu > ul .plus-button {
+        right: auto;
+        left: 0;
+	    border-right: 1px solid #aaa;
+	    border-left: none;
+    }
+    .header-menu .sublist li a {
+	    background-position: 95% center;
+	    padding: 14px 32px 14px 44px;
+    }
+
+    .dropdown li a {
+        text-shadow: -1px 1px #fff;
+    }
+
+    .new_select {
+        background-position: 4px center;
+    }
+	
+	.footer-block {
+        margin: 0 1% 2% 0;
+    }
+	.footer-block:nth-child(2n+1) {
+		margin-right: 0;
+	}
+	.footer-block li a {
+		padding: 0 10px 0 0;
+	}
+    .footer-block-first li {
+        padding: 0 32px 0 0;
+    }
+    .footer-store-theme {
+        padding: 0 110px 0 0;
+    }
+	
+    .listbox .list > li > a {
+        background-position: 160px center;
+    }
+    .listbox .list > li.active > a, .listbox .list > li > a.active {
+        background: url('../img/rtl-bullet5.png') 160px center no-repeat,
+					#bbb url('../img/rtl-block-pointer.png') no-repeat left center;
+    }
+    .listbox .sublist {
+        padding-right: 20px;
+        padding-left: 0;
+    }
+    .product-selectors > div {
+        margin-left: 0;
+    }
+    .item-box,
+    .item-box:nth-child(3n+1),
+    .cross-sells .item-box,
+    .cross-sells .item-box:nth-child(3n+1),
+    .home-page .item-box,
+    .home-page .item-box:nth-child(2n+1) {
+        margin: 0 2% 2% 0;
+    }
+    .item-box:nth-child(2n+1),
+    .cross-sells .item-box:nth-child(2n+1),
+    .home-page .item-box:nth-child(3n+1) {
+        margin: 0 0 2% 0;
+    }
+    .item-box .old-price {
+        margin: 0 0 0 5px;
+    }
+    .product-variant-line {
+        margin: 0 2% 2% 0;
+        float: right;
+    }
+
+    .color-squares li {
+        margin-left: 10px;
+        margin-right: 0;
+    }
+	.color-squares li:last-child {
+		margin-left: 0;
+	}
+    .giftcard label {
+        margin-right: 0;
+    }
+    .advanced-search .inputs {
+        padding-right: 0;
+    }
+    #username-availabilty {
+        right: 50%;
+        left: auto;
+        margin-right: -44px;
+        margin-left: 0;
+    }
+    .shipping-options .inputs {
+        text-align: right;
+    }
+    .checkout-page .address-item,
+    .checkout-page .address-item:nth-child(4n+1) {
+        margin: 0 1% 10px 0;
+    }
+    .checkout-page .edit-address .inputs,
+	.checkout-page .edit-address span {
+        text-align: right;
+    }
+    .year strong {
+        background: url('../img/bullet5.png') 12px center no-repeat,
+					#bbb url('../img/block-pointer.png') no-repeat left center;
+    }
+    .compare-products-page tr:first-child td {
+        padding: 10px 100px 10px 20px;
+    }
+    .compare-products-table-mobile td:before {
+        right: 10px;
+        left: auto;
+    }
+    .compare-products-table-mobile td {
+        padding: 10px 100px 10px 20px;
+        text-align: right !important;
+    }
+    .compare-products-table-mobile td:first-child div {
+        position: absolute;
+        right: 10px;
+    }
+	
+	.forum-search-box {
+		float: left;
+	}
+	.forum-edit-page .inputs.reversed label {
+		margin: 5px 0 0 0;
+	}
+    
+}
